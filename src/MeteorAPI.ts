@@ -4,7 +4,14 @@ import { BaseSchema, parse, ValiError } from 'valibot';
 import { formatValibotError } from './Errors';
 import type { GuardStatic } from './Guard';
 import { Logger } from './Logger';
-import type { BaseContext, MethodDefinition, PublicationDefinition, ResourceType, WrappedContext } from './Types';
+import type {
+    BaseContext,
+    MethodDefinition,
+    MethodDefinitionMap,
+    PublicationDefinition, PublicationDefinitionMap,
+    ResourceType,
+    WrappedContext,
+} from './Types';
 import type { ContextWrapper } from './Wrappers';
 import Pino from 'pino';
 
@@ -55,6 +62,19 @@ export default class MeteorAPI<
         return publications;
     }
     
+    public exposeMethods(methods: MethodDefinitionMap) {
+        const methodMap = Object.entries(methods).map(([name, definition]) => {
+            return [name, this.wrapResource({ definition, name })]
+        })
+        Meteor.methods(Object.fromEntries(methodMap));
+    }
+    
+    public exposePublications(publications: PublicationDefinitionMap) {
+        Object.entries(publications).forEach(([name, definition]) => {
+            Meteor.publish(name, this.wrapResource({ name, definition }))
+        })
+    }
+    
     protected extendContext({ type, context, name }: ContextWrapper) {
         const startTime = performance.now();
         const logger = this.options.createLogger?.({ type, context, name });
@@ -91,7 +111,7 @@ export default class MeteorAPI<
         definition.guards.forEach((guard) => new guard(context, validatedParams).validate());
     }
     
-    protected withErrorHandler(method: (...params: unknown[]) => unknown) {
+    protected withErrorHandler(method: (...params: unknown[]) => unknown): (...params: unknown[]) => any {
         const api = this;
         return function(this: WrappedContext & TExtendedContext, ...params: unknown[]) {
             try {
@@ -122,7 +142,6 @@ export default class MeteorAPI<
     protected wrapResource({ definition, name }: {
         definition: MethodDefinition | PublicationDefinition,
         name: string,
-        handle: (...params: unknown[]) => unknown
     }) {
         const api = this;
         const { run, type } = this.parseDefinition(definition);
