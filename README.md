@@ -115,4 +115,4 @@ And that's about it. Whenever you use `Meteor.subscribe()` or `Meteor.call()` yo
 method/publication names, and it type checks your provided parameters.
 
 ## License
-ISC
+MIT
