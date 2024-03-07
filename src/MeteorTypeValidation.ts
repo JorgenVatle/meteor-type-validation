@@ -1,4 +1,4 @@
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from '@meteor';
 import { performance } from 'node:perf_hooks';
 import { BaseSchema, parse, ValiError } from 'valibot';
 import { formatValibotError } from './Errors';

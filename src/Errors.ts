@@ -1,4 +1,4 @@
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from '@meteor';
 import { ValiError, flatten } from 'valibot';
 import { startCase } from 'lodash-es';
 

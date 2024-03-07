@@ -1,4 +1,4 @@
-import { Meteor, Subscription } from 'meteor/meteor';
+import { Meteor, Subscription } from '@meteor';
 
 export abstract class Guard {
     constructor(
