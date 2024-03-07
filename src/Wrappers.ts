@@ -5,7 +5,7 @@ import { formatValibotError } from './Errors';
 import { Logger } from './Logger';
 
 import type {
-    BaseContext,
+    BaseContext, ExtendedContext,
     MethodDefinition,
     MethodDefinitionMap,
     PublicationDefinition, PublicationDefinitionMap,
@@ -54,13 +54,17 @@ function withErrorHandler(method: (...params: unknown[]) => unknown) {
     }
 }
 
-function wrapMethod(name: string, method: MethodDefinition) {
+function wrapMethod(name: string, method: MethodDefinition, options?: WrapperOptions) {
     const methodHandle = function(this: Meteor.MethodThisType, ...params: unknown[]) {
         const context = extendContext({
             name,
             type: 'method',
             context: this,
-        })
+        });
+        
+        if (options?.extendContext) {
+            Object.assign(context, options.extendContext({ context, type: 'method', name }));
+        }
         
         validateRequest({
             definition: method,
@@ -74,13 +78,17 @@ function wrapMethod(name: string, method: MethodDefinition) {
     return withErrorHandler(methodHandle);
 }
 
-function wrapPublication(name: string, publication: PublicationDefinition): (...params: unknown[]) => any {
+function wrapPublication(name: string, publication: PublicationDefinition, options?: WrapperOptions): (...params: unknown[]) => any {
     const publish = function(this: Subscription, ...params: unknown[]) {
         const context = extendContext({
             type: 'publication',
             name,
             context: this,
         });
+        
+        if (options?.extendContext) {
+            Object.assign(context, options.extendContext({ context, type: 'publication', name }));
+        }
         
         validateRequest({
             definition: publication,
@@ -94,11 +102,7 @@ function wrapPublication(name: string, publication: PublicationDefinition): (...
     return withErrorHandler(publish);
 }
 
-function extendContext({ type, context, name }: {
-    name: string;
-    context: BaseContext;
-    type: 'method' | 'publication';
-}) {
+function extendContext({ type, context, name }: ContextWrapper) {
     const startTime = performance.now();
     const logger = Logger.child({
         [type]: { name },
@@ -116,16 +120,26 @@ function extendContext({ type, context, name }: {
     });
 }
 
-export function ExposeMethods(methods: MethodDefinitionMap) {
+export function ExposeMethods(methods: MethodDefinitionMap, options?: WrapperOptions) {
     const methodEntries = Object.entries(methods).map(([name, definition]) => {
-        return [name, wrapMethod(name, definition)];
+        return [name, wrapMethod(name, definition, options)];
     });
     
     Meteor.methods(Object.fromEntries(methodEntries));
 }
 
-export function ExposePublications(publications: PublicationDefinitionMap) {
+export function ExposePublications(publications: PublicationDefinitionMap, options?: WrapperOptions) {
     Object.entries(publications).map(([name, definition]) => {
-        Meteor.publish(name, wrapPublication(name, definition))
+        Meteor.publish(name, wrapPublication(name, definition, options))
     });
+}
+
+interface WrapperOptions {
+    extendContext?: (wrapper: ContextWrapper) => ExtendedContext;
+}
+
+interface ContextWrapper {
+    name: string;
+    context: BaseContext;
+    type: 'method' | 'publication';
 }
