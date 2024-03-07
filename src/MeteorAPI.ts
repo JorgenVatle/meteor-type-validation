@@ -7,15 +7,17 @@ import { Logger } from './Logger';
 import type { BaseContext, MethodDefinition, PublicationDefinition, ResourceType, WrappedContext } from './Types';
 import type { ContextWrapper } from './Wrappers';
 
-export default class MeteorAPI {
-    constructor() {
+export default class MeteorAPI<TExtendedContext = {}> {
+    constructor(protected readonly options: {
+        extendContext?: (context: WrappedContext) => TExtendedContext;
+    }) {
     }
     
     public defineMethods<
         TSchemas extends Record<keyof TGuards, BaseSchema[]>,
         TGuards extends Record<keyof TSchemas, GuardStatic[]>
     >(methods: {
-        [key in keyof TSchemas | keyof TGuards]: MethodDefinition<TSchemas[key], TGuards[key]>
+        [key in keyof TSchemas | keyof TGuards]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext>
     }) {
         return methods;
     }
@@ -24,7 +26,7 @@ export default class MeteorAPI {
         TSchemas extends Record<keyof TGuards, BaseSchema[]>,
         TGuards extends Record<keyof TSchemas, GuardStatic[]>
     >(publications: {
-        [key in keyof TSchemas | keyof TGuards]: PublicationDefinition<TSchemas[key], TGuards[key]>
+        [key in keyof TSchemas | keyof TGuards]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext>
     }) {
         return publications;
     }
