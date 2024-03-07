@@ -53,3 +53,4 @@ type UnwrapSchemas<TSchemas extends BaseSchema[]> = {
 }
 
 type ValidatedThisType<TGuards extends GuardStatic[]> = InstanceType<TGuards[number]>['validatedContext'];
+export type ResourceType = 'method' | 'publication';

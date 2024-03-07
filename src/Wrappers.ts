@@ -8,7 +8,7 @@ import type {
     BaseContext, ExtendedContext,
     MethodDefinition,
     MethodDefinitionMap,
-    PublicationDefinition, PublicationDefinitionMap,
+    PublicationDefinition, PublicationDefinitionMap, ResourceType,
     WrappedContext,
 } from './Types';
 
@@ -138,8 +138,8 @@ interface WrapperOptions {
     extendContext?: (wrapper: ContextWrapper) => ExtendedContext;
 }
 
-interface ContextWrapper {
+export interface ContextWrapper {
     name: string;
     context: BaseContext;
-    type: 'method' | 'publication';
+    type: ResourceType;
 }
