@@ -16,9 +16,10 @@ Instead of defining your methods using `Meteor.methods(...)`, we export an objec
 We have two helper functions for this, `DefineMethods()` and `DefinePublications()` they're only there for type 
 inference and just returns the same object you provided.
 
-### Example
+### Example methods
 ```ts
 // ./imports/api/topics/methods.ts
+import { DefineMethods } from 'meteor-type-validation';
 import * as v from 'valibot';
 
 const CreateSchema = v.object({
@@ -28,18 +29,40 @@ const CreateSchema = v.object({
 export default DefineMethods({
     'topics.create': {
         schema: [CreateSchema],
-        method(topic) {
-            typeof topic.title // -> string 
-            TopicsCollection.insert(topic);
+        method(topic) { // Method parameters are validated and have proper types
+            return TopicsCollection.insert(topic);
         }
     },
     'topics.remove': {
         schema: [v.string()],
         method(topicId) {
-            TopicsCollection.remove(topicId);
+            return TopicsCollection.remove(topicId);
         }
     }
 });
+```
+### Example publications
+```ts
+// ./imports/api/topics/server/publications.ts
+import { DefinePublications } from 'meteor-type-validation';
+import * as v from 'valibot';
+
+const QuerySchema = v.object({
+    _id: v.optional(v.string()),
+    createdBy: v.optional(v.string()),
+});
+const OptionsSchema = v.object({
+    limit: v.number(v.maxValue(255))
+})
+
+export default DefinePublications({
+    'topics': {
+        schema: [QuerySchema, OptionsSchema],
+        publish(query, options) {
+            return TopicsCollection.find(query, options);
+        }
+    }
+})
 ```
 
 ## Registering your API definitions
