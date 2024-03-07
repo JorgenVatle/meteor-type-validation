@@ -12,6 +12,9 @@ export const AllMethods = defineMethods({
         guards: [],
         method(entry) {
             entry.title
+            
+            // @ts-expect-error
+            entry._id
         }
     },
     'todo.remove': {
@@ -19,6 +22,9 @@ export const AllMethods = defineMethods({
         guards: [],
         method(entry) {
             entry._id
+            
+            // @ts-expect-error
+            entry.title
         }
     }
 });
@@ -29,6 +35,9 @@ export const AllPublications = definePublications({
         guards: [],
         publish(entry) {
             entry.createdBy
+            
+            // @ts-expect-error
+            entry._id
         }
     }
 })
@@ -37,3 +46,5 @@ declare module 'meteor/meteor' {
     interface DefinedPublications extends UnwrapPublications<typeof AllPublications> {}
     interface DefinedMethods extends UnwrapMethods<typeof AllMethods> {}
 }
+
+
