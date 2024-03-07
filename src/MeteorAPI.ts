@@ -6,10 +6,18 @@ import type { GuardStatic } from './Guard';
 import { Logger } from './Logger';
 import type { BaseContext, MethodDefinition, PublicationDefinition, ResourceType, WrappedContext } from './Types';
 import type { ContextWrapper } from './Wrappers';
+import Pino from 'pino';
 
-export default class MeteorAPI<TExtendedContext = {}> {
+export default class MeteorAPI<
+    TAddedContext = {},
+    TOptionsContext extends {
+        logger?: Pino.Logger;
+    } = {},
+    TExtendedContext extends TAddedContext & TOptionsContext = TAddedContext & TOptionsContext
+> {
     constructor(protected readonly options: {
         extendContext?: (context: WrappedContext) => TExtendedContext;
+        logger?: TOptionsContext['logger']
     }) {
     }
     
@@ -72,10 +80,10 @@ export default class MeteorAPI<TExtendedContext = {}> {
     }
     
     protected withErrorHandler(method: (...params: unknown[]) => unknown) {
-        return function(this: WrappedContext, ...params: unknown[]) {
+        return function(this: WrappedContext & TExtendedContext, ...params: unknown[]) {
             try {
                 const result = method.apply(this, params);
-                this.logger.debug(`Request completed in ${(performance.now() - this.startTime).toLocaleString()}ms`);
+                this.logger?.debug(`Request completed in ${(performance.now() - this.startTime).toLocaleString()}ms`);
                 return result;
             } catch (error) {
                 let formattedError = new Error('Unexpected internal server error!');
@@ -86,7 +94,7 @@ export default class MeteorAPI<TExtendedContext = {}> {
                     formattedError = error;
                 }
                 
-                this.logger.error({
+                this.logger?.error({
                     error: formattedError || error,
                 }, `Request failed: ${formattedError.message}`);
                 throw error;

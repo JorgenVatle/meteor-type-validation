@@ -27,12 +27,11 @@ export interface PublicationDefinition<
  * Useful for loggers, profiling or adding extra request metadata.
  */
 export interface ExtendedContext {
-    logger: typeof Logger,
-    startTime: number;
+
 }
 
 export type BaseContext = Meteor.MethodThisType | Subscription;
-export type WrappedContext = BaseContext & ExtendedContext;
+export type WrappedContext = BaseContext & ExtendedContext & { startTime: number };
 
 
 export type MethodDefinitionMap = {
