@@ -1,14 +1,14 @@
 # Meteor Type Validation
 > Improves Meteor's built-in types using declarative API resource definitions.
 
-## Usage
+## Installation
 Install the package, and optionally [`valibot`](https://github.com/fabian-hiller/valibot) for schema validation.
 
 ```sh
 npm i meteor-type-validation valibot
 ```
 
-### Defining your Meteor API
+## Defining your Meteor API
 This package takes a different approach to defining your Meteor methods and publications. To properly infer types for
 each resource without resorting to a compilation step, we explicitly export each method/publication we want to expose.
 
