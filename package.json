@@ -4,7 +4,9 @@
   "description": "A lightweight set of TypeScript utilities to add proper type inference and validation for your Meteor publications and methods",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tsc --noEmit",
+    "build": "tsup"
   },
   "repository": {
     "type": "git",
