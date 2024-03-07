@@ -1,7 +1,8 @@
+import 'meteor/meteor'
 declare module 'meteor/meteor' {
     // These are left empty so you can merge in your own types
-    interface DefinedMethods {}
-    interface DefinedPublications {}
+    export interface DefinedMethods {}
+    export interface DefinedPublications {}
     
     module Meteor {
         function subscribe<
@@ -25,5 +26,3 @@ declare module 'meteor/meteor' {
         ): Awaited<ReturnType<DefinedMethods[TName]>>;
     }
 }
-
-export {}
