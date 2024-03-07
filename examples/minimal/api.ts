@@ -1,12 +1,12 @@
 import {
-    DefineMethods,
-    DefinePublications,
+    defineMethods,
+    definePublications,
     type WrappedMeteorMethods,
     type WrappedMeteorPublications,
 } from '../../src';
 import * as v from 'valibot';
 
-export const AllMethods = DefineMethods({
+export const AllMethods = defineMethods({
     'todo.add': {
         schema: [v.object({ title: v.string() })],
         guards: [],
@@ -23,7 +23,7 @@ export const AllMethods = DefineMethods({
     }
 });
 
-export const AllPublications = DefinePublications({
+export const AllPublications = definePublications({
     'todos': {
         schema: [v.object({ createdBy: v.string() })],
         guards: [],
