@@ -16,9 +16,24 @@ export default class MeteorAPI<
     TExtendedContext extends TAddedContext & TOptionsContext = TAddedContext & TOptionsContext
 > {
     constructor(protected readonly options: {
-        extendContext?: (context: WrappedContext) => TExtendedContext;
-        logger?: TOptionsContext['logger']
+        extendContext?: (context: ContextWrapper) => TExtendedContext;
+        createLogger?: (context: ContextWrapper) => TOptionsContext['logger']
     }) {
+        this.setupDefaultLogger();
+    }
+    
+    protected setupDefaultLogger() {
+        if (this.options.createLogger) return;
+        if (this.options.createLogger === false) return;
+        
+        this.options.createLogger = ({ type, name, context }) => {
+            return  Logger.child({
+                [type]: { name },
+                user: { id: context.userId },
+            }, {
+                msgPrefix: `[${type}] [${name}] `,
+            });
+        }
     }
     
     public defineMethods<
@@ -41,13 +56,8 @@ export default class MeteorAPI<
     
     protected extendContext({ type, context, name }: ContextWrapper) {
         const startTime = performance.now();
-        const logger = Logger.child({
-            [type]: { name },
-            user: { id: context.userId },
-        }, {
-            msgPrefix: `[${type}] [${name}] `,
-        });
-        logger.debug('Incoming request');
+        const logger = this.options.createLogger?.({ type, context, name });
+        logger?.debug('Incoming request');
         
         return Object.assign(context, {
             type,
