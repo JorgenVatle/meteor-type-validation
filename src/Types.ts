@@ -5,18 +5,20 @@ import type { Logger } from './Logger';
 export interface MethodDefinition<
     TSchemas extends BaseSchema[] = BaseSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
+    TExtendedContext = {}
 > {
     schema: [...TSchemas],
     guards: TGuards,
-    method(this: ValidatedThisType<TGuards>, ...params: UnwrapSchemas<TSchemas>): unknown
+    method(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemas<TSchemas>): unknown
 }
 export interface PublicationDefinition<
     TSchemas extends BaseSchema[] = BaseSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
+    TExtendedContext = {}
 > {
     schema: [...TSchemas],
     guards: TGuards,
-    publish(this: ValidatedThisType<TGuards>, ...params: UnwrapSchemas<TSchemas>): unknown
+    publish(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemas<TSchemas>): unknown
 }
 
 /**
