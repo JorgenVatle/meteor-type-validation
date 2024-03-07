@@ -17,9 +17,9 @@ We have two helper functions for this, `DefineMethods()` and `DefinePublications
 inference and just returns the same object you provided.
 
 ### Example
+> ./imports/api/topics/methods.ts
 ```ts
-// ./imports/api/topics/methods.ts
-import v from 'valibot';
+import * as v from 'valibot';
 
 const CreateSchema = v.object({
     title: v.string(),
