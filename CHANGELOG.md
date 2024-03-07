@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 1.0.3
+
+### Patch Changes
+
+- 8730cc0: Refactor pub/method unwrapping type helpers to be a little less verbose
+
 ## 1.0.2
 
 ### Patch Changes
