@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "A lightweight set of TypeScript utilities to add proper type inference and validation for your Meteor publications and methods",
   "main": "dist/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "exports": {
     "default": {
       "import": "./dist/index.mjs",
