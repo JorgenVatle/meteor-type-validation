@@ -1,3 +1,5 @@
+import './types/meteor';
+
 export * from './Definitions';
 export * from './Guard';
 export * from './MeteorTypeValidation';
