@@ -1,13 +1,32 @@
 import { Meteor } from 'meteor/meteor';
 import { performance } from 'node:perf_hooks';
-import { parse, ValiError } from 'valibot';
+import { BaseSchema, parse, ValiError } from 'valibot';
 import { formatValibotError } from './Errors';
+import type { GuardStatic } from './Guard';
 import { Logger } from './Logger';
 import type { BaseContext, MethodDefinition, PublicationDefinition, ResourceType, WrappedContext } from './Types';
 import type { ContextWrapper } from './Wrappers';
 
 export default class MeteorAPI {
     constructor() {
+    }
+    
+    public defineMethods<
+        TSchemas extends Record<keyof TGuards, BaseSchema[]>,
+        TGuards extends Record<keyof TSchemas, GuardStatic[]>
+    >(methods: {
+        [key in keyof TSchemas | keyof TGuards]: MethodDefinition<TSchemas[key], TGuards[key]>
+    }) {
+        return methods;
+    }
+    
+    public definePublications<
+        TSchemas extends Record<keyof TGuards, BaseSchema[]>,
+        TGuards extends Record<keyof TSchemas, GuardStatic[]>
+    >(publications: {
+        [key in keyof TSchemas | keyof TGuards]: PublicationDefinition<TSchemas[key], TGuards[key]>
+    }) {
+        return publications;
     }
     
     protected extendContext({ type, context, name }: ContextWrapper) {
