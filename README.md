@@ -124,10 +124,22 @@ Meteor.call<'topics.create'>('topics.create', {
 })
 
 Meteor.subscribe<'topics'>('topics', { 
-    createdBy: null // type error: `null` is not assignable to `string`
+    createdBy: null // Emits a type error that we were expecting to see here
 })
 ```
 
+We also export a type helper that have these rules pre-applied, so you won't have to repeat yourself.
+```ts
+import { MeteorApi } from 'meteor-type-validation';
+
+// Typo checks
+MeteorApi.call('topics.creatE') // type error: Argument of type `topics.creatE` is...
+
+
+MeteorApi.subscribe('topics', {
+    createdBy: null, // type error: `null` is not assignable to `string`
+})
+```
 
 
 ## License
