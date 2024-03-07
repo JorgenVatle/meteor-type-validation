@@ -25,5 +25,8 @@
   "devDependencies": {
     "@types/meteor": "^2.9.8",
     "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "valibot": "^0.30.0"
   }
 }
