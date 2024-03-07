@@ -1,0 +1,25 @@
+{
+  "name": "meteor-type-validation",
+  "version": "1.0.0",
+  "description": "A lightweight set of TypeScript utilities to add proper type inference and validation for your Meteor publications and methods",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JorgenVatle/meteor-type-validation.git"
+  },
+  "keywords": [
+    "Meteor",
+    "TypeScript",
+    "Valibot",
+    "improved types"
+  ],
+  "author": "Jørgen Vatle <jorgen@wcaservices.net>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JorgenVatle/meteor-type-validation/issues"
+  },
+  "homepage": "https://github.com/JorgenVatle/meteor-type-validation#readme"
+}
