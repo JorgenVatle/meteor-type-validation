@@ -30,7 +30,7 @@
     "improved types"
   ],
   "author": "Jørgen Vatle <jorgen@wcaservices.net>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/JorgenVatle/meteor-type-validation/issues"
   },
