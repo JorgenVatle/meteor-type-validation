@@ -1,0 +1,32 @@
+declare module 'meteor/meteor' {
+    // These are left empty so you can merge in your own types
+    interface DefinedMethods {}
+    interface DefinedPublications {}
+    
+    
+    module Meteor {
+        declare function subscribe<
+            TName extends keyof DefinedPublications
+        >(
+            name: TName,
+            ...params: Parameters<DefinedPublications[TName]>
+        ): Meteor.SubscriptionHandle;
+        
+        declare function call<
+            TName extends keyof DefinedMethods
+        >(
+            name: TName,
+            ...params: [
+                ...Parameters<DefinedMethods[TName]>,
+                callback?: (error?: Error, response?: ReturnType<DefinedMethods[TName]>) => void
+            ],
+        ): void;
+        
+        declare function callAsync<
+            TName extends keyof DefinedMethods
+        >(
+            name: TName,
+            ...params: Parameters<DefinedMethods[TName]>
+        ): Awaited<ReturnType<DefinedMethods[TName]>>;
+    }
+}
