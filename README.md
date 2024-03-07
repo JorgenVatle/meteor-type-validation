@@ -28,9 +28,15 @@ const CreateSchema = v.object({
 export default DefineMethods({
     'topics.create': {
         schema: [CreateSchema],
-        guards: [],
-        method(topic) { 
-            typeof topic.title // string
+        method(topic) {
+            typeof topic.title // -> string 
+            TopicsCollection.insert(topic);
+        }
+    },
+    'topics.remove': {
+        schema: [v.string()],
+        method(topicId) {
+            TopicsCollection.remove(topicId);
         }
     }
 });
