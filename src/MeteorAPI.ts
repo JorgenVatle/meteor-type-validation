@@ -17,7 +17,8 @@ export default class MeteorAPI<
 > {
     constructor(protected readonly options: {
         extendContext?: (context: ContextWrapper) => TExtendedContext;
-        createLogger?: (context: ContextWrapper) => TOptionsContext['logger']
+        createLogger?: (context: ContextWrapper) => TOptionsContext['logger'];
+        errorHandler?: (error: unknown) => never;
     } = {}) {
         this.setupDefaultLogger();
     }
@@ -91,12 +92,17 @@ export default class MeteorAPI<
     }
     
     protected withErrorHandler(method: (...params: unknown[]) => unknown) {
+        const api = this;
         return function(this: WrappedContext & TExtendedContext, ...params: unknown[]) {
             try {
                 const result = method.apply(this, params);
                 this.logger?.debug(`Request completed in ${(performance.now() - this.startTime).toLocaleString()}ms`);
                 return result;
             } catch (error) {
+                if (api.options.errorHandler) {
+                    return api.options.errorHandler(error);
+                }
+                
                 let formattedError = new Error('Unexpected internal server error!');
                 
                 if (error instanceof ValiError) {
