@@ -21,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/JorgenVatle/meteor-type-validation/issues"
   },
-  "homepage": "https://github.com/JorgenVatle/meteor-type-validation#readme"
+  "homepage": "https://github.com/JorgenVatle/meteor-type-validation#readme",
+  "devDependencies": {
+    "@types/meteor": "^2.9.8",
+    "typescript": "^5.4.2"
+  }
 }
