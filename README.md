@@ -114,5 +114,21 @@ declare module 'meteor/meteor' {
 And that's about it. Whenever you use `Meteor.subscribe()` or `Meteor.call()` you should see that it both autocompletes
 method/publication names, and it type checks your provided parameters.
 
+## Notes
+If you're using the `@types/meteor` package, you might only get auto-completion for publication/method names.
+The best way to enforce strict typing for these calls would be to explicitly define the resource name as a generic param.
+
+```ts
+Meteor.call<'topics.create'>('topics.create', { 
+    title: '...'  // strictly type checked
+})
+
+Meteor.subscribe<'topics'>('topics', { 
+    createdBy: null // type error: `null` is not assignable to `string`
+})
+```
+
+
+
 ## License
 MIT
