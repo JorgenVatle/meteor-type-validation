@@ -8,5 +8,6 @@ export default defineConfig({
     platform: 'node',
     target: ['es2022'],
     skipNodeModulesBundle: true,
+    sourcemap: true,
     clean: true,
 })
