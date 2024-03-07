@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/improved-meteor-types.iml" filepath="$PROJECT_DIR$/.idea/improved-meteor-types.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/meteor-type-validation.iml" filepath="$PROJECT_DIR$/.idea/meteor-type-validation.iml" />
     </modules>
   </component>
 </project>
