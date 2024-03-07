@@ -12,7 +12,7 @@ const defaultApi = new MeteorTypeValidation();
  * The result of this function should be exported so that we can infer all its types globally.
  *
  * @example /imports/api/topics/methods.ts
- * export default DefineMethods({
+ * export default defineMethods({
  *     'topic.create': {
  *         schema: [TopicSchemas.create],
  *         guards: [...],
@@ -31,20 +31,20 @@ const defaultApi = new MeteorTypeValidation();
  * }
  *
  * Meteor.startup(() => {
- *     ExposeMethods(AllMethods)
+ *     exposeMethods(AllMethods)
  * })
  *
  * declare module 'meteor/meteor' {
  *     interface DefinedMethods extends WrappedMeteorMethods<typeof AllMethods> {}
  * }
  */
-export const DefineMethods = defaultApi.defineMethods;
+export const defineMethods = defaultApi.defineMethods;
 
 /**
  * Defines a type safe publication input and context validation.
  * The result of this method should be exported so that we can infer all its types globally.
  */
-export const DefinePublications = defaultApi.definePublications;
+export const definePublications = defaultApi.definePublications;
 
-export const ExposeMethods = defaultApi.exposeMethods;
-export const ExposePublications = defaultApi.exposePublications;
+export const exposeMethods = defaultApi.exposeMethods;
+export const exposePublications = defaultApi.exposePublications;

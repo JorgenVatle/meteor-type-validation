@@ -13,20 +13,20 @@ This package takes a different approach to defining your Meteor methods and publ
 each resource without resorting to a compilation step, we explicitly export each method/publication we want to expose.
 
 Instead of defining your methods using `Meteor.methods(...)`, we export an object with the methods you want to publish.
-We have two helper functions for this, `DefineMethods()` and `DefinePublications()` they're only there for type 
+We have two helper functions for this, `defineMethods()` and `definePublications()` they're only there for type 
 inference and just returns the same object you provided.
 
 ### Example methods
 ```ts
 // ./imports/api/topics/methods.ts
-import { DefineMethods } from 'meteor-type-validation';
+import { defineMethods } from 'meteor-type-validation';
 import * as v from 'valibot';
 
 const CreateSchema = v.object({
     title: v.string(),
 });
 
-export default DefineMethods({
+export default defineMethods({
     'topics.create': {
         schema: [CreateSchema],
         method(topic) { // Method parameters are validated and have proper types
@@ -44,7 +44,7 @@ export default DefineMethods({
 ### Example publications
 ```ts
 // ./imports/api/topics/server/publications.ts
-import { DefinePublications } from 'meteor-type-validation';
+import { definePublications } from 'meteor-type-validation';
 import * as v from 'valibot';
 
 const QuerySchema = v.object({
@@ -55,7 +55,7 @@ const OptionsSchema = v.object({
     limit: v.number(v.maxValue(255))
 })
 
-export default DefinePublications({
+export default definePublications({
     'topics': {
         schema: [QuerySchema, OptionsSchema],
         publish(query, options) {
@@ -73,7 +73,7 @@ autocomplete and perform type validation.
 On the server, import all of your publication and method definitions and add them to one big index object.
 ```ts
 // ./imports/api/index.ts
-import { ExposeMethods, WrappedMeteorMethods } from 'meteor-type-validation'
+import { exposeMethods, WrappedMeteorMethods } from 'meteor-type-validation'
 import TopicMethods from '/imports/api/topics/methods';
 import TopicPublications from '/imports/api/topics/server/publications';
 
@@ -92,15 +92,15 @@ and `Meteor.methods()`.
 // ./server/startup.ts
 import { AllMethods, AllPublications } from '/imports/api';
 import { 
-    ExposeMethods, 
-    ExposePublications,
+    exposeMethods, 
+    exposePublications,
     WrappedMeteorPublications,
     WrappedMeteorMethods 
 } from 'meteor-type-validation';
 
 Meteor.startup(() => {
-    ExposeMethods(AllMethods);
-    ExposePublications(AllPublications);
+    exposeMethods(AllMethods);
+    exposePublications(AllPublications);
 });
 
 // This extends Meteor's types so that Meteor.call() and Meteor.subscribe()
