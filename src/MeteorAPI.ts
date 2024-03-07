@@ -18,7 +18,7 @@ export default class MeteorAPI<
     constructor(protected readonly options: {
         extendContext?: (context: ContextWrapper) => TExtendedContext;
         createLogger?: (context: ContextWrapper) => TOptionsContext['logger']
-    }) {
+    } = {}) {
         this.setupDefaultLogger();
     }
     
@@ -57,6 +57,7 @@ export default class MeteorAPI<
     protected extendContext({ type, context, name }: ContextWrapper) {
         const startTime = performance.now();
         const logger = this.options.createLogger?.({ type, context, name });
+        const addedContext = this.options.extendContext?.({ type, context, name });
         logger?.debug('Incoming request');
         
         return Object.assign(context, {
@@ -64,7 +65,7 @@ export default class MeteorAPI<
             name,
             logger,
             startTime,
-        });
+        }, addedContext);
     }
     
     protected validateRequest({ context, definition, params }: {
