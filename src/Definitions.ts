@@ -1,6 +1,11 @@
-import { BaseSchema } from "valibot";
-import type { GuardStatic } from './Guard';
-import type { MethodDefinition, PublicationDefinition } from './Types';
+import MeteorAPI from './MeteorAPI';
+
+/**
+ * Base API instance - has default contexts and nothing fancy.
+ * This class can be extended to add additional context into
+ * methods and publications' `this` type.
+ */
+const defaultApi = new MeteorAPI();
 
 /**
  * Defines a type safe method with input and context validation.
@@ -33,24 +38,13 @@ import type { MethodDefinition, PublicationDefinition } from './Types';
  *     interface DefinedMethods extends WrappedMeteorMethods<typeof AllMethods> {}
  * }
  */
-export function DefineMethods<
-    TSchemas extends Record<keyof TGuards, BaseSchema[]>,
-    TGuards extends Record<keyof TSchemas, GuardStatic[]>
->(methods: {
-    [key in keyof TSchemas | keyof TGuards]: MethodDefinition<TSchemas[key], TGuards[key]>
-}) {
-    return methods;
-}
+export const DefineMethods = defaultApi.defineMethods;
 
 /**
  * Defines a type safe publication input and context validation.
  * The result of this method should be exported so that we can infer all its types globally.
  */
-export function DefinePublications<
-    TSchemas extends Record<keyof TGuards, BaseSchema[]>,
-    TGuards extends Record<keyof TSchemas, GuardStatic[]>
->(publications: {
-    [key in keyof TSchemas | keyof TGuards]: PublicationDefinition<TSchemas[key], TGuards[key]>
-}) {
-    return publications;
-}
+export const DefinePublications = defaultApi.definePublications;
+
+export const ExposeMethods = defaultApi.exposeMethods;
+export const ExposePublications = defaultApi.exposePublications;
