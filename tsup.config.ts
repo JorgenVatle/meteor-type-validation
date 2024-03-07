@@ -4,5 +4,7 @@ export default defineConfig({
     outDir: 'dist',
     format: ['esm', 'cjs'],
     dts: true,
-    external: ['meteor/meteor']
+    external: ['meteor/meteor'],
+    platform: 'node',
+    target: ['es2022']
 })
