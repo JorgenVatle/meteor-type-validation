@@ -5,14 +5,13 @@ import { formatValibotError } from './Errors';
 import type { GuardStatic } from './Guard';
 import { Logger } from './Logger';
 import type {
-    BaseContext,
+    BaseContext, ContextWrapper,
     MethodDefinition,
     MethodDefinitionMap,
     PublicationDefinition, PublicationDefinitionMap,
     ResourceType,
     WrappedContext,
 } from './Types';
-import type { ContextWrapper } from './Wrappers';
 import Pino from 'pino';
 
 export default class MeteorAPI<
