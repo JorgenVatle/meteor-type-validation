@@ -19,4 +19,7 @@ export interface GuardStatic<TGuard extends Guard = Guard> {
 
 export type GuardFunction<
     TSchemas extends BaseSchema[] = BaseSchema[],
-> = (context: GuardInputContext, params: UnwrapSchemas<TSchemas>) => asserts context;
+> = (request: {
+    context: GuardInputContext,
+    params: UnwrapSchemas<TSchemas>
+}) => asserts request;
