@@ -1,4 +1,6 @@
 import { Meteor, Subscription } from '@meteor';
+import type { BaseSchema } from 'valibot';
+import type { UnwrapSchemas } from './types/ValidatedResources';
 
 export abstract class Guard {
     constructor(
@@ -14,3 +16,7 @@ export type GuardInputContext = Meteor.MethodThisType | Subscription
 export interface GuardStatic<TGuard extends Guard = Guard> {
     new(...context: any): TGuard;
 }
+
+export type GuardFunction<
+    TSchemas extends BaseSchema[] = BaseSchema[],
+> = (context: GuardInputContext, params: UnwrapSchemas<TSchemas>) => asserts context;
