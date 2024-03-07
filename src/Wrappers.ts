@@ -1,6 +1,7 @@
 import { Meteor, type Subscription } from 'meteor/meteor';
 import { performance } from 'node:perf_hooks';
 import { parse, ValiError } from 'valibot';
+import { formatValibotError } from './Errors';
 import { Logger } from './Logger';
 
 import type {
