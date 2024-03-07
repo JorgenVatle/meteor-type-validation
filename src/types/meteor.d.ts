@@ -1,4 +1,3 @@
-import 'meteor/meteor'
 declare module 'meteor/meteor' {
     // These are left empty so you can merge in your own types
     export interface DefinedMethods {}
