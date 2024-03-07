@@ -1,5 +1,6 @@
 import { BaseSchema, Input } from "valibot";
 import type { GuardStatic } from './Guard';
+import type { Logger } from './Logger';
 
 export interface MethodDefinition<
     TSchemas extends BaseSchema[] = BaseSchema[],
@@ -24,7 +25,8 @@ export interface PublicationDefinition<
  * Useful for loggers, profiling or adding extra request metadata.
  */
 export interface ExtendedContext {
-
+    logger: typeof Logger,
+    startTime: number;
 }
 
 export type BaseContext = Meteor.MethodThisType | Subscription;
