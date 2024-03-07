@@ -1,7 +1,7 @@
-import './types/meteor';
+import './types/meteor/ModuleAugmentation';
 
 export * from './Definitions';
 export * from './Guard';
 export * from './MeteorTypeValidation';
 
-export type * from './Types';
+export type * from './types/ValidatedResources';

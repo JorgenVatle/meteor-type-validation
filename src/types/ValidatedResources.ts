@@ -1,6 +1,6 @@
 import { BaseSchema, Input } from "valibot";
-import type { GuardStatic } from './Guard';
-import type { Logger } from './Logger';
+import type { GuardStatic } from '../Guard';
+import type { Logger } from '../Logger';
 
 export interface MethodDefinition<
     TSchemas extends BaseSchema[] = BaseSchema[],

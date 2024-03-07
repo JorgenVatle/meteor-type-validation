@@ -11,7 +11,7 @@ import type {
     PublicationDefinition, PublicationDefinitionMap,
     ResourceType,
     WrappedContext,
-} from './Types';
+} from './types/ValidatedResources';
 import Pino from 'pino';
 
 export class MeteorTypeValidation<
