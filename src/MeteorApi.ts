@@ -19,6 +19,8 @@ export default new class MeteorApi {
         return Meteor.call<TName>(name, ...params);
     }
     
-   
+    public subscribe<TName extends keyof DefinedPublications>(name: TName, ...params: Parameters<DefinedPublications[TName]>) {
+        return Meteor.subscribe<TName>(name, ...params);
+    }
     
 }
