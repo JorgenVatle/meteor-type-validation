@@ -1,6 +1,5 @@
-import { BaseSchema, Input } from "valibot";
-import type { GuardStatic } from '../Guard';
-import type { Logger } from '../Logger';
+import { BaseSchema, Input } from 'valibot';
+import type { GuardFunction, GuardStatic } from '../Guard';
 
 export interface MethodDefinition<
     TSchemas extends BaseSchema[] = BaseSchema[],
@@ -61,11 +60,19 @@ export type UnwrapPublications<TPublications extends PublicationDefinitionMap> =
 /**
  * Convert schema definitions to plain parameter types
  */
-type UnwrapSchemas<TSchemas extends BaseSchema[]> = {
+export type UnwrapSchemas<TSchemas extends BaseSchema[]> = {
     [key in keyof TSchemas]: Input<TSchemas[key]>
 }
 
-type ValidatedThisType<TGuards extends GuardStatic[]> = InstanceType<TGuards[number]>['validatedContext'];
+type ValidatedThisType<
+    TGuards extends GuardStatic[] | GuardFunction[]
+> = TGuards extends GuardStatic[]
+    ? ValidatedStaticThisType<TGuards>
+    : TGuards extends GuardFunction[]
+      ? ValidatedFnThisType<TGuards>
+      : never;
+type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InstanceType<TGuards[number]>['validatedContext'];
+type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[number]>;
 export type ResourceType = 'method' | 'publication';
 export interface ContextWrapper {
     type: ResourceType,
