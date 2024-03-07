@@ -27,6 +27,7 @@
     "@types/meteor": "^2.9.8",
     "lodash-es": "^4.17.21",
     "pino": "^8.19.0",
+    "tsup": "^8.0.2",
     "typescript": "^5.4.2"
   },
   "dependencies": {
