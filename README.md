@@ -73,7 +73,7 @@ autocomplete and perform type validation.
 On the server, import all of your publication and method definitions and add them to one big index object.
 ```ts
 // ./imports/api/index.ts
-import { exposeMethods, WrappedMeteorMethods } from 'meteor-type-validation'
+import { exposeMethods, UnwrapMethods } from 'meteor-type-validation'
 import TopicMethods from '/imports/api/topics/methods';
 import TopicPublications from '/imports/api/topics/server/publications';
 
@@ -94,8 +94,8 @@ import { AllMethods, AllPublications } from '/imports/api';
 import { 
     exposeMethods, 
     exposePublications,
-    WrappedMeteorPublications,
-    WrappedMeteorMethods 
+    UnwrapPublications,
+    UnwrapMethods 
 } from 'meteor-type-validation';
 
 Meteor.startup(() => {
@@ -106,8 +106,8 @@ Meteor.startup(() => {
 // This extends Meteor's types so that Meteor.call() and Meteor.subscribe()
 // will autocomplete and do all that sweet type checking for you 👌
 declare module 'meteor/meteor' {
-    interface DefinedPublications extends WrappedMeteorPublications<typeof AllPublications> {}
-    interface DefinedMethods extends WrappedMeteorMethods<typeof AllPublications> {}
+    interface DefinedPublications extends UnwrapPublications<typeof AllPublications> {}
+    interface DefinedMethods extends UnwrapMethods<typeof AllPublications> {}
 }
 ```
 

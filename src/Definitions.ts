@@ -35,7 +35,7 @@ const defaultApi = new MeteorTypeValidation();
  * })
  *
  * declare module 'meteor/meteor' {
- *     interface DefinedMethods extends WrappedMeteorMethods<typeof AllMethods> {}
+ *     interface DefinedMethods extends UnwrapMethods<typeof AllMethods> {}
  * }
  */
 export const defineMethods = defaultApi.defineMethods;

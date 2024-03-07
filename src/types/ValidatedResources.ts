@@ -41,14 +41,26 @@ export type MethodDefinitionMap = {
 export type PublicationDefinitionMap = {
     [key in string]: PublicationDefinition
 }
-export type WrappedMeteorMethods<TMethods extends MethodDefinitionMap> = {
+
+/**
+ * Unwrap method definitions to get the method map as it would be
+ * fed into Meteor.methods(...)
+ */
+export type UnwrapMethods<TMethods extends MethodDefinitionMap> = {
     [key in keyof TMethods]: TMethods[key]['method']
 }
 
-export type WrappedMeteorPublications<TPublications extends PublicationDefinitionMap> = {
+/**
+ * Unwrap publications to get a record of publication handles as
+ * they would be added to Meteor.publish(<name>, ...)
+ */
+export type UnwrapPublications<TPublications extends PublicationDefinitionMap> = {
     [key in keyof TPublications]: TPublications[key]['publish'];
 }
 
+/**
+ * Convert schema definitions to plain parameter types
+ */
 type UnwrapSchemas<TSchemas extends BaseSchema[]> = {
     [key in keyof TSchemas]: Input<TSchemas[key]>
 }

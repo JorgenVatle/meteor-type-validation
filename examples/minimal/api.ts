@@ -1,8 +1,8 @@
 import {
     defineMethods,
     definePublications,
-    type WrappedMeteorMethods,
-    type WrappedMeteorPublications,
+    type UnwrapMethods,
+    type UnwrapPublications,
 } from '../../src';
 import * as v from 'valibot';
 
@@ -34,6 +34,6 @@ export const AllPublications = definePublications({
 })
 
 declare module 'meteor/meteor' {
-    interface DefinedPublications extends WrappedMeteorPublications<typeof AllPublications> {}
-    interface DefinedMethods extends WrappedMeteorMethods<typeof AllMethods> {}
+    interface DefinedPublications extends UnwrapPublications<typeof AllPublications> {}
+    interface DefinedMethods extends UnwrapMethods<typeof AllMethods> {}
 }
