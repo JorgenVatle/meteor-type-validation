@@ -6,5 +6,6 @@ export default defineConfig({
     dts: true,
     external: ['meteor/meteor'],
     platform: 'node',
-    target: ['es2022']
+    target: ['es2022'],
+    clean: true,
 })
