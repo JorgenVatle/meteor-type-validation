@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 1.0.2
+
+### Patch Changes
+
+- 82cf9da: Refactor internal Meteor imports to allow for use outside of an Atmosphere.js package
+
 ## 1.0.1
 
 ### Patch Changes
