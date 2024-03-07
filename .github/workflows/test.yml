@@ -1,0 +1,18 @@
+name: 'Test'
+run-name: '🧪 Test: ${{ github.event.head_commit.message }}'
+on:
+  push:
+
+jobs:
+  test:
+    name: '🧪 Test'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+      - name: 'Setup Node'
+        uses: actions/setup-node@v4
+      - name: 'Install dependencies'
+        run: npm ci
+      - name: 'Run tests'
+        run: npm test
