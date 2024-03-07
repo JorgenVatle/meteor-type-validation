@@ -7,5 +7,6 @@ export default defineConfig({
     external: ['meteor/meteor'],
     platform: 'node',
     target: ['es2022'],
+    skipNodeModulesBundle: true,
     clean: true,
 })
