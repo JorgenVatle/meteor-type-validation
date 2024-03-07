@@ -14,7 +14,7 @@ import type {
 } from './Types';
 import Pino from 'pino';
 
-export default class MeteorAPI<
+export class MeteorTypeValidation<
     TAddedContext = {},
     TOptionsContext extends {
         logger?: Pino.Logger;

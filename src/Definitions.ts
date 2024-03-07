@@ -1,11 +1,11 @@
-import MeteorAPI from './MeteorAPI';
+import { MeteorTypeValidation } from './MeteorTypeValidation';
 
 /**
  * Base API instance - has default contexts and nothing fancy.
  * This class can be extended to add additional context into
  * methods and publications' `this` type.
  */
-const defaultApi = new MeteorAPI();
+const defaultApi = new MeteorTypeValidation();
 
 /**
  * Defines a type safe method with input and context validation.
