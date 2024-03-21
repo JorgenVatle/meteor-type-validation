@@ -1,6 +1,6 @@
 import { Meteor } from '@meteor';
-import { ValiError, flatten } from 'valibot';
 import { startCase } from 'lodash-es';
+import { flatten, ValiError } from 'valibot';
 
 export function formatValibotError(error: ValiError) {
     const errors: { message: string, reason?: string, key: string }[] = [];
@@ -11,6 +11,12 @@ export function formatValibotError(error: ValiError) {
                 reason: message,
                 key,
             })
+        })
+    });
+    flatten(error).root?.forEach((message) => {
+        errors.push({
+            message,
+            key: '[root]'
         })
     });
     return new MeteorError('ValiError', error.message, errors);
