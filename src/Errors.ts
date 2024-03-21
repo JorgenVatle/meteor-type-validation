@@ -4,7 +4,7 @@ import { flatten, ValiError } from 'valibot';
 
 export function formatValibotError(error: ValiError) {
     const errors: { message: string, reason?: string, key: string }[] = [];
-    const { nested, root } = flatten(error);
+    const { nested, root } = flatten(error.issues);
     
     Object.entries(nested).forEach(([key, messages]) => {
         messages?.forEach((message) => {
