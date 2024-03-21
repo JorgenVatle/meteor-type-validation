@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 1.0.5
+
+### Patch Changes
+
+- 81effcb: Include schema root errors in error details
+
 ## 1.0.4
 
 ### Patch Changes
