@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 1.0.4
+
+### Patch Changes
+
+- 72b2666: Fix issue where formatted errors would remain unused in error handler
+
 ## 1.0.3
 
 ### Patch Changes
