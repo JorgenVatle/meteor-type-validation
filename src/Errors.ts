@@ -4,7 +4,9 @@ import { flatten, ValiError } from 'valibot';
 
 export function formatValibotError(error: ValiError) {
     const errors: { message: string, reason?: string, key: string }[] = [];
-    Object.entries(flatten(error).nested).forEach(([key, messages]) => {
+    const { nested, root } = flatten(error);
+    
+    Object.entries(nested).forEach(([key, messages]) => {
         messages?.forEach((message) => {
             errors.push({
                 message: message.replace('Invalid type: Expected', `Expected ${startCase(key)} to be`),
@@ -13,7 +15,8 @@ export function formatValibotError(error: ValiError) {
             })
         })
     });
-    flatten(error).root?.forEach((message) => {
+    
+    root?.forEach((message) => {
         errors.push({
             message,
             key: '[root]'
