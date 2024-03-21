@@ -22,7 +22,7 @@ export function formatValibotError(error: ValiError) {
             key: '[root]'
         })
     });
-    return new MeteorError('ValiError', error.message, errors);
+    return new MeteorError('ValiError', error.message, { errors, details: error.issues });
 }
 
 class MeteorError extends Meteor.Error {
