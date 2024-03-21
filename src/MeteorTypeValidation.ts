@@ -1,18 +1,20 @@
 import { Meteor } from '@meteor';
 import { performance } from 'node:perf_hooks';
+import Pino from 'pino';
 import { BaseSchema, parse, ValiError } from 'valibot';
 import { formatValibotError } from './Errors';
 import type { GuardStatic } from './Guard';
 import { Logger } from './Logger';
 import type {
-    BaseContext, ContextWrapper,
+    BaseContext,
+    ContextWrapper,
     MethodDefinition,
     MethodDefinitionMap,
-    PublicationDefinition, PublicationDefinitionMap,
+    PublicationDefinition,
+    PublicationDefinitionMap,
     ResourceType,
     WrappedContext,
 } from './types/ValidatedResources';
-import Pino from 'pino';
 
 export class MeteorTypeValidation<
     TAddedContext = {},
@@ -131,9 +133,11 @@ export class MeteorTypeValidation<
                 }
                 
                 this.logger?.error({
-                    error: formattedError || error,
+                    error,
+                    formattedError,
                 }, `Request failed: ${formattedError.message}`);
-                throw error;
+                
+                throw formattedError;
             }
         };
     }
