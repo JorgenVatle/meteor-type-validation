@@ -124,17 +124,16 @@ export class MeteorTypeValidation<
                     return api.options.errorHandler(error);
                 }
                 
-                let formattedError = new Error('Unexpected internal server error!');
+                let formattedError = error instanceof Error
+                                     ? error
+                                     : new Error(`Unexpected internal server error: ${error}`);
                 
                 if (error instanceof ValiError) {
                     formattedError = formatValibotError(error);
-                } else if (error instanceof Error) {
-                    formattedError = error;
                 }
                 
                 this.logger?.error({
-                    error,
-                    formattedError,
+                    error: formattedError,
                 }, `Request failed: ${formattedError.message}`);
                 
                 throw formattedError;
