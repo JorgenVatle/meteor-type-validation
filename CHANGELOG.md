@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 1.0.7
+
+### Patch Changes
+
+- a20c843: Fix issue where original input params would be passed to handler functions instead of the parsed/validated params
+
 ## 1.0.6
 
 ### Patch Changes
