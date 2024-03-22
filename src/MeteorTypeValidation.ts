@@ -110,6 +110,10 @@ export class MeteorTypeValidation<
         
         // Run guard validators
         definition.guards.forEach((guard) => new guard(context, validatedParams).validate());
+        
+        return {
+            validatedParams,
+        }
     }
     
     protected withErrorHandler(method: (...params: unknown[]) => unknown): (...params: unknown[]) => any {
@@ -155,13 +159,13 @@ export class MeteorTypeValidation<
                 context: this,
             });
             
-            api.validateRequest({
+            const { validatedParams } = api.validateRequest({
                 context,
                 definition,
                 params,
             });
             
-            run.apply(context, params);
+            run.apply(context, validatedParams);
         };
         
         return this.withErrorHandler(handle);
