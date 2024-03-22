@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 1.0.6
+
+### Patch Changes
+
+- 391d400: Reduce duplication in error detail keys
+
 ## 1.0.5
 
 ### Patch Changes
