@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 1.0.8
+
+### Patch Changes
+
+- 3541f3f: Include dependencies in package build
+
 ## 1.0.7
 
 ### Patch Changes
