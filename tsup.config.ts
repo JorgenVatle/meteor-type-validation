@@ -10,4 +10,5 @@ export default defineConfig({
     skipNodeModulesBundle: true,
     sourcemap: true,
     clean: true,
+    noExternal: ['lodash-es'],
 })
