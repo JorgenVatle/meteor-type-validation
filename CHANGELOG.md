@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 1.0.9
+
+### Patch Changes
+
+- a1de2e9: Add missing return to wrapped Meteor publications/methods. Fixes an issue where publications and methods return no results.
+
 ## 1.0.8
 
 ### Patch Changes
