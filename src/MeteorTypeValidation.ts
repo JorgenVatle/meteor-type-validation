@@ -165,7 +165,7 @@ export class MeteorTypeValidation<
                 params,
             });
             
-            run.apply(context, validatedParams);
+            return run.apply(context, validatedParams);
         };
         
         return this.withErrorHandler(handle);
