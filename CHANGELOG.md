@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.0.0
+
+### Major Changes
+
+- cd98aaf: Upgrade Valibot to v0.31 - contains breaking changes in the way schemas are defined and validated
+
 ## 1.0.9
 
 ### Patch Changes
