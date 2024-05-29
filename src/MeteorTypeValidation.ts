@@ -1,7 +1,7 @@
 import { Meteor } from '@meteor';
 import { performance } from 'node:perf_hooks';
 import Pino from 'pino';
-import { BaseSchema, parse, ValiError } from 'valibot';
+import { type GenericSchema, parse, ValiError } from 'valibot';
 import { formatValibotError } from './Errors';
 import type { GuardStatic } from './Guard';
 import { Logger } from './Logger';
@@ -46,7 +46,7 @@ export class MeteorTypeValidation<
     }
     
     public defineMethods<
-        TSchemas extends Record<keyof TGuards, BaseSchema[]>,
+        TSchemas extends Record<keyof TGuards, GenericSchema[]>,
         TGuards extends Record<keyof TSchemas, GuardStatic[]>
     >(methods: {
         [key in keyof TSchemas | keyof TGuards]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext>
@@ -55,7 +55,7 @@ export class MeteorTypeValidation<
     }
     
     public definePublications<
-        TSchemas extends Record<keyof TGuards, BaseSchema[]>,
+        TSchemas extends Record<keyof TGuards, GenericSchema[]>,
         TGuards extends Record<keyof TSchemas, GuardStatic[]>
     >(publications: {
         [key in keyof TSchemas | keyof TGuards]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext>
