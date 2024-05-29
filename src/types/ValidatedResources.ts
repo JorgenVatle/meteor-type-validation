@@ -1,4 +1,4 @@
-import { GenericSchema, InferInput } from 'valibot';
+import { GenericSchema, type InferOutput } from 'valibot';
 import type { GuardFunction, GuardStatic } from '../Guard';
 
 export interface MethodDefinition<
@@ -61,7 +61,7 @@ export type UnwrapPublications<TPublications extends PublicationDefinitionMap> =
  * Convert schema definitions to plain parameter types
  */
 export type UnwrapSchemas<TSchemas extends GenericSchema[]> = {
-    [key in keyof TSchemas]: InferInput<TSchemas[key]>
+    [key in keyof TSchemas]: InferOutput<TSchemas[key]>
 }
 
 type ValidatedThisType<
