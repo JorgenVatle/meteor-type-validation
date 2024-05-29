@@ -38,13 +38,13 @@ const defaultApi = new MeteorTypeValidation();
  *     interface DefinedMethods extends UnwrapMethods<typeof AllMethods> {}
  * }
  */
-export const defineMethods = defaultApi.defineMethods;
+export const defineMethods = defaultApi.defineMethods.bind(defaultApi);
 
 /**
  * Defines a type safe publication input and context validation.
  * The result of this method should be exported so that we can infer all its types globally.
  */
-export const definePublications = defaultApi.definePublications;
+export const definePublications = defaultApi.definePublications.bind(defaultApi);
 
-export const exposeMethods = defaultApi.exposeMethods;
-export const exposePublications = defaultApi.exposePublications;
+export const exposeMethods = defaultApi.exposeMethods.bind(defaultApi);
+export const exposePublications = defaultApi.exposePublications.bind(defaultApi);
