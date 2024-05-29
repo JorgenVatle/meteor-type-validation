@@ -1,10 +1,10 @@
 import { Meteor } from '@meteor';
 import { startCase } from 'lodash-es';
-import { flatten, ValiError } from 'valibot';
+import { flatten, type UnknownSchema, ValiError } from 'valibot';
 
-export function formatValibotError(error: ValiError) {
+export function formatValibotError(error: ValiError<UnknownSchema>) {
     const errors: { message: string, reason?: string, key: string }[] = [];
-    const { nested, root } = flatten(error.issues);
+    const { nested, root } = flatten<never>(error.issues) as { nested: Record<string, string[]>, root: string[] };
     
     Object.entries(nested).forEach(([key, messages]) => {
         messages?.forEach((message) => {
