@@ -1,8 +1,8 @@
-import { BaseSchema, Input } from 'valibot';
+import { GenericSchema, InferInput } from 'valibot';
 import type { GuardFunction, GuardStatic } from '../Guard';
 
 export interface MethodDefinition<
-    TSchemas extends BaseSchema[] = BaseSchema[],
+    TSchemas extends GenericSchema[] = GenericSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext = {}
 > {
@@ -11,7 +11,7 @@ export interface MethodDefinition<
     method(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemas<TSchemas>): unknown
 }
 export interface PublicationDefinition<
-    TSchemas extends BaseSchema[] = BaseSchema[],
+    TSchemas extends GenericSchema[] = GenericSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext = {}
 > {
@@ -60,8 +60,8 @@ export type UnwrapPublications<TPublications extends PublicationDefinitionMap> =
 /**
  * Convert schema definitions to plain parameter types
  */
-export type UnwrapSchemas<TSchemas extends BaseSchema[]> = {
-    [key in keyof TSchemas]: Input<TSchemas[key]>
+export type UnwrapSchemas<TSchemas extends GenericSchema[]> = {
+    [key in keyof TSchemas]: InferInput<TSchemas[key]>
 }
 
 type ValidatedThisType<
