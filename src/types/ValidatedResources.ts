@@ -58,14 +58,16 @@ export type UnwrapPublications<TPublications extends PublicationDefinitionMap> =
 }
 
 /**
- * Convert schema definitions to plain parameter types
+ * Infer method/publication argument types from the provided schema.
+ * This is the argument's type as it is received inside the method handle.
+ * The input type (the type the caller should adhere to) is inferred from {@link UnwrapSchemaInput}
  */
 export type UnwrapSchemaOutput<TSchemas extends GenericSchema[]> = {
     [key in keyof TSchemas]: InferOutput<TSchemas[key]>
 }
 
 /**
- * Convert schema definitions to plain parameter input arguments.
+ * Argument types for the provided schemas as it should be passed by the caller of the method/publication.
  */
 export type UnwrapSchemaInput<TSchemas extends GenericSchema[]> = {
     [key in keyof TSchemas]: InferInput<TSchemas[key]>
