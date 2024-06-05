@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.0.3
+
+### Patch Changes
+
+- a66ea90: Handle inaccurate types for schemas with transform functions when calling a method or publication.
+
 ## 2.0.0
 
 ### Major Changes
