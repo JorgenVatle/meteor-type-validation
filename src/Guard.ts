@@ -1,6 +1,6 @@
 import { Meteor, Subscription } from '@meteor';
 import type { GenericSchema } from 'valibot';
-import type { UnwrapSchemas } from './types/ValidatedResources';
+import type { UnwrapSchemaOutput } from './types/ValidatedResources';
 
 export abstract class Guard {
     constructor(
@@ -21,5 +21,5 @@ export type GuardFunction<
     TSchemas extends GenericSchema[] = GenericSchema[],
 > = (request: {
     context: GuardInputContext,
-    params: UnwrapSchemas<TSchemas>
+    params: UnwrapSchemaOutput<TSchemas>
 }) => asserts request;

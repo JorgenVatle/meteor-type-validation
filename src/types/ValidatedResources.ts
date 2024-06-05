@@ -1,4 +1,4 @@
-import { GenericSchema, type InferOutput } from 'valibot';
+import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
 import type { GuardFunction, GuardStatic } from '../Guard';
 
 export interface MethodDefinition<
@@ -8,7 +8,7 @@ export interface MethodDefinition<
 > {
     schema: [...TSchemas],
     guards: TGuards,
-    method(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemas<TSchemas>): unknown
+    method(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): unknown
 }
 export interface PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
@@ -17,7 +17,7 @@ export interface PublicationDefinition<
 > {
     schema: [...TSchemas],
     guards: TGuards,
-    publish(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemas<TSchemas>): unknown
+    publish(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): unknown
 }
 
 /**
@@ -46,7 +46,7 @@ export type PublicationDefinitionMap = {
  * fed into Meteor.methods(...)
  */
 export type UnwrapMethods<TMethods extends MethodDefinitionMap> = {
-    [key in keyof TMethods]: TMethods[key]['method']
+    [key in keyof TMethods]: (...params: UnwrapSchemaInput<TMethods[key]['schema']>) => ReturnType<TMethods[key]['method']>;
 }
 
 /**
@@ -54,14 +54,21 @@ export type UnwrapMethods<TMethods extends MethodDefinitionMap> = {
  * they would be added to Meteor.publish(<name>, ...)
  */
 export type UnwrapPublications<TPublications extends PublicationDefinitionMap> = {
-    [key in keyof TPublications]: TPublications[key]['publish'];
+    [key in keyof TPublications]: (...params: UnwrapSchemaInput<TPublications[key]['schema']>) => ReturnType<TPublications[key]['publish']>;
 }
 
 /**
  * Convert schema definitions to plain parameter types
  */
-export type UnwrapSchemas<TSchemas extends GenericSchema[]> = {
+export type UnwrapSchemaOutput<TSchemas extends GenericSchema[]> = {
     [key in keyof TSchemas]: InferOutput<TSchemas[key]>
+}
+
+/**
+ * Convert schema definitions to plain parameter input arguments.
+ */
+export type UnwrapSchemaInput<TSchemas extends GenericSchema[]> = {
+    [key in keyof TSchemas]: InferInput<TSchemas[key]>
 }
 
 type ValidatedThisType<
