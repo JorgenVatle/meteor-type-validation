@@ -71,9 +71,9 @@ export class MeteorTypeValidation<
     }
     
     public exposePublications(publications: PublicationDefinitionMap) {
-        Object.entries(publications).forEach(([name, definition]) => {
+        for (const [name, definition] of Object.entries(publications)) {
             Meteor.publish(name, this.wrapResource({ name, definition }))
-        })
+        }
     }
     
     protected extendContext({ type, context, name }: ContextWrapper) {
@@ -109,7 +109,9 @@ export class MeteorTypeValidation<
         }
         
         // Run guard validators
-        definition.guards.forEach((guard) => new guard(context, validatedParams).validate());
+        for (const guard of definition.guards) {
+            const instance = new guard(context, validatedParams).validate();
+        }
         
         return {
             validatedParams,
