@@ -90,7 +90,7 @@ export class MeteorTypeValidation<
         }, addedContext);
     }
     
-    protected validateRequest({ context, definition, params }: {
+    protected async validateRequest({ context, definition, params }: {
         context: WrappedContext;
         definition: MethodDefinition | PublicationDefinition,
         params: unknown[]
@@ -110,7 +110,7 @@ export class MeteorTypeValidation<
         
         // Run guard validators
         for (const guard of definition.guards) {
-            const instance = new guard(context, validatedParams).validate();
+            await new guard(context, validatedParams).validate();
         }
         
         return {
@@ -154,14 +154,14 @@ export class MeteorTypeValidation<
         const api = this;
         const { run, type } = this.parseDefinition(definition);
         
-        const handle = function(this: BaseContext, ...params: unknown[]) {
+        const handle = async function(this: BaseContext, ...params: unknown[]) {
             const context = api.extendContext({
                 type,
                 name,
                 context: this,
             });
             
-            const { validatedParams } = api.validateRequest({
+            const { validatedParams } = await api.validateRequest({
                 context,
                 definition,
                 params,
