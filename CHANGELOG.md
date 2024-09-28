@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.0.4
+
+### Patch Changes
+
+- 24eb4ad: Handle asynchronous guard validator methods
+
 ## 2.0.3
 
 ### Patch Changes
