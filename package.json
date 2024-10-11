@@ -50,6 +50,6 @@
     "pino": "^8.19.0"
   },
   "peerDependencies": {
-    "valibot": ">= 0.31.0-rc.5"
+    "valibot": ">=0.42.1"
   }
 }
