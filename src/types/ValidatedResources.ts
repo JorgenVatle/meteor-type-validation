@@ -4,20 +4,22 @@ import type { GuardFunction, GuardStatic } from '../Guard';
 export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
-    TExtendedContext = {}
+    TExtendedContext = {},
+    TReturnType = unknown
 > {
     schema: [...TSchemas],
     guards: TGuards,
-    method(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): unknown
+    method(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
 }
 export interface PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
-    TExtendedContext = {}
+    TExtendedContext = {},
+    TReturnType = unknown,
 > {
     schema: [...TSchemas],
     guards: TGuards,
-    publish(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): unknown
+    publish(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
 }
 
 /**

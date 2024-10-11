@@ -47,18 +47,20 @@ export class MeteorTypeValidation<
     
     public defineMethods<
         TSchemas extends Record<keyof TGuards, GenericSchema[]>,
-        TGuards extends Record<keyof TSchemas, GuardStatic[]>
+        TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
+        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>
     >(methods: {
-        [key in keyof TSchemas | keyof TGuards]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext>
+        [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
     }) {
         return methods;
     }
     
     public definePublications<
         TSchemas extends Record<keyof TGuards, GenericSchema[]>,
-        TGuards extends Record<keyof TSchemas, GuardStatic[]>
+        TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
+        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>
     >(publications: {
-        [key in keyof TSchemas | keyof TGuards]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext>
+        [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
     }) {
         return publications;
     }
