@@ -43,6 +43,11 @@ export type PublicationDefinitionMap = {
     [key in string]: PublicationDefinition
 }
 
+export type RateLimiterRule = Pick<DDPRateLimiter.Matcher, 'userId' | 'connectionId' | 'clientAddress'> & {
+    requestCount?: number;
+    intervalMs?: number;
+};
+
 /**
  * Unwrap method definitions to get the method map as it would be
  * fed into Meteor.methods(...)
