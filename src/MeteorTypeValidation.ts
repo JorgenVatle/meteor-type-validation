@@ -1,6 +1,6 @@
 import { Meteor } from '@meteor';
 import { performance } from 'node:perf_hooks';
-import Pino from 'pino';
+import type Pino from 'pino';
 import { type GenericSchema, parse, ValiError } from 'valibot';
 import { formatValibotError } from './Errors';
 import type { GuardStatic } from './Guard';
