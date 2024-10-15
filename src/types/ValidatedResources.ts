@@ -9,6 +9,7 @@ export interface MethodDefinition<
 > {
     schema: [...TSchemas],
     guards: TGuards,
+    rateLimiters?: RateLimiterRule[],
     method(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
 }
 export interface PublicationDefinition<
@@ -19,6 +20,7 @@ export interface PublicationDefinition<
 > {
     schema: [...TSchemas],
     guards: TGuards,
+    rateLimiters?: RateLimiterRule[],
     publish(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
 }
 
