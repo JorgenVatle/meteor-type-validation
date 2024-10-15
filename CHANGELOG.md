@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.1.0
+
+### Minor Changes
+
+- 0ca769e: Add option to specify DDPRateLimiter rules within method/publication definitions
+
 ## 2.0.4
 
 ### Patch Changes
