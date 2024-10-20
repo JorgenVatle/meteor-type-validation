@@ -74,6 +74,8 @@ export const AllPublications = definePublications({
             entry.createdBy
             this.userId = '';
             
+            this.added('some-collection', 'some-id', { foo: 'bar' });
+            
             // @ts-expect-error
             this.userId = null;
             // @ts-expect-error
