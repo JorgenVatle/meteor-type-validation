@@ -1,5 +1,6 @@
 import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
 import type { GuardFunction, GuardStatic } from '../Guard';
+import type { Meteor, Subscription } from 'meteor/meteor';
 
 export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
