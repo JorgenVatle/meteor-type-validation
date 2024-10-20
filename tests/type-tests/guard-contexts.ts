@@ -58,6 +58,9 @@ export const AllMethods = defineMethods({
         method(entry) {
             entry._id
             
+            // @ts-expect-error publication-only method
+            this.added('some-collection', 'some-id', { foo: 'bar' });
+            
             // @ts-expect-error
             this.userId = null;
             // @ts-expect-error
