@@ -93,8 +93,13 @@ type ValidatedThisType<
 type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InstanceType<TGuards[number]>['validatedContext'];
 type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[number]>;
 export type ResourceType = 'method' | 'publication';
-export interface ContextWrapper {
-    type: ResourceType,
-    context: BaseContext,
+export interface ContextWrapper<
+    TType extends ResourceType = ResourceType,
+    TContext extends BaseContext = TType extends 'publication'
+                                   ? BaseContext<Subscription>
+                                   : TType extends Meteor.MethodThisType ? BaseContext<Meteor.MethodThisType> : never
+> {
+    type: TType,
+    context: TContext,
     name: string;
 }
