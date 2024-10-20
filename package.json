@@ -1,6 +1,6 @@
 {
   "name": "meteor-type-validation",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "A lightweight set of TypeScript utilities to add proper type inference and validation for your Meteor publications and methods",
   "main": "dist/index.js",
   "files": [
