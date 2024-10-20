@@ -95,12 +95,20 @@ export class MeteorTypeValidation<
         const addedContext = this.options.extendContext?.({ type, context, name });
         logger?.debug('Incoming request');
         
-        return Object.assign(context, {
+        Object.assign(context, {
             type,
             name,
             logger,
             startTime,
-        }, addedContext);
+        });
+        
+        if (!(addedContext instanceof Promise)) {
+            return Object.assign(context, addedContext);
+        }
+        
+        return addedContext.then((addedContext) => {
+            return Object.assign(context, addedContext)
+        })
     }
     
     protected async validateRequest({ context, definition, params }: {
@@ -168,7 +176,7 @@ export class MeteorTypeValidation<
         const { run, type } = this.parseDefinition(definition);
         
         const handle = async function(this: BaseContext, ...params: unknown[]) {
-            const context = api.extendContext({
+            const context = await api.extendContext({
                 type,
                 name,
                 context: this,
