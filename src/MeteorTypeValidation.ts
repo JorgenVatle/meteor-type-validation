@@ -15,6 +15,7 @@ import type {
     ResourceType,
     WrappedContext,
 } from './types/ValidatedResources';
+import 'meteor/globals/ddp-rate-limiter';
 
 export class MeteorTypeValidation<
     TAddedContext = {},
