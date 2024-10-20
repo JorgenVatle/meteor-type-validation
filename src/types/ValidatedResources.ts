@@ -10,7 +10,7 @@ export interface MethodDefinition<
     schema: [...TSchemas],
     guards: TGuards,
     rateLimiters?: RateLimiterRule[],
-    method(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
+    method(this: ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
 }
 export interface PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
@@ -21,7 +21,7 @@ export interface PublicationDefinition<
     schema: [...TSchemas],
     guards: TGuards,
     rateLimiters?: RateLimiterRule[],
-    publish(this: ValidatedThisType<TGuards> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
+    publish(this: ValidatedThisType<TGuards, Subscription> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
 }
 
 /**
@@ -84,11 +84,12 @@ export type UnwrapSchemaInput<TSchemas extends GenericSchema[]> = {
 }
 
 type ValidatedThisType<
-    TGuards extends GuardStatic[] | GuardFunction[]
+    TGuards extends GuardStatic[] | GuardFunction[],
+    TThisType extends _ResourceThisType = _ResourceThisType,
 > = TGuards extends GuardStatic[]
-    ? ValidatedStaticThisType<TGuards>
+    ? ValidatedStaticThisType<TGuards> & BaseContext<TThisType>
     : TGuards extends GuardFunction[]
-      ? ValidatedFnThisType<TGuards>
+      ? ValidatedFnThisType<TGuards> & BaseContext<TThisType>
       : never;
 type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InstanceType<TGuards[number]>['validatedContext'];
 type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[number]>;
