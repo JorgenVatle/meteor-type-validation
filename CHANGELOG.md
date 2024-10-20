@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.1.4
+
+### Patch Changes
+
+- 2a2cd21: Improve context typings - fixes an issue where method and publication handles were missing their original 'this' type.
+
 ## 2.1.0
 
 ### Minor Changes
