@@ -33,8 +33,9 @@ export interface ExtendedContext {
 
 }
 
-export type BaseContext = Meteor.MethodThisType | Subscription;
-export type WrappedContext = BaseContext & ExtendedContext & { startTime: number };
+export type _ResourceThisType = Meteor.MethodThisType | Subscription;
+export type BaseContext<TSelf extends _ResourceThisType = _ResourceThisType> = TSelf;
+export type WrappedContext<TBaseContext extends BaseContext = BaseContext> = TBaseContext & ExtendedContext & { startTime: number };
 
 
 export type MethodDefinitionMap = {
