@@ -1,3 +1,4 @@
+/// <reference types="meteor/globals/ddp-rate-limiter" />
 import { Meteor } from '@meteor';
 import { performance } from 'node:perf_hooks';
 import type Pino from 'pino';
@@ -15,7 +16,6 @@ import type {
     ResourceType,
     WrappedContext,
 } from './types/ValidatedResources';
-import 'meteor/globals/ddp-rate-limiter';
 
 export class MeteorTypeValidation<
     TAddedContext = {},
