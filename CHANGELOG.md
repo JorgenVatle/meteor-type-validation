@@ -1,5 +1,12 @@
 # meteor-type-validation
 
+## 2.1.7
+
+### Patch Changes
+
+- 56d70eb: Allow asynchronous use of extendContext() option.
+  - Fix type import for DDPRateLimiter
+
 ## 2.1.4
 
 ### Patch Changes
