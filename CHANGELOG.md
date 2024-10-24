@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.1.9
+
+### Patch Changes
+
+- c2651ce: Fix issue where validation errors thrown in async methods and publications would yield a not-so-useful generic 500 error message to users.
+
 ## 2.1.7
 
 ### Patch Changes
