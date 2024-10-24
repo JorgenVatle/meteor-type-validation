@@ -140,15 +140,15 @@ export class MeteorTypeValidation<
     }
     
     protected withErrorHandler(method: (...params: unknown[]) => unknown): (...params: unknown[]) => any {
-        const api = this;
+        const customErrorHandler = this.options.errorHandler?.bind(this);
         return function(this: WrappedContext & TExtendedContext, ...params: unknown[]) {
             try {
                 const result = method.apply(this, params);
                 this.logger?.debug(`Request completed in ${(performance.now() - this.startTime).toLocaleString()}ms`);
                 return result;
             } catch (error) {
-                if (api.options.errorHandler) {
-                    return api.options.errorHandler(error);
+                if (customErrorHandler) {
+                    return customErrorHandler(error);
                 }
                 
                 let formattedError = error instanceof Error
