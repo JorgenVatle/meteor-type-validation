@@ -1,4 +1,4 @@
-import { defineMethods, definePublications, UnwrapPublications, UnwrapMethods } from 'meteor-type-validation';
+import { defineMethods, definePublications, UnwrapPublications, UnwrapMethods } from 'dist/index';
 import { Mongo } from 'meteor/mongo';
 import { type Order, OrderSchema } from './schemas';
 

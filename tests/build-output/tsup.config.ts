@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-    entry: ['api.ts'],
+    entry: ['src/api.ts'],
     clean: true,
 })
