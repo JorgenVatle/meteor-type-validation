@@ -81,14 +81,14 @@ export class MeteorTypeValidation<
     public exposePublications<TPublications extends PublicationDefinitionMap>(publications: TPublications): {
         [key in keyof TPublications]: (...params: Parameters<TPublications[key]['publish']>) => ReturnType<TPublications[key]['publish']>
     } {
-        const wrappedPublications = {} as UnwrapPublications<TPublications>;
-        for (const [name, definition] of Object.entries(publications)) {
+        const wrappedPublications = Object.entries(publications).map(([name, definition]) => {
             const wrappedPublication = this.wrapResource({ name, definition });
-            Object.assign(wrappedPublications, { [name]: wrappedPublication });
             Meteor.publish(name, wrappedPublication);
             definition.rateLimiters?.forEach((rule) => this.loadRateLimit({ rule, name, type: 'publication' }));
-        }
-        return wrappedPublications;
+            return [name, wrappedPublication];
+        });
+        
+        return Object.fromEntries(wrappedPublications);
     }
     
     protected loadRateLimit({ rule, type, name }: { rule: RateLimiterRule, type: ContextWrapper['type'], name: string }) {
