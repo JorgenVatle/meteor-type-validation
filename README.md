@@ -70,44 +70,38 @@ Having all your Meteor API resources be defined as exports rather than through a
 augment all your resources. But most importantly, we can extend Meteor's types to make things like `Meteor.call()`
 autocomplete and perform type validation.
 
-On the server, import all of your publication and method definitions and add them to one big index object.
+On the server, create one large index module that re-exports all of your exposed methods and publications in a single object.
 ```ts
 // ./imports/api/index.ts
-import { exposeMethods, UnwrapMethods } from 'meteor-type-validation'
+import { exposeMethods, exposePublications } from 'meteor-type-validation'
 import TopicMethods from '/imports/api/topics/methods';
 import TopicPublications from '/imports/api/topics/server/publications';
 
-export const AllMethods = {
+export const Methods = exposeMethods({
     ...TopicMethods,
-} as const;
+});
 
-export const AllPublications = {
+export const Publications = exposePublications({
     ...TopicPublications,
-} as const;
+});
+
+export type Methods = typeof Methods;
+export type Publications = typeof Publications;
 ```
 
-Then, in your server startup module, import and expose each resource like you normally would with `Meteor.publish()` 
-and `Meteor.methods()`.
+Then, in your server startup module, import your API index module. Optionally this is done asynchronously if you have Meteor startup hooks that should run before exposing resources to users.
+Use the types exported in `api/index.ts` to augment Meteor's core types with your type definitions.
 ```ts
 // ./server/startup.ts
-import { AllMethods, AllPublications } from '/imports/api';
-import { 
-    exposeMethods, 
-    exposePublications,
-    UnwrapPublications,
-    UnwrapMethods 
-} from 'meteor-type-validation';
+import type { Methods, Publications } from '/imports/api';
 
-Meteor.startup(() => {
-    exposeMethods(AllMethods);
-    exposePublications(AllPublications);
-});
+Meteor.startup(() => import('/imports/api'));
 
 // This extends Meteor's types so that Meteor.call() and Meteor.subscribe()
 // will autocomplete and do all that sweet type checking for you 👌
 declare module 'meteor/meteor' {
-    interface DefinedPublications extends UnwrapPublications<typeof AllPublications> {}
-    interface DefinedMethods extends UnwrapMethods<typeof AllPublications> {}
+    interface DefinedPublications extends Publications {}
+    interface DefinedMethods extends Methods {}
 }
 ```
 
