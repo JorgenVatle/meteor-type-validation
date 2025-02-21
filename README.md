@@ -87,15 +87,6 @@ export const Publications = exposePublications({
 
 export type Methods = typeof Methods;
 export type Publications = typeof Publications;
-```
-
-Then, in your server startup module, import your API index module. Optionally this is done asynchronously if you have Meteor startup hooks that should run before exposing resources to users.
-Use the types exported in `api/index.ts` to augment Meteor's core types with your type definitions.
-```ts
-// ./server/startup.ts
-import type { Methods, Publications } from '/imports/api';
-
-Meteor.startup(() => import('/imports/api'));
 
 // This extends Meteor's types so that Meteor.call() and Meteor.subscribe()
 // will autocomplete and do all that sweet type checking for you 👌
@@ -103,6 +94,12 @@ declare module 'meteor/meteor' {
     interface DefinedPublications extends Publications {}
     interface DefinedMethods extends Methods {}
 }
+```
+
+Then, in your server startup module, import your API index module. Optionally this is done asynchronously if you have Meteor startup hooks that should run before exposing resources to users.
+```ts
+// ./server/startup.ts
+Meteor.startup(() => import('/imports/api'));
 ```
 
 And that's about it. Whenever you use `Meteor.subscribe()` or `Meteor.call()` you should see that it both autocompletes
