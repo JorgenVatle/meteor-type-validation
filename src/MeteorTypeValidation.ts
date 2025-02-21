@@ -67,7 +67,7 @@ export class MeteorTypeValidation<
     }
     
     public exposeMethods<TMethods extends MethodDefinitionMap>(methods: TMethods): {
-        [key in keyof TMethods]: (...params: UnwrapSchemaInput<TMethods[key]['schema']>) => ReturnType<TMethods[key]['method']>
+        [key in keyof TMethods]: (...params: Parameters<TMethods[key]['method']>) => ReturnType<TMethods[key]['method']>
     } {
         const methodMap = Object.entries(methods).map(([name, definition]) => {
             definition.rateLimiters?.forEach((rule) => this.loadRateLimit({ rule, name, type: 'method' }));
