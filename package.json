@@ -8,11 +8,10 @@
     "src"
   ],
   "exports": {
-    "default": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js",
+    "default": "./dist/index.js",
   },
   "scripts": {
     "test": "npm run lint",
