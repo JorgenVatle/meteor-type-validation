@@ -106,7 +106,8 @@ And that's about it. Whenever you use `Meteor.subscribe()` or `Meteor.call()` yo
 method/publication names, and it type checks your provided parameters.
 
 Note that the API index with your `Publications` and `Methods` consts shouldn't be imported by clients. 
-They are only used for augmenting Meteor's global types. If you import from the index module, make sure you use explicit
+They are only used for augmenting Meteor's global types. You shouldn't need to import anything from there except for
+once during server startup. But if you need to access it directly within the client, just make sure you use explicit 
 type imports to prevent sources for your API from being bundled into the client:
 ```diff
 - import { Publications } from '/imports/api'
