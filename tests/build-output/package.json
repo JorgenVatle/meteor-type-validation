@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:dts": "tsup --dtsResolve --dts",
     "build:experimental-dts": "tsup --experimental-dts",
-    "build": "npm run build:dts"
+    "build": "npm run build:dts",
+    "lint": "tsc --noEmit"
   },
   "author": "",
   "license": "ISC",
