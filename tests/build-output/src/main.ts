@@ -1,5 +1,7 @@
 import { UnwrapMethods, UnwrapPublications } from 'meteor-type-validation';
 import type { Methods, Publications } from './api';
 
-export interface DefinedPublications extends UnwrapPublications<typeof Publications> {}
-export interface DefinedMethods extends UnwrapMethods<typeof Methods> {}
+declare module 'meteor/meteor' {
+    interface DefinedPublications extends UnwrapPublications<typeof Publications> {}
+    interface DefinedMethods extends UnwrapMethods<typeof Methods> {}
+}
