@@ -1,5 +1,18 @@
 # meteor-type-validation
 
+## 2.3.0
+
+### Minor Changes
+
+- c6689f3: Update Valibot peer dependency to allow for 1.0 release candidate
+
+  - Expose unwrapped method and publication definition types from `exposeMethods` and `exposePublications` utilities.
+    - Using unwrapped method types from these methods should provide significant performance improvements within the TypeScript language server.
+
+### Patch Changes
+
+- accca5a: Correct package.json exports order
+
 ## 2.1.9
 
 ### Patch Changes
