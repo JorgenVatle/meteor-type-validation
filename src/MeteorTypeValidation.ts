@@ -78,7 +78,9 @@ export class MeteorTypeValidation<
         return wrappedMethods;
     }
     
-    public exposePublications<TPublications extends PublicationDefinitionMap>(publications: TPublications): UnwrapPublications<TPublications> {
+    public exposePublications<TPublications extends PublicationDefinitionMap>(publications: TPublications): {
+        [key in keyof TPublications]: (...params: Parameters<TPublications[key]['publish']>) => ReturnType<TPublications[key]['publish']>
+    } {
         const wrappedPublications = {} as UnwrapPublications<TPublications>;
         for (const [name, definition] of Object.entries(publications)) {
             const wrappedPublication = this.wrapResource({ name, definition });
