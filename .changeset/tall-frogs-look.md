@@ -3,3 +3,5 @@
 ---
 
 Update Valibot peer dependency to allow for 1.0 release candidate
+
+- Expose unwrapped method and publication definition types from `exposeMethods` and `exposePublications` utilities.
