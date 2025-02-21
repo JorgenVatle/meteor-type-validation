@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:dts": "tsup --dtsResolve --dts",
-    "build:api-extractor": "tsup --experimental-dts",
+    "build:experimental-dts": "tsup --experimental-dts",
     "build": "npm run build:dts"
   },
   "author": "",
