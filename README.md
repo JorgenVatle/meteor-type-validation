@@ -105,6 +105,11 @@ Meteor.startup(() => import('/imports/api'));
 And that's about it. Whenever you use `Meteor.subscribe()` or `Meteor.call()` you should see that it both autocompletes
 method/publication names, and it type checks your provided parameters.
 
+Note that the API index with your `Publications` and `Methods` consts shouldn't be imported by clients. 
+They are only used for augmenting Meteor's global types. If you import from the index module, make sure you use explicit
+type imports to prevent sources for your API from being bundled into the client. 
+(e.g. `import type { Methods } from '/imports/api'`)
+
 ## Notes
 If you're using the `@types/meteor` package, you might only get auto-completion for publication/method names.
 The best way to enforce strict typing for these calls would be to explicitly define the resource name as a generic param.
