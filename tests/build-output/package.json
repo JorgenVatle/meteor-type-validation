@@ -10,10 +10,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "meteor-type-validation": "^2.2.1"
+    "meteor-type-validation": "*"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.50.0",
     "tsup": "^8.3.6"
-  }
+  },
+  "workspaces": [
+    "../../"
+  ]
 }
