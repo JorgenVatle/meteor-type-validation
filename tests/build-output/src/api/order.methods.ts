@@ -1,4 +1,4 @@
-import { defineMethods } from '../../../../dist/index';
+import { defineMethods } from 'meteor-type-validation';
 import { OrderSchema } from '../schemas';
 
 export default defineMethods({
