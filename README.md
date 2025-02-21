@@ -77,11 +77,11 @@ import { exposeMethods, exposePublications } from 'meteor-type-validation'
 import TopicMethods from '/imports/api/topics/methods';
 import TopicPublications from '/imports/api/topics/server/publications';
 
-export const Methods = exposeMethods({
+const Methods = exposeMethods({
     ...TopicMethods,
 });
 
-export const Publications = exposePublications({
+const Publications = exposePublications({
     ...TopicPublications,
 });
 
