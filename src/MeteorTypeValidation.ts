@@ -71,7 +71,7 @@ export class MeteorTypeValidation<
         return publications;
     }
     
-    public exposeMethods<TMethods extends MethodDefinitionMap>(methods: TMethods): {
+    public exposeMethods<TMethods extends Record<string, MethodDefinition<any, any>>>(methods: TMethods): {
         [key in keyof TMethods]: (...params: Parameters<TMethods[key]['method']>) => ReturnType<TMethods[key]['method']>
     } {
         const methodMap = Object.entries(methods).map(([name, definition]) => {
@@ -83,7 +83,7 @@ export class MeteorTypeValidation<
         return wrappedMethods;
     }
     
-    public exposePublications<TPublications extends PublicationDefinitionMap>(publications: TPublications): {
+    public exposePublications<TPublications extends Record<string, PublicationDefinition<any, any>>>(publications: TPublications): {
         [key in keyof TPublications]: (...params: Parameters<TPublications[key]['publish']>) => ReturnType<TPublications[key]['publish']>
     } {
         const publicationMap = Object.entries(publications).map(([name, definition]) => {
