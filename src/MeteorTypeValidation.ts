@@ -12,7 +12,7 @@ import type {
     MethodDefinition,
     PublicationDefinition,
     RateLimiterRule,
-    ResourceType,
+    ResourceType, UnwrapMethods, UnwrapPublications,
     WrappedContext,
 } from './types/ValidatedResources';
 
@@ -80,9 +80,7 @@ export class MeteorTypeValidation<
         return publications;
     }
     
-    public exposeMethods<TMethods extends Record<string, MethodDefinition<any, any>>>(methods: TMethods): {
-        [key in keyof TMethods]: (...params: Parameters<TMethods[key]['method']>) => ReturnType<TMethods[key]['method']>
-    } {
+    public exposeMethods<TMethods extends Record<string, MethodDefinition<any, any>>>(methods: TMethods): UnwrapMethods<TMethods> {
         const methodMap = Object.entries(methods).map(([name, definition]) => {
             definition.rateLimiters?.forEach((rule) => this.loadRateLimit({ rule, name, type: 'method' }));
             return [name, this.wrapResource({ definition, name })]
@@ -92,9 +90,7 @@ export class MeteorTypeValidation<
         return wrappedMethods;
     }
     
-    public exposePublications<TPublications extends Record<string, PublicationDefinition<any, any>>>(publications: TPublications): {
-        [key in keyof TPublications]: (...params: Parameters<TPublications[key]['publish']>) => ReturnType<TPublications[key]['publish']>
-    } {
+    public exposePublications<TPublications extends Record<string, PublicationDefinition<any, any>>>(publications: TPublications): UnwrapPublications<TPublications> {
         const publicationMap = Object.entries(publications).map(([name, definition]) => {
             const wrappedPublication = this.wrapResource({ name, definition });
             Meteor.publish(name, wrappedPublication);
