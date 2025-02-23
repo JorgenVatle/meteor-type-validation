@@ -60,12 +60,18 @@ export class MeteorTypeValidation<
     public definePublications<
         TSchemas extends Record<keyof TGuards, GenericSchema[]>,
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
-        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>
+        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
+        TPublications extends {
+            [key in keyof TSchemas | keyof TGuards | keyof TResult]: {
+                schema: any,
+                guards: any,
+                publish: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>['publish']
+            }
+        }
     >(publications: {
         [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
-    }): {
-        [key in keyof TSchemas | keyof TGuards | keyof TResult]: Omit<PublicationDefinition, 'publish'> & Pick<PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>, 'publish'>
-    } {
+    }): TPublications {
+        // @ts-expect-error Type mismatch
         return publications;
     }
     
