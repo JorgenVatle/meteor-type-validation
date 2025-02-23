@@ -13,7 +13,7 @@ import type {
     MethodDefinitionMap,
     PublicationDefinition,
     PublicationDefinitionMap, RateLimiterRule,
-    ResourceType, UnwrapMethods, UnwrapPublications, UnwrapSchemaInput,
+    ResourceType, UnwrapMethods, UnwrapPublications, UnwrapSchemaInput, UnwrapSchemaOutput,
     WrappedContext,
 } from './types/ValidatedResources';
 
@@ -52,7 +52,9 @@ export class MeteorTypeValidation<
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>
     >(methods: {
         [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
-    }) {
+    }): {
+        [key in keyof TSchemas | keyof TGuards | keyof TResult]: Omit<MethodDefinition, 'method'> & Pick<MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>, 'method'>
+    } {
         return methods;
     }
     
@@ -62,7 +64,9 @@ export class MeteorTypeValidation<
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>
     >(publications: {
         [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
-    }) {
+    }): {
+        [key in keyof TSchemas | keyof TGuards | keyof TResult]: Omit<PublicationDefinition, 'publish'> & Pick<PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>, 'publish'>
+    } {
         return publications;
     }
     
