@@ -4,5 +4,7 @@
   "initialVersions": {
     "meteor-type-validation": "2.3.0"
   },
-  "changesets": []
+  "changesets": [
+    "few-spiders-tap"
+  ]
 }
