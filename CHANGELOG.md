@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.4.0-beta.0
+
+### Minor Changes
+
+- 78f830a: Optimize types for method and publication declaration methods to avoid unnecessary work from the TS engine
+
 ## 2.3.0
 
 ### Minor Changes
