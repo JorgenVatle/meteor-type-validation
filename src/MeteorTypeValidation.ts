@@ -50,13 +50,13 @@ export class MeteorTypeValidation<
         TSchemas extends Record<keyof TGuards, GenericSchema[]>,
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
-        TMethods extends { [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]> }
-    >(methods: TMethods): {
+        TMethods extends Record<keyof TSchemas, (...params: any) => any>,
+    >(methods: { [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]> }): {
         [key in keyof TMethods]: {
             schema: GenericSchema[],
             guards: GuardStatic[],
             rateLimiters?: RateLimiterRule[],
-            method: TMethods[key]['method']
+            method: TMethods[key]
         }
     } {
         return methods;
@@ -66,15 +66,13 @@ export class MeteorTypeValidation<
         TSchemas extends Record<keyof TGuards, GenericSchema[]>,
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
-        TPublications extends {
-            [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
-        }
-    >(publications: TPublications): {
+        TPublications extends Record<keyof TSchemas, (...params: any) => any>,
+    >(publications: { [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]> }): {
         [key in keyof TPublications]: {
             schema: GenericSchema[],
             guards: GuardStatic[],
             rateLimiters?: RateLimiterRule[],
-            publish: TPublications[key]['publish']
+            publish: TPublications[key]
         }
     } {
         return publications;
