@@ -7,25 +7,23 @@ export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
-    TReturnType = unknown,
-    TMethod = (this: ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>) => TReturnType
+    TReturnType = unknown
 > {
     schema: [...TSchemas],
     guards: TGuards,
     rateLimiters?: RateLimiterRule[],
-    method: TMethod,
+    method(this: ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
 }
 export interface PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown,
-    TPublish = (this: ValidatedThisType<TGuards, Subscription> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>) => TReturnType
 > {
     schema: [...TSchemas],
     guards: TGuards,
     rateLimiters?: RateLimiterRule[],
-    publish: TPublish,
+    publish(this: ValidatedThisType<TGuards, Subscription> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
 }
 
 /**

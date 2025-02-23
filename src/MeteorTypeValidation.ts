@@ -49,34 +49,20 @@ export class MeteorTypeValidation<
     public defineMethods<
         TSchemas extends Record<keyof TGuards, GenericSchema[]>,
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
-        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
-        TMethods extends Record<keyof TSchemas, (...params: any) => any>,
-    >(methods: { [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]> }): {
-        [key in keyof TMethods]: {
-            schema: GenericSchema[],
-            guards: GuardStatic[],
-            rateLimiters?: RateLimiterRule[],
-            method: TMethods[key]
-        }
-    } {
-        // @ts-expect-error Subtype validation error
+        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>
+    >(methods: {
+        [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
+    }) {
         return methods;
     }
     
     public definePublications<
         TSchemas extends Record<keyof TGuards, GenericSchema[]>,
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
-        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
-        TPublications extends Record<keyof TSchemas, (...params: any) => any>,
-    >(publications: { [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]> }): {
-        [key in keyof TPublications]: {
-            schema: GenericSchema[],
-            guards: GuardStatic[],
-            rateLimiters?: RateLimiterRule[],
-            publish: TPublications[key];
-        }
-    } {
-        // @ts-expect-error Subtype validation error
+        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>
+    >(publications: {
+        [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
+    }) {
         return publications;
     }
     
