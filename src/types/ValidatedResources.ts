@@ -20,11 +20,12 @@ export interface PublicationDefinition<
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown,
+    TPublish = (this: ValidatedThisType<TGuards, Subscription> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>) => TReturnType
 > {
     schema: [...TSchemas],
     guards: TGuards,
     rateLimiters?: RateLimiterRule[],
-    publish(this: ValidatedThisType<TGuards, Subscription> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
+    publish: TPublish,
 }
 
 /**
