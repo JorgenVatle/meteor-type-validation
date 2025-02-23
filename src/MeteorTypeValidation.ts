@@ -59,6 +59,7 @@ export class MeteorTypeValidation<
             method: TMethods[key]
         }
     } {
+        // @ts-expect-error Subtype validation error
         return methods;
     }
     
@@ -75,6 +76,7 @@ export class MeteorTypeValidation<
             publish: TPublications[key];
         }
     } {
+        // @ts-expect-error Subtype validation error
         return publications;
     }
     
