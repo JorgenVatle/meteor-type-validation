@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.4.0-beta.1
+
+### Patch Changes
+
+- 383dde3: Omit detailed type information from declared method and publication objects
+
 ## 2.4.0-beta.0
 
 ### Minor Changes
