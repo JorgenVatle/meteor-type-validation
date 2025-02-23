@@ -51,8 +51,9 @@ export class MeteorTypeValidation<
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
         TMethods extends Record<keyof TSchemas, (...params: any) => any>,
-    >(methods: { [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]> }): {
-        [key in keyof TMethods]: {
+        TKey extends keyof TSchemas | keyof TGuards | keyof TResult
+    >(methods: { [key in TKey]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key], TMethods[key]> }): {
+        [key in TKey]: {
             schema: GenericSchema[],
             guards: GuardStatic[],
             rateLimiters?: RateLimiterRule[],
