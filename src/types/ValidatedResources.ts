@@ -58,7 +58,7 @@ export type RateLimiterRule = Pick<DDPRateLimiter.Matcher, 'userId' | 'connectio
  * fed into Meteor.methods(...)
  */
 export type UnwrapMethods<TMethods extends MethodDefinitionMap> = {
-    [key in keyof TMethods]: (...params: UnwrapSchemaInput<TMethods[key]['schema']>) => ReturnType<TMethods[key]['method']>;
+    [key in keyof TMethods]: TMethods[key]['method'];
 }
 
 /**
@@ -66,7 +66,7 @@ export type UnwrapMethods<TMethods extends MethodDefinitionMap> = {
  * they would be added to Meteor.publish(<name>, ...)
  */
 export type UnwrapPublications<TPublications extends PublicationDefinitionMap> = {
-    [key in keyof TPublications]: (...params: UnwrapSchemaInput<TPublications[key]['schema']>) => ReturnType<TPublications[key]['publish']>;
+    [key in keyof TPublications]: TPublications[key]['publish'];
 }
 
 /**
