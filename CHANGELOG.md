@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.4.0-beta.2
+
+### Patch Changes
+
+- 4b40d1c: Fix issue where internal type definitions would be included in peer publication/method type definitions
+
 ## 2.4.0-beta.1
 
 ### Patch Changes
