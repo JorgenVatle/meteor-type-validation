@@ -7,12 +7,13 @@ export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
-    TReturnType = unknown
+    TReturnType = unknown,
+    TMethod = (this: ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>) => TReturnType
 > {
     schema: [...TSchemas],
     guards: TGuards,
     rateLimiters?: RateLimiterRule[],
-    method(this: ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
+    method: TMethod,
 }
 export interface PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
