@@ -55,6 +55,7 @@ export class MeteorTypeValidation<
         [key in keyof TMethods]: {
             schema: GenericSchema[],
             guards: GuardStatic[],
+            rateLimiters?: RateLimiterRule[],
             method: TMethods[key]['method']
         }
     } {
