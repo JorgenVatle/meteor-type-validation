@@ -1,10 +1,12 @@
+import * as v from 'valibot';
 import {
     defineMethods,
-    definePublications, Guard,
-    type UnwrapMethods,
-    type UnwrapPublications, type WrappedContext,
+    definePublications,
+    exposeMethods,
+    exposePublications,
+    Guard,
+    type WrappedContext,
 } from '../../src';
-import * as v from 'valibot';
 
 class UserAuthenticated extends Guard {
     public validate(): asserts this is { context: { userId: string } } {}
@@ -85,11 +87,16 @@ export const AllPublications = definePublications({
             entry._id
         }
     }
-})
+});
+
+const Methods = exposeMethods(AllMethods);
+const Publications = exposePublications(AllPublications);
+type Publications = typeof Publications;
+type Methods = typeof Methods;
 
 declare module 'meteor/meteor' {
-    interface DefinedPublications extends UnwrapPublications<typeof AllPublications> {}
-    interface DefinedMethods extends UnwrapMethods<typeof AllMethods> {}
+    interface DefinedPublications extends Publications {}
+    interface DefinedMethods extends Methods {}
 }
 
 
