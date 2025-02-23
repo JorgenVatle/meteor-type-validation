@@ -68,8 +68,9 @@ export class MeteorTypeValidation<
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
         TPublications extends Record<keyof TSchemas, (...params: any) => any>,
-    >(publications: { [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]> }): {
-        [key in keyof TPublications]: {
+        TKey extends keyof TSchemas | keyof TGuards | keyof TResult,
+    >(publications: { [key in TKey]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key], TPublications[key]> }): {
+        [key in TKey]: {
             schema: GenericSchema[],
             guards: GuardStatic[],
             rateLimiters?: RateLimiterRule[],
