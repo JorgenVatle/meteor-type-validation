@@ -12,8 +12,9 @@ import type {
     MethodDefinition,
     MethodDefinitionMap,
     PublicationDefinition,
-    PublicationDefinitionMap, RateLimiterRule,
-    ResourceType, UnwrapMethods, UnwrapPublications, UnwrapSchemaInput, UnwrapSchemaOutput,
+    PublicationDefinitionMap,
+    RateLimiterRule,
+    ResourceType,
     WrappedContext,
 } from './types/ValidatedResources';
 
