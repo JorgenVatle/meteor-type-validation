@@ -51,9 +51,8 @@ export class MeteorTypeValidation<
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
         TMethods extends Record<keyof TSchemas, (...params: any) => any>,
-        TKey extends keyof TSchemas | keyof TGuards | keyof TResult
-    >(methods: { [key in TKey]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key], TMethods[key]> }): {
-        [key in TKey]: {
+    >(methods: { [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]> }): {
+        [key in keyof TMethods]: {
             schema: GenericSchema[],
             guards: GuardStatic[],
             rateLimiters?: RateLimiterRule[],
@@ -68,13 +67,12 @@ export class MeteorTypeValidation<
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
         TPublications extends Record<keyof TSchemas, (...params: any) => any>,
-        TKey extends keyof TSchemas | keyof TGuards | keyof TResult,
-    >(publications: { [key in TKey]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key], TPublications[key]> }): {
-        [key in TKey]: {
+    >(publications: { [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]> }): {
+        [key in keyof TPublications]: {
             schema: GenericSchema[],
             guards: GuardStatic[],
             rateLimiters?: RateLimiterRule[],
-            publish: TPublications[key]
+            publish: TPublications[key];
         }
     } {
         return publications;
