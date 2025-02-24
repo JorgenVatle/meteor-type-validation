@@ -5,14 +5,19 @@ import type { GuardFunction, GuardStatic } from '../guards/Guard';
 
 export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
-    TGuards extends GuardStatic[] = GuardStatic[],
+    TGuards extends GuardStatic[] | [] = [],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown
 > {
     schema: [...TSchemas],
-    guards: TGuards,
+    guards: [...TGuards],
     rateLimiters?: RateLimiterRule[],
-    method: (this: ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>) => TReturnType
+    method: (
+        this: TGuards extends []
+              ? Meteor.MethodThisType & TExtendedContext
+              : ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext,
+        ...params: UnwrapSchemaOutput<TSchemas>
+    ) => TReturnType
 }
 export interface PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],

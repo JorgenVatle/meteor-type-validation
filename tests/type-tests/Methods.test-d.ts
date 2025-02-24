@@ -14,7 +14,6 @@ it('should infer method params types from the provided schema', () => {
                     createdAt: Date,
                 }>();
                 
-                // @ts-expect-error TODO fix this inference for methods without guards
                 expectTypeOf(this.userId).toEqualTypeOf<null | string>();
             }
         },
