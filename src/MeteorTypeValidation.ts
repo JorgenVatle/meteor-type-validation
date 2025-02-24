@@ -234,11 +234,4 @@ export class MeteorTypeValidation<
             run: definition.method,
         };
     }
-    
-    private isType<
-        TType extends ResourceType,
-        TDefinition extends ResourceDefinition,
-    >(definition: TDefinition, type: TType): type is TType {
-        return this.parseDefinition(definition).type === type;
-    }
 }
