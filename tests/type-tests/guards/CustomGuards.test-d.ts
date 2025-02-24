@@ -15,6 +15,19 @@ describe('CreatedByCurrentUser', () => {
                     }
                 }
             })
+        });
+        
+        it.todo('should extend the input params with a createdBy selector', () => {
+            defineMethods({
+                'todo.edit': {
+                    schema: [EditTodoSchema],
+                    guards: [CreatedByCurrentUser],
+                    method(entry) {
+                        // @ts-expect-error (This still needs to be implemented)
+                        expectTypeOf(entry).toMatchTypeOf<{ createdBy: string }>()
+                    }
+                }
+            })
         })
     })
     describe('publications', () => {
