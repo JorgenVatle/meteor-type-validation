@@ -1,41 +1,7 @@
 import * as v from 'valibot';
-import {
-    defineMethods,
-    definePublications,
-    exposeMethods,
-    exposePublications,
-    Guard,
-    type WrappedContext,
-} from '../../src';
-
-class UserAuthenticated extends Guard {
-    public validate(): asserts this is { context: { userId: string } } {}
-    public get validatedContext() {
-        this.validate();
-        return this.context;
-    }
-}
-
-class CreatedByCurrentUser extends UserAuthenticated {
-    constructor(context: WrappedContext, protected readonly params: [{ createdBy: string }, ...rest: unknown[]]) {
-        super(context, params);
-    }
-    
-    public validate(): asserts this is {
-        context: { userId: string },
-        params: [{ createdBy: string }, ...unknown[]]
-    } {
-        if (!this.params[0]?.createdBy) {
-            throw new Error('No user ID')
-        }
-        return super.validate();
-    }
-    
-    public get validatedContext() {
-        this.validate();
-        return this.context;
-    }
-}
+import { defineMethods, definePublications, exposeMethods, exposePublications } from '../../src';
+import { UserAuthenticated } from '../../src/guards/UserAuthenticated';
+import { CreatedByCurrentUser } from '../lib/CreatedByCurrentUser';
 
 export const AllMethods = defineMethods({
     'user:todo.add': {
