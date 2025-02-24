@@ -48,6 +48,8 @@ export type PublicationDefinitionMap = {
     [key in string]: PublicationDefinition
 }
 
+export type ResourceDefinition = MethodDefinition | PublicationDefinition;
+
 export type RateLimiterRule = Pick<DDPRateLimiter.Matcher, 'userId' | 'connectionId' | 'clientAddress'> & {
     requestCount?: number;
     intervalMs?: number;

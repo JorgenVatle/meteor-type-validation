@@ -11,7 +11,7 @@ import type {
     ContextWrapper,
     MethodDefinition,
     PublicationDefinition,
-    RateLimiterRule,
+    RateLimiterRule, ResourceDefinition,
     ResourceType, UnwrapMethods, UnwrapPublications,
     WrappedContext,
 } from './types/ValidatedResources';
@@ -228,5 +228,12 @@ export class MeteorTypeValidation<
             type: 'method',
             run: definition.method,
         };
+    }
+    
+    private isType<
+        TType extends ResourceType,
+        TDefinition extends ResourceDefinition,
+    >(definition: TDefinition, type: TType): type is TType {
+        return this.parseDefinition(definition).type === type;
     }
 }
