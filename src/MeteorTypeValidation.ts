@@ -15,6 +15,7 @@ import type {
     ResourceType,
     UnwrapMethods,
     UnwrapPublications,
+    UnwrapSchemaInput,
     WrappedContext,
 } from './types/ValidatedResources';
 
@@ -55,7 +56,7 @@ export class MeteorTypeValidation<
             [key in keyof TSchemas | keyof TGuards | keyof TResult]: {
                 guards: any,
                 schema: any,
-                method: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>['method']
+                method: (...params: UnwrapSchemaInput<NoInfer<TSchemas>[key]>) => NoInfer<TResult>[key];
             }
         }
     >(methods: {
@@ -72,7 +73,7 @@ export class MeteorTypeValidation<
             [key in keyof TSchemas | keyof TGuards | keyof TResult]: {
                 schema: any,
                 guards: any,
-                publish: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>['publish']
+                publish: (...params: UnwrapSchemaInput<NoInfer<TSchemas>[key]>) => NoInfer<TResult>[key]
             }
         }
     >(publications: {
