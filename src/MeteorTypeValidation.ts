@@ -4,7 +4,7 @@ import { performance } from 'node:perf_hooks';
 import type Pino from 'pino';
 import { type GenericSchema, parse, ValiError } from 'valibot';
 import { formatValibotError } from './Errors';
-import type { GuardStatic } from './Guard';
+import type { GuardStatic } from './guards/Guard';
 import { Logger } from './Logger';
 import type {
     BaseContext,

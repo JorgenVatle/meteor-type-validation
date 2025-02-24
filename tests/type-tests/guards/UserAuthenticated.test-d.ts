@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 import { defineMethods, exposeMethods } from '../../../src/Definitions';
-import { Guard } from '../../../src/Guard';
+import { Guard } from '../../../src/guards/Guard';
 import * as v from 'valibot';
 
 class UserAuthenticated extends Guard {
