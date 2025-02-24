@@ -14,7 +14,7 @@
     "default": "./dist/index.js"
   },
   "scripts": {
-    "test": "npm run lint",
+    "test": "vitest",
     "lint": "tsc --noEmit",
     "build": "tsup src/index.ts",
     "prepack": "npm run build",
