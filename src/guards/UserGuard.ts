@@ -23,7 +23,7 @@ export class UserGuard extends Guard {
         createdAt: 1,
     }
     
-    public readonly contextSchema = v.pipeAsync(
+    public static readonly contextSchema = v.pipeAsync(
         UserAuthenticated.contextSchema,
         v.transformAsync(async (context) => {
             const user = await Meteor.users.findOneAsync(context.userId, { fields: UserGuard.fields });
@@ -35,6 +35,8 @@ export class UserGuard extends Guard {
             
             return Object.assign(context, { user });
         })
-    )
+    );
+    
+    public readonly contextSchema = UserGuard.contextSchema;
     
 }
