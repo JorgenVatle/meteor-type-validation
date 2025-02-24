@@ -14,6 +14,13 @@ it('should infer method params types from the provided schema', () => {
                     createdAt: Date,
                 }>();
                 
+                expectTypeOf(entry).not.toEqualTypeOf<{
+                    title: string;
+                    completed: boolean;
+                    createdAt: Date,
+                    forbiddenField: true,
+                }>()
+                
                 expectTypeOf(this.userId).toEqualTypeOf<null | string>();
             }
         },
