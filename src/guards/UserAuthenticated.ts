@@ -9,10 +9,9 @@ import { Guard } from './Guard';
 export class UserAuthenticated extends Guard {
     
     public readonly writeToContext = false;
-    
-    public readonly contextSchema = v.object({
+    public static readonly contextSchema = v.object({
         userId: v.pipe(
-            v.nullish(v.string()),
+            v.nullable(v.string()),
             v.transform((userId): string => {
                 if (!userId) {
                     throw new Meteor.Error(401, 'You need to be logged in first');
@@ -20,5 +19,7 @@ export class UserAuthenticated extends Guard {
                 return userId;
             }),
         ),
-    })
+    });
+    
+    public readonly contextSchema = UserAuthenticated.contextSchema;
 }
