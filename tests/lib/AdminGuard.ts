@@ -1,27 +1,24 @@
-import { Meteor } from '@meteor';
-import type { InferOutput } from 'valibot';
 import * as v from 'valibot';
-import { UserAuthenticated } from '../../src/guards/UserAuthenticated';
+import { Guard } from '../../src';
+import { UserGuard } from '../../src/guards/UserGuard';
 
-export class AdminGuard extends UserAuthenticated {
+export class AdminGuard extends Guard {
     
-    public validate(): asserts this is {
-        context: InferOutput<AdminGuard['contextSchema']>,
-    } {
-        return super.validate();
-    }
+    public writeToContext = false;
     
-    public readonly contextSchema = v.objectAsync({
-        userId: v.pipeAsync(v.string(), v.checkAsync(async (userId) => {
-            const user = await Meteor.users.findOneAsync({ _id: userId });
-            return !!user?.roles.includes('admin');
-        })),
-    })
+    public readonly contextSchema = v.pipeAsync(
+        UserGuard.contextSchema,
+        v.objectAsync({
+            userId: v.string(),
+            user: v.pipe(v.any(), v.object({
+                roles: v.pipe(
+                    v.array(v.string()),
+                    v.includes('admin')
+                )
+            })),
+        }),
+    )
     
-    public get validatedContext() {
-        this.validate();
-        return this.context;
-    }
 }
 
 declare module 'meteor/meteor' {
