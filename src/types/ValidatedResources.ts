@@ -105,7 +105,7 @@ type ValidatedThisType<
     : TGuards extends GuardFunction[]
       ? ValidatedFnThisType<TGuards> & BaseContext<TThisType>
       : never;
-type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InstanceType<TGuards[number]>['validatedContext'];
+type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InferOutput<InstanceType<TGuards[number]>['contextSchema']>;
 type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[number]>;
 export type ResourceType = 'method' | 'publication';
 
