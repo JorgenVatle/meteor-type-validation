@@ -13,11 +13,21 @@ export abstract class Guard {
      * Handy for checking that a user is logged in by checking for the presence of `this.userId`.
      */
     public readonly contextSchema?: v.ObjectSchema<any, any> | v.ObjectSchemaAsync<any, any>;
+    
+    /**
+     * Whether validated context should be written to the handle's `this` type.
+     * Useful if you're transforming the context to add user information for example.
+     */
+    public readonly writeToContext = true;
+    
     public validate(): void | Promise<void> {};
     
     public async _validate() {
         if (this.contextSchema) {
-            Object.assign(this.context, await v.parseAsync(this.contextSchema, this.context));
+            const context = await v.parseAsync(this.contextSchema, this.context);
+            if (this.writeToContext) {
+                Object.assign(this.context, context);
+            }
         }
         await this.validate();
     }
