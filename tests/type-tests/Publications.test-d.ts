@@ -25,6 +25,21 @@ it('should infer method params types from the provided schema', () => {
     })
 });
 
+it.todo(`should have the same 'this' context as Meteor's publication methods`, () => {
+    definePublications({
+        'todos': {
+            schema: [QueryTodoSchema],
+            guards: [],
+            publish(entry) {
+                // @ts-expect-error TODO: fix 'this' type inference for publish handles without guards.
+                expectTypeOf(this).toMatchTypeOf<{
+                    added: (...params: any) => any,
+                }>()
+            }
+        },
+    })
+});
+
 it('defined methods should yield a map with schema input types, not output types', () => {
     const methods = definePublications({
         'todo.create': {
