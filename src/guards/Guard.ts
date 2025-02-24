@@ -12,7 +12,7 @@ export abstract class Guard {
      * Used to perform validation on the current method or publication's `this` context.
      * Handy for checking that a user is logged in by checking for the presence of `this.userId`.
      */
-    public readonly contextSchema?: v.ObjectSchema<any, any> | v.ObjectSchemaAsync<any, any>;
+    public readonly contextSchema!: v.ObjectSchema<any, any> | v.ObjectSchemaAsync<any, any>;
     
     /**
      * Whether validated context should be written to the handle's `this` type.
@@ -34,7 +34,12 @@ export abstract class Guard {
         }
         await this.validate();
     }
-    
+ 
+    protected assertContext<
+        TSelf extends Guard,
+    >(this: TSelf): asserts this is { context: v.InferOutput<TSelf['contextSchema']> } {
+        // The context should be validated before this method is reachable, so no need to validate twice.
+    }
 }
 
 export interface GuardStatic<TGuard extends Guard = Guard> {
