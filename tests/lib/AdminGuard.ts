@@ -12,8 +12,7 @@ export class AdminGuard extends Guard {
             userId: v.string(),
             user: v.pipe(v.any(), v.object({
                 roles: v.pipe(
-                    v.array(v.picklist(['admin', 'user'])),
-                    v.includes('admin' as const)
+                    v.array(v.picklist(['admin'])),
                 )
             })),
         }),
