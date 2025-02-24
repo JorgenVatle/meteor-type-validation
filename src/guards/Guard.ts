@@ -53,10 +53,14 @@ export abstract class Guard {
         }
         await this.validate();
     }
- 
+    
+    /**
+     * Used for enabling better type hints within the context of this class,
+     * primarily for the validate() method.
+     */
     protected assertContext<
         TSelf extends Guard,
-    >(this: TSelf): asserts this is { context: v.InferOutput<TSelf['contextSchema']> } {
+    >(this: TSelf): asserts this is { context: v.InferOutput<TSelf['contextSchema']>, params: UnwrapSchemaOutput<TSelf['inputSchema']> } {
         // The context should be validated before this method is reachable, so no need to validate twice.
     }
 }
