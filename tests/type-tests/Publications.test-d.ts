@@ -24,7 +24,7 @@ it('should infer method params types from the provided schema', () => {
     })
 });
 
-it.todo(`should have the same 'this' context as Meteor's publication methods`, () => {
+it(`should have the same 'this' context as Meteor's publication methods`, () => {
     definePublications({
         'todos': {
             schema: [QueryTodoSchema],
