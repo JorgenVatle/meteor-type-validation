@@ -50,6 +50,7 @@ export abstract class Guard {
      * Internal validation method.
      * This is called after your method/publication's parameter schemas have been validated, but before the method or
      * publication is hit by the user. It's essentially middleware between the two.
+     * @private
      */
     public async _validate() {
         if (this.contextSchema) {
