@@ -76,6 +76,11 @@ export class MeteorTypeValidation<
     >(publications: {
         [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
     }): TPublications {
+        if (Meteor.isClient) {
+            const logger = this.options?.createLogger?.({ type: 'publication', name: '<internal definition>', context: {} as any }) || console;
+            logger.warn(new Error(`Publication definition included in client bundle. This is generally unwanted as publications should only live on the server.`));
+        }
+        
         // @ts-expect-error Type mismatch
         return publications;
     }
