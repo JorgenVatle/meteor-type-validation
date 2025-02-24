@@ -3,10 +3,10 @@ import type { InferOutput } from 'valibot';
 import * as v from 'valibot';
 import { UserAuthenticated } from '../../src/guards/UserAuthenticated';
 
-export class CreatedByCurrentUser extends UserAuthenticated {
+export class AdminGuard extends UserAuthenticated {
     
     public validate(): asserts this is {
-        context: InferOutput<CreatedByCurrentUser['contextSchema']>,
+        context: InferOutput<AdminGuard['contextSchema']>,
     } {
         return super.validate();
     }
