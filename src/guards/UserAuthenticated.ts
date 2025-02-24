@@ -2,6 +2,10 @@ import { Meteor } from '@meteor';
 import * as v from 'valibot';
 import { Guard } from './Guard';
 
+/**
+ * Checks whether the current user is logged in.
+ * Throws a 401 error if not.
+ */
 export class UserAuthenticated extends Guard {
     
     public readonly contextSchema = v.object({
