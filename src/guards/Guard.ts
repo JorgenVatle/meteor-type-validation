@@ -16,15 +16,11 @@ export abstract class Guard {
     public validate(): void | Promise<void> {};
     
     public async _validate() {
-        Object.assign(this.context, await this.validatedContext);
+        if (this.contextSchema) {
+            Object.assign(this.context, await v.parseAsync(this.contextSchema, this.context));
+        }
         await this.validate();
     }
-    
-    public get validatedContext() {
-        if (this.contextSchema) {
-            return v.parseAsync(this.contextSchema, this.context);
-        }
-    };
     
 }
 
