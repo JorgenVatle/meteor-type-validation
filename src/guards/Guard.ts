@@ -36,6 +36,21 @@ export abstract class Guard {
      */
     public validate(): void | Promise<void> {};
     
+    /**
+     * Used for enabling better type hints within the context of this class,
+     * primarily for the validate() method.
+     */
+    protected assertContext<
+        TSelf extends Guard,
+    >(this: TSelf): asserts this is { context: v.InferOutput<TSelf['contextSchema']>, params: UnwrapSchemaOutput<TSelf['inputSchema']> } {
+        // The context should be validated before this method is reachable, so no need to validate twice.
+    }
+    
+    /**
+     * Internal validation method.
+     * This is called after your method/publication's parameter schemas have been validated, but before the method or
+     * publication is hit by the user. It's essentially middleware between the two.
+     */
     public async _validate() {
         if (this.contextSchema) {
             const context = await v.parseAsync(this.contextSchema, this.context);
@@ -52,16 +67,6 @@ export abstract class Guard {
             }
         }
         await this.validate();
-    }
-    
-    /**
-     * Used for enabling better type hints within the context of this class,
-     * primarily for the validate() method.
-     */
-    protected assertContext<
-        TSelf extends Guard,
-    >(this: TSelf): asserts this is { context: v.InferOutput<TSelf['contextSchema']>, params: UnwrapSchemaOutput<TSelf['inputSchema']> } {
-        // The context should be validated before this method is reachable, so no need to validate twice.
     }
 }
 
