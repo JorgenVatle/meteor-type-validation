@@ -15,10 +15,21 @@ export abstract class Guard {
     public readonly contextSchema!: v.ObjectSchema<any, any> | v.ObjectSchemaAsync<any, any>;
     
     /**
+     * Used to perform and potentially transform input parameters for guarded methods/publications.
+     */
+    public readonly inputSchema!: v.BaseSchema<any, any, any>[];
+    
+    /**
      * Whether validated context should be written to the handle's `this` type.
      * Useful if you're transforming the context to add user information for example.
      */
     public abstract readonly writeToContext: boolean;
+    
+    /**
+     * Whether to write validated input to input parameters before passing it onto the method or publication.
+     * Keep in mind that method and publication handles' original validation schema is called before the guard's
+     */
+    public readonly writeToParams: boolean = false;
     
     /**
      * Optionally define to perform custom validation after the context has been validated.
@@ -30,6 +41,14 @@ export abstract class Guard {
             const context = await v.parseAsync(this.contextSchema, this.context);
             if (this.writeToContext) {
                 Object.assign(this.context, context);
+            }
+        }
+        if (this.inputSchema) {
+            for (const index in this.inputSchema) {
+                const validated = await v.parseAsync(this.inputSchema[index], this.params[index]);
+                if (this.writeToParams) {
+                    this.params[index] = validated;
+                }
             }
         }
         await this.validate();
