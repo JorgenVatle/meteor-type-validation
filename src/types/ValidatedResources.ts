@@ -1,7 +1,7 @@
+import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
+import type { Meteor, Subscription } from 'meteor/meteor';
 import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
 import type { GuardFunction, GuardStatic } from '../guards/Guard';
-import type { Meteor, Subscription } from 'meteor/meteor';
-import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 
 export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
@@ -16,14 +16,19 @@ export interface MethodDefinition<
 }
 export interface PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
-    TGuards extends GuardStatic[] = GuardStatic[],
+    TGuards extends GuardStatic[] | [] = [],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown,
 > {
     schema: [...TSchemas],
-    guards: TGuards,
+    guards: [...TGuards],
     rateLimiters?: RateLimiterRule[],
-    publish: (this: ValidatedThisType<TGuards, Subscription> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>) => TReturnType
+    publish: (
+        this: TGuards extends []
+              ? Subscription & TExtendedContext
+              : ValidatedThisType<NoInfer<TGuards>, Subscription> & TExtendedContext,
+        ...params: UnwrapSchemaOutput<TSchemas>
+    ) => TReturnType
 }
 
 /**
@@ -88,7 +93,7 @@ export type UnwrapSchemaInput<TSchemas extends GenericSchema[]> = {
 }
 
 type ValidatedThisType<
-    TGuards extends GuardStatic[] | GuardFunction[],
+    TGuards extends GuardStatic[] | GuardFunction[] | [],
     TThisType extends _ResourceThisType = _ResourceThisType,
 > = TGuards extends GuardStatic[]
     ? ValidatedStaticThisType<TGuards> & BaseContext<TThisType>
