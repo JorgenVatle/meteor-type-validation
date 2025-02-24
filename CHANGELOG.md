@@ -1,5 +1,13 @@
 # meteor-type-validation
 
+## 2.4.0-beta.3
+
+### Patch Changes
+
+- ccf09fb: Fix type inference for method/publication input parameters using output instead of input types for resulting API definition objects.
+
+  - Added warning message if publication definitions are imported by a client.
+
 ## 2.4.0-beta.2
 
 ### Patch Changes
