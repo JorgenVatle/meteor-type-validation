@@ -1,15 +1,7 @@
-import { describe, expectTypeOf, it } from 'vitest';
-import { defineMethods, exposeMethods } from '../../../src/Definitions';
-import { Guard } from '../../../src/guards/Guard';
 import * as v from 'valibot';
-
-class UserAuthenticated extends Guard {
-    public validate(): asserts this is { context: { userId: string } } {}
-    public get validatedContext() {
-        this.validate();
-        return this.context;
-    }
-}
+import { describe, expectTypeOf, it } from 'vitest';
+import { defineMethods } from '../../../src/Definitions';
+import { UserAuthenticated } from '../../../src/guards/UserAuthenticated';
 
 const TodoDocumentSchema = v.object({
     title: v.string(),
