@@ -34,7 +34,7 @@ export abstract class Guard {
     /**
      * Optionally define to perform custom validation after the context has been validated.
      */
-    public validate(): void | Promise<void> {};
+    public validate(): Promise<void> | void {};
     
     /**
      * Used for enabling better type hints within the context of this class,
