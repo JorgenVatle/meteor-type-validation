@@ -2,7 +2,10 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-    test: {
-    
-    }
+  test: {
+      dir: 'tests',
+      typecheck: {
+          enabled: true,
+      },
+  }
 })
