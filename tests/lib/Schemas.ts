@@ -16,4 +16,14 @@ export const CreateTodoSchema = v.pipe(
 export const EditTodoSchema = v.object({
     _id: v.string(),
     ...CreateTodoSchema.entries,
+});
+
+export const QueryTodoSchema = v.object({
+    _id: v.optional(v.string()),
+    title: v.optional(v.string()),
+    completed: v.optional(v.boolean()),
+    createdAt: v.optional(v.object({
+        $gt: v.optional(v.date()),
+        $lt: v.optional(v.date()),
+    })),
 })
