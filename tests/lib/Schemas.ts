@@ -18,12 +18,12 @@ export const EditTodoSchema = v.object({
     ...CreateTodoSchema.entries,
 });
 
-export const QueryTodoSchema = v.object({
-    _id: v.optional(v.string()),
-    title: v.optional(v.string()),
-    completed: v.optional(v.boolean()),
-    createdAt: v.optional(v.object({
-        $gt: v.optional(v.date()),
-        $lt: v.optional(v.date()),
-    })),
-})
+export const QueryTodoSchema = v.partial(v.object({
+    _id: v.string(),
+    title: v.string(),
+    completed: v.boolean(),
+    createdAt: v.object({
+        $gt: v.date(),
+        $lt: v.date(),
+    }),
+}))
