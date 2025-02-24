@@ -11,8 +11,10 @@ import type {
     ContextWrapper,
     MethodDefinition,
     PublicationDefinition,
-    RateLimiterRule, ResourceDefinition,
-    ResourceType, UnwrapMethods, UnwrapPublications,
+    RateLimiterRule,
+    ResourceType,
+    UnwrapMethods,
+    UnwrapPublications,
     WrappedContext,
 } from './types/ValidatedResources';
 
