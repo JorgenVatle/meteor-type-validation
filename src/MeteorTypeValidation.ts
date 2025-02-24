@@ -159,7 +159,7 @@ export class MeteorTypeValidation<
         
         // Run guard validators
         for (const guard of definition.guards) {
-            await new guard(context, validatedParams).validate();
+            await new guard(context, validatedParams)._validate();
         }
         
         return {
