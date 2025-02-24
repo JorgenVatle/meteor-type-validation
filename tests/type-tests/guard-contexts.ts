@@ -1,7 +1,7 @@
 import * as v from 'valibot';
 import { defineMethods, definePublications, exposeMethods, exposePublications } from '../../src';
 import { UserAuthenticated } from '../../src/guards/UserAuthenticated';
-import { CreatedByCurrentUser } from '../lib/CreatedByCurrentUser';
+import { CreatedByCurrentUser } from '../lib/CreatedByCurrentUserGuard';
 
 export const AllMethods = defineMethods({
     'user:todo.add': {
