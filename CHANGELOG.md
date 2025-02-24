@@ -1,5 +1,14 @@
 # meteor-type-validation
 
+## 2.4.0-beta.4
+
+### Minor Changes
+
+- 91e7c98: Provide `UserAuthenticated` and `UserGuard` guard classes so peer projects don't have to write up their own validation guard for this.
+
+  - Fixed issue where the `this` context for methods and publications without guards specified would infer to `never`.
+  - Refactored abstract Guard class to accept a schema property to validate context and input parameters with type-safe inference for the resulting method/publication hook.
+
 ## 2.4.0-beta.3
 
 ### Patch Changes
