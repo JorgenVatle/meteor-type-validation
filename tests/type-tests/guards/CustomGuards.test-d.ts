@@ -54,7 +54,7 @@ describe('AdminGuard', () => {
                     schema: [EditTodoSchema],
                     guards: [AdminGuard],
                     method(entry) {
-                        expectTypeOf(this.user).toMatchTypeOf<{ roles: ['admin'] }>();
+                        expectTypeOf(this.user).toMatchTypeOf<{ roles: 'admin'[] }>();
                     }
                 }
             })
