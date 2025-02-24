@@ -20,6 +20,9 @@ export abstract class Guard {
      */
     public readonly writeToContext = true;
     
+    /**
+     * Optionally define to perform custom validation after the context has been validated.
+     */
     public validate(): void | Promise<void> {};
     
     public async _validate() {
