@@ -1,5 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 import { defineMethods, definePublications } from '../../../src';
+import { AdminGuard } from '../../lib/AdminGuard';
 import { CreatedByCurrentUser } from '../../lib/CreatedByCurrentUserGuard';
 import { EditTodoSchema } from '../../lib/Schemas';
 
@@ -38,6 +39,22 @@ describe('CreatedByCurrentUser', () => {
                     guards: [CreatedByCurrentUser],
                     publish(entry) {
                         expectTypeOf(this.userId).toEqualTypeOf<string>();
+                    }
+                }
+            })
+        })
+    })
+})
+
+describe('AdminGuard', () => {
+    describe('methods', () => {
+        it(`should asser that the user's 'roles' field includes 'admin'`, () => {
+            defineMethods({
+                'admin:todo.edit': {
+                    schema: [EditTodoSchema],
+                    guards: [AdminGuard],
+                    method(entry) {
+                        expectTypeOf(this.user).toMatchTypeOf<{ roles: ['admin'] }>();
                     }
                 }
             })
