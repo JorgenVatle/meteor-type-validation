@@ -11,10 +11,25 @@ it('should infer method params types from the provided schema', () => {
                 expectTypeOf(entry).toEqualTypeOf<{
                     title: string;
                     completed: boolean;
+                    createdAt: Date,
                 }>();
                 
                 expectTypeOf(this.userId).toEqualTypeOf<null | string>();
             }
         },
     })
+});
+
+it('defined methods should yield a map with schema input types, not output types', () => {
+    const methods = defineMethods({
+        'todo.create': {
+            schema: [CreateTodoSchema],
+            guards: [],
+            method(entry) {}
+        },
+    })
+    
+    expectTypeOf(methods['todo.create'].method).parameters.toEqualTypeOf<[
+        { title: string, completed: boolean }
+    ]>()
 })
