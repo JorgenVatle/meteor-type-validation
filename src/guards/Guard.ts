@@ -18,7 +18,7 @@ export abstract class Guard {
      * Whether validated context should be written to the handle's `this` type.
      * Useful if you're transforming the context to add user information for example.
      */
-    public readonly writeToContext = true;
+    public abstract readonly writeToContext: boolean;
     
     /**
      * Optionally define to perform custom validation after the context has been validated.
