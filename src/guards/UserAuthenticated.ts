@@ -8,6 +8,8 @@ import { Guard } from './Guard';
  */
 export class UserAuthenticated extends Guard {
     
+    public readonly writeToContext = false;
+    
     public readonly contextSchema = v.object({
         userId: v.pipe(
             v.nullish(v.string()),
