@@ -20,7 +20,10 @@ export const EditTodoSchema = v.object({
 
 export const QueryTodoSchema = v.partial(v.object({
     _id: v.string(),
-    title: v.string(),
+    title: v.pipe(
+        v.string(),
+        v.transform((title) => new RegExp(`${title}`, 'i')) // Don't actually do this in your project, it's dangerous
+    ),
     completed: v.boolean(),
     createdAt: v.object({
         $gt: v.date(),
