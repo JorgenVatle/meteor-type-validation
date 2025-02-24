@@ -5,7 +5,7 @@ import type { GuardFunction, GuardStatic } from '../guards/Guard';
 
 export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
-    TGuards extends GuardStatic[] | [] = [],
+    TGuards extends GuardStatic[] = [],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown
 > {
@@ -21,7 +21,7 @@ export interface MethodDefinition<
 }
 export interface PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
-    TGuards extends GuardStatic[] | [] = [],
+    TGuards extends GuardStatic[] = [],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown,
 > {
