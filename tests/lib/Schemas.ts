@@ -30,3 +30,8 @@ export const QueryTodoSchema = v.partial(v.object({
         $lt: v.date(),
     }),
 }))
+
+export const QueryOptionsSchema = v.object({
+    limit: v.number(),
+    fields: v.optional(v.record(v.string(), v.number())),
+})
