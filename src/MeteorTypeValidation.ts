@@ -167,10 +167,9 @@ export class MeteorTypeValidation<
         }
     }
     
-    protected withErrorHandler(method: (...params: unknown[]) => unknown): ((...params: unknown[]) => any) | Function {
+    protected withErrorHandler(method: (...params: unknown[]) => unknown): (...params: unknown[]) => any {
         const customErrorHandler = this.options.errorHandler?.bind(this);
-        return Meteor.wrapAsync(async function(this: WrappedContext & TExtendedContext, ...inputParams: unknown[]) {
-            const params = inputParams.slice(0, -1);
+        return async function(this: WrappedContext & TExtendedContext, ...params: unknown[]) {
             try {
                 const result = await method.apply(this, params);
                 this.logger?.debug(`Request completed in ${(performance.now() - this.startTime).toLocaleString()}ms`);
@@ -194,7 +193,7 @@ export class MeteorTypeValidation<
                 
                 throw formattedError;
             }
-        });
+        };
     }
     
     protected wrapResource({ definition, name }: {
