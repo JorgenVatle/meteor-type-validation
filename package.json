@@ -1,6 +1,6 @@
 {
   "name": "meteor-type-validation",
-  "version": "2.3.0",
+  "version": "2.4.0-beta.5",
   "description": "A lightweight set of TypeScript utilities to add proper type inference and validation for your Meteor publications and methods",
   "main": "dist/index.js",
   "files": [
@@ -14,7 +14,7 @@
     "default": "./dist/index.js"
   },
   "scripts": {
-    "test": "npm run lint",
+    "test": "vitest",
     "lint": "tsc --noEmit",
     "build": "tsup src/index.ts",
     "prepack": "npm run build",
@@ -42,8 +42,8 @@
     "@types/meteor": "^2.9.8",
     "lodash-es": "^4.17.21",
     "tsup": "^8.0.2",
-    "typescript": "^5.4.2",
-    "vitest": "^1.3.1"
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.6"
   },
   "optionalDependencies": {
     "pino": "^8.19.0"

@@ -4,16 +4,18 @@ import { performance } from 'node:perf_hooks';
 import type Pino from 'pino';
 import { type GenericSchema, parse, ValiError } from 'valibot';
 import { formatValibotError } from './Errors';
-import type { GuardStatic } from './Guard';
+import type { GuardStatic } from './guards/Guard';
 import { Logger } from './Logger';
 import type {
     BaseContext,
     ContextWrapper,
     MethodDefinition,
-    MethodDefinitionMap,
     PublicationDefinition,
-    PublicationDefinitionMap, RateLimiterRule,
-    ResourceType, UnwrapMethods, UnwrapPublications, UnwrapSchemaInput,
+    RateLimiterRule,
+    ResourceType,
+    UnwrapMethods,
+    UnwrapPublications,
+    UnwrapSchemaInput,
     WrappedContext,
 } from './types/ValidatedResources';
 
@@ -49,26 +51,44 @@ export class MeteorTypeValidation<
     public defineMethods<
         TSchemas extends Record<keyof TGuards, GenericSchema[]>,
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
-        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>
+        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
+        TMethods extends {
+            [key in keyof TSchemas | keyof TGuards | keyof TResult]: {
+                guards: any,
+                schema: any,
+                method: (...params: UnwrapSchemaInput<NoInfer<TSchemas>[key]>) => NoInfer<TResult>[key];
+            }
+        }
     >(methods: {
         [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
-    }) {
-        return methods;
+    }): TMethods {
+        return methods as TMethods;
     }
     
     public definePublications<
         TSchemas extends Record<keyof TGuards, GenericSchema[]>,
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
-        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>
+        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
+        TPublications extends {
+            [key in keyof TSchemas | keyof TGuards | keyof TResult]: {
+                schema: any,
+                guards: any,
+                publish: (...params: UnwrapSchemaInput<NoInfer<TSchemas>[key]>) => NoInfer<TResult>[key]
+            }
+        }
     >(publications: {
         [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
-    }) {
+    }): TPublications {
+        if (Meteor.isClient && !Meteor.isProduction) {
+            const logger = this.options?.createLogger?.({ type: 'publication', name: '<internal definition>', context: {} as any }) || console;
+            logger.warn(new Error(`Publication definition included in client bundle. This is generally unwanted as publications should only live on the server.`));
+        }
+        
+        // @ts-expect-error Type mismatch
         return publications;
     }
     
-    public exposeMethods<TMethods extends MethodDefinitionMap>(methods: TMethods): {
-        [key in keyof TMethods]: (...params: Parameters<TMethods[key]['method']>) => ReturnType<TMethods[key]['method']>
-    } {
+    public exposeMethods<TMethods extends Record<string, MethodDefinition<any, any>>>(methods: TMethods): UnwrapMethods<TMethods> {
         const methodMap = Object.entries(methods).map(([name, definition]) => {
             definition.rateLimiters?.forEach((rule) => this.loadRateLimit({ rule, name, type: 'method' }));
             return [name, this.wrapResource({ definition, name })]
@@ -78,9 +98,7 @@ export class MeteorTypeValidation<
         return wrappedMethods;
     }
     
-    public exposePublications<TPublications extends PublicationDefinitionMap>(publications: TPublications): {
-        [key in keyof TPublications]: (...params: Parameters<TPublications[key]['publish']>) => ReturnType<TPublications[key]['publish']>
-    } {
+    public exposePublications<TPublications extends Record<string, PublicationDefinition<any, any>>>(publications: TPublications): UnwrapPublications<TPublications> {
         const publicationMap = Object.entries(publications).map(([name, definition]) => {
             const wrappedPublication = this.wrapResource({ name, definition });
             Meteor.publish(name, wrappedPublication);
@@ -141,7 +159,7 @@ export class MeteorTypeValidation<
         
         // Run guard validators
         for (const guard of definition.guards) {
-            await new guard(context, validatedParams).validate();
+            await new guard(context, validatedParams)._validate();
         }
         
         return {

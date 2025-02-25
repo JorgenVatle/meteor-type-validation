@@ -1,7 +1,7 @@
-import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
-import type { GuardFunction, GuardStatic } from '../Guard';
-import type { Meteor, Subscription } from 'meteor/meteor';
 import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
+import type { Meteor, Subscription } from 'meteor/meteor';
+import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
+import type { GuardFunction, GuardStatic } from '../guards/Guard';
 
 export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
@@ -10,9 +10,14 @@ export interface MethodDefinition<
     TReturnType = unknown
 > {
     schema: [...TSchemas],
-    guards: TGuards,
+    guards: [...TGuards],
     rateLimiters?: RateLimiterRule[],
-    method(this: ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
+    method: (
+        this: TGuards extends []
+              ? Meteor.MethodThisType & TExtendedContext
+              : ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext,
+        ...params: UnwrapSchemaOutput<TSchemas>
+    ) => TReturnType
 }
 export interface PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
@@ -21,9 +26,14 @@ export interface PublicationDefinition<
     TReturnType = unknown,
 > {
     schema: [...TSchemas],
-    guards: TGuards,
+    guards: [...TGuards],
     rateLimiters?: RateLimiterRule[],
-    publish(this: ValidatedThisType<TGuards, Subscription> & TExtendedContext, ...params: UnwrapSchemaOutput<TSchemas>): TReturnType
+    publish: (
+        this: TGuards extends []
+              ? Subscription & TExtendedContext
+              : ValidatedThisType<NoInfer<TGuards>, Subscription> & TExtendedContext,
+        ...params: UnwrapSchemaOutput<TSchemas>
+    ) => TReturnType
 }
 
 /**
@@ -48,6 +58,8 @@ export type PublicationDefinitionMap = {
     [key in string]: PublicationDefinition
 }
 
+export type ResourceDefinition = MethodDefinition | PublicationDefinition;
+
 export type RateLimiterRule = Pick<DDPRateLimiter.Matcher, 'userId' | 'connectionId' | 'clientAddress'> & {
     requestCount?: number;
     intervalMs?: number;
@@ -58,7 +70,7 @@ export type RateLimiterRule = Pick<DDPRateLimiter.Matcher, 'userId' | 'connectio
  * fed into Meteor.methods(...)
  */
 export type UnwrapMethods<TMethods extends MethodDefinitionMap> = {
-    [key in keyof TMethods]: (...params: UnwrapSchemaInput<TMethods[key]['schema']>) => ReturnType<TMethods[key]['method']>;
+    [key in keyof TMethods]: TMethods[key]['method'];
 }
 
 /**
@@ -66,7 +78,7 @@ export type UnwrapMethods<TMethods extends MethodDefinitionMap> = {
  * they would be added to Meteor.publish(<name>, ...)
  */
 export type UnwrapPublications<TPublications extends PublicationDefinitionMap> = {
-    [key in keyof TPublications]: (...params: UnwrapSchemaInput<TPublications[key]['schema']>) => ReturnType<TPublications[key]['publish']>;
+    [key in keyof TPublications]: TPublications[key]['publish'];
 }
 
 /**
@@ -86,14 +98,14 @@ export type UnwrapSchemaInput<TSchemas extends GenericSchema[]> = {
 }
 
 type ValidatedThisType<
-    TGuards extends GuardStatic[] | GuardFunction[],
+    TGuards extends GuardStatic[] | GuardFunction[] | [],
     TThisType extends _ResourceThisType = _ResourceThisType,
 > = TGuards extends GuardStatic[]
     ? ValidatedStaticThisType<TGuards> & BaseContext<TThisType>
     : TGuards extends GuardFunction[]
       ? ValidatedFnThisType<TGuards> & BaseContext<TThisType>
       : never;
-type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InstanceType<TGuards[number]>['validatedContext'];
+type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InferOutput<InstanceType<TGuards[number]>['contextSchema']>;
 type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[number]>;
 export type ResourceType = 'method' | 'publication';
 

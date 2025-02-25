@@ -1,5 +1,46 @@
 # meteor-type-validation
 
+## 2.4.0-beta.5
+
+### Patch Changes
+
+- 0cfacf5: Add missing exports for new reusable guard classes
+
+## 2.4.0-beta.4
+
+### Minor Changes
+
+- 91e7c98: Provide `UserAuthenticated` and `UserGuard` guard classes so peer projects don't have to write up their own validation guard for this.
+
+  - Fixed issue where the `this` context for methods and publications without guards specified would infer to `never`.
+  - Refactored abstract Guard class to accept a schema property to validate context and input parameters with type-safe inference for the resulting method/publication hook.
+
+## 2.4.0-beta.3
+
+### Patch Changes
+
+- ccf09fb: Fix type inference for method/publication input parameters using output instead of input types for resulting API definition objects.
+
+  - Added warning message if publication definitions are imported by a client.
+
+## 2.4.0-beta.2
+
+### Patch Changes
+
+- 4b40d1c: Fix issue where internal type definitions would be included in peer publication/method type definitions
+
+## 2.4.0-beta.1
+
+### Patch Changes
+
+- 383dde3: Omit detailed type information from declared method and publication objects
+
+## 2.4.0-beta.0
+
+### Minor Changes
+
+- 78f830a: Optimize types for method and publication declaration methods to avoid unnecessary work from the TS engine
+
 ## 2.3.0
 
 ### Minor Changes
