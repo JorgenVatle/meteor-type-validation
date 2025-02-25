@@ -1,6 +1,6 @@
 import { expectTypeOf, it } from 'vitest';
 import { definePublications } from '../../src';
-import { QueryTodoSchema } from '../lib/Schemas';
+import { QueryOptionsSchema, QueryTodoSchema } from '../lib/Schemas';
 
 it('should infer method params types from the provided schema', () => {
     definePublications({
@@ -17,6 +17,30 @@ it('should infer method params types from the provided schema', () => {
                         $lt: Date,
                     }
                 }>>();
+                
+                expectTypeOf(this.userId).toEqualTypeOf<null | string>();
+            }
+        },
+    })
+});
+
+it('should infer multiple publication params', () => {
+    definePublications({
+        'todos': {
+            schema: [QueryTodoSchema, QueryOptionsSchema],
+            guards: [],
+            publish(entry, options) {
+                expectTypeOf(entry).toEqualTypeOf<Partial<{
+                    _id: string,
+                    title: RegExp,
+                    completed: boolean,
+                    createdAt: {
+                        $gt: Date,
+                        $lt: Date,
+                    }
+                }>>();
+                
+                expectTypeOf(options).toEqualTypeOf<{ fields?: Record<string, number>, limit: number }>();
                 
                 expectTypeOf(this.userId).toEqualTypeOf<null | string>();
             }
