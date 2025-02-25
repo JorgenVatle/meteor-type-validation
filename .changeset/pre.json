@@ -5,6 +5,7 @@
     "meteor-type-validation": "2.3.0"
   },
   "changesets": [
+    "chilly-parrots-tease",
     "few-spiders-tap",
     "five-tomatoes-type",
     "hot-cooks-tie",
