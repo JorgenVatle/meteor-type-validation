@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.4.0-beta.5
+
+### Patch Changes
+
+- 0cfacf5: Add missing exports for new reusable guard classes
+
 ## 2.4.0-beta.4
 
 ### Minor Changes
