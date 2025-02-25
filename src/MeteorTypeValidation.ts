@@ -167,10 +167,8 @@ export class MeteorTypeValidation<
         }
     }
     
-    protected withErrorHandler(method: (...params: unknown[]) => unknown): ((...params: unknown[]) => any) {
+    protected withErrorHandler(method: (...params: unknown[]) => unknown): ((...params: unknown[]) => any) | Function {
         const customErrorHandler = this.options.errorHandler?.bind(this);
-        
-        // @ts-expect-error (Bad typing from @types/meteor)
         return Meteor.wrapAsync(async function(this: WrappedContext & TExtendedContext, ...inputParams: unknown[]) {
             const params = inputParams.slice(0, -1);
             try {
