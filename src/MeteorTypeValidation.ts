@@ -219,9 +219,7 @@ export class MeteorTypeValidation<
             return run.apply(context, validatedParams);
         };
         
-        const withErrorHandler = this.withErrorHandler(handle);
-        
-        return Meteor.bindEnvironment(withErrorHandler);
+        return this.withErrorHandler(handle);
     }
     
     private parseDefinition(definition: MethodDefinition | PublicationDefinition): {
