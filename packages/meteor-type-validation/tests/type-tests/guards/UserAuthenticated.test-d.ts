@@ -15,6 +15,22 @@ describe('methods', () => {
             }
         })
     })
+    
+    it(`should affect types from the provided schema`, () => {
+        defineMethods({
+            'todos.create': {
+                guards: [UserAuthenticated],
+                schema: [CreateTodoSchema],
+                method(todo) {
+                    expectTypeOf(todo).toEqualTypeOf<{
+                        title: string,
+                        completed: boolean,
+                        createdAt: Date,
+                    }>();
+                }
+            }
+        })
+    })
 })
 
 describe('publications', () => {
