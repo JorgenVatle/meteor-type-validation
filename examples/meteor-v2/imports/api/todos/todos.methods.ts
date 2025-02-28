@@ -9,5 +9,12 @@ export default defineMethods({
         method(todo) {
             TodosCollection.insert(todo);
         }
+    },
+    'todos.edit': {
+        schema: [TodosSchema],
+        guards: [],
+        method(todo) {
+            TodosCollection.update(todo._id, { $set: todo });
+        }
     }
 })
