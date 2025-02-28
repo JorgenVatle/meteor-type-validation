@@ -17,7 +17,7 @@ export abstract class Guard {
     /**
      * Used to perform and potentially transform input parameters for guarded methods/publications.
      */
-    public readonly inputSchema!: v.BaseSchema<any, any, any>[];
+    public readonly inputSchema: v.GenericSchema[] = [];
     
     /**
      * Whether validated context should be written to the handle's `this` type.
