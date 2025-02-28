@@ -93,7 +93,7 @@ export type UnwrapSchemaInput<TSchemas extends GenericSchema[]> = {
  */
 type UnwrapGuardedSchemaOutput<TSchemas extends GenericSchema[], TGuards extends GuardStatic[]> = MergeDeep<
     UnwrapSchemaOutput<TSchemas>,
-    { [key in keyof TGuards]: UnwrapSchemaOutput<InstanceType<TGuards[key]>['inputSchema']> }[number],
+    UnwrapSchemaOutput<InstanceType<TGuards[number]>['inputSchema']>,
     { arrayMergeMode: 'spread', recurseIntoArrays: true }
 >
 
