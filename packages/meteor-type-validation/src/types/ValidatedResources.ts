@@ -91,9 +91,13 @@ export type UnwrapSchemaInput<TSchemas extends GenericSchema[]> = {
 /**
  * Infer method/publication argument output types after applying input validation schemas from guard classes.
  */
-type UnwrapGuardedSchemaOutput<TSchemas extends GenericSchema[], TGuards extends GuardStatic[]> = MergeDeep<
+type UnwrapGuardedSchemaOutput<
+    TSchemas extends GenericSchema[],
+    TGuards extends GuardStatic[],
+    TGuardSchemas extends GenericSchema[] = InstanceType<TGuards[number]>['inputSchema'],
+> = MergeDeep<
     UnwrapSchemaOutput<TSchemas>,
-    UnwrapSchemaOutput<InstanceType<TGuards[number]>['inputSchema']>,
+    UnwrapSchemaOutput<TGuardSchemas>,
     { arrayMergeMode: 'spread', recurseIntoArrays: true }
 >
 
