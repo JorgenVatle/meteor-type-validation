@@ -19,7 +19,7 @@ export interface MethodDefinition<
               : ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext,
         ...params: TGuards extends []
                    ? UnwrapSchemaOutput<TSchemas>
-                   : MergeDeep<{ [key in keyof TGuards]: UnwrapSchemaOutput<InstanceType<TGuards[key]>['inputSchema']> }[number], UnwrapSchemaOutput<TSchemas>>
+                   : MergeDeep<{ [key in keyof TGuards]: UnwrapSchemaOutput<InstanceType<TGuards[key]>['inputSchema']> }[number], UnwrapSchemaOutput<TSchemas>, { arrayMergeMode: 'spread', recurseIntoArrays: true }>
     ) => TReturnType
 }
 export interface PublicationDefinition<
