@@ -110,7 +110,7 @@
   },
   "include": [
     "src",
-    "packages/meteor-type-validation/tests"
+    "tests"
   ],
   "exclude": [
     "./tests/build-output"
