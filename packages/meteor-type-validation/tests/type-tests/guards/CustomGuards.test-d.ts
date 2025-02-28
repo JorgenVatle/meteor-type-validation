@@ -36,7 +36,8 @@ describe('CreatedByCurrentUser', () => {
                     schema: [EditTodoSchema],
                     guards: [UserAuthenticated, CreatedByCurrentUser],
                     method(entry) {
-                        expectTypeOf(entry).toMatchTypeOf<{ createdBy: string }>()
+                        expectTypeOf(entry).toMatchTypeOf<{ createdBy: string }>();
+                        expectTypeOf(this.userId).toEqualTypeOf<string>();
                     }
                 }
             })
