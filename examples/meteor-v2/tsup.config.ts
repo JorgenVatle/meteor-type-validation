@@ -3,7 +3,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
     target: 'node14',
-    entry: ['./server/main.ts'],
+    entry: ['./server/entry-tsup.ts'],
     outDir: 'server/_bundle',
     skipNodeModulesBundle: true,
     sourcemap: true,
