@@ -1,4 +1,4 @@
 import { Mongo } from 'meteor/mongo';
-import type { TodosDocument } from './todos.schema';
+import type { TodoDocument } from './todos.schema';
 
-export const TodosCollection = new Mongo.Collection<TodosDocument>('todos');
+export const TodosCollection = new Mongo.Collection<TodoDocument>('todos');
