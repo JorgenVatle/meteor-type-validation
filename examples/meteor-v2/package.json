@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.5",
-    "meteor-node-stubs": "^1.2.7"
+    "meteor-node-stubs": "^1.2.7",
+    "meteor-vite": "^2.0.0"
   },
   "meteor": {
     "mainModule": {
@@ -17,5 +18,9 @@
       "server": "server/entry-meteor.js"
     },
     "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "vite": "^4.5.9"
   }
 }
