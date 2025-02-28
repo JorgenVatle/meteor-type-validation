@@ -1,4 +1,4 @@
-import { Meteor, DefinedMethods, DefinedPublications } from '@meteor';
+import { DefinedMethods, DefinedPublications, Meteor } from '@meteor';
 
 /**
  * Overrides for Meteor's default types to enforce type safety.

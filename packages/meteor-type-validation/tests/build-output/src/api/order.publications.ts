@@ -1,5 +1,5 @@
-import { Mongo } from 'meteor/mongo';
 import { definePublications } from 'meteor-type-validation';
+import { Mongo } from 'meteor/mongo';
 import type { Order } from '../schemas';
 
 export default definePublications({

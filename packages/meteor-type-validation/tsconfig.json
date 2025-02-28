@@ -108,6 +108,11 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
-  "include": ["src", "tests"],
-  "exclude": ["./tests/build-output"]
+  "include": [
+    "src",
+    "packages/meteor-type-validation/tests"
+  ],
+  "exclude": [
+    "./tests/build-output"
+  ]
 }

@@ -2,11 +2,11 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/packages/meteor-type-validation/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/dist" />
-      <excludeFolder url="file://$MODULE_DIR$/tests/build-output/.tsup" />
-      <excludeFolder url="file://$MODULE_DIR$/tests/build-output/dist" />
       <excludeFolder url="file://$MODULE_DIR$/examples/meteor-v2/server/_bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/meteor-type-validation/tests/build-output/.tsup" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/meteor-type-validation/tests/build-output/dist" />
       <excludePattern pattern=".meteor/local" />
       <excludePattern pattern="_vite-bundle" />
     </content>
