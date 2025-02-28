@@ -60,13 +60,29 @@ describe('CreatedByCurrentUser', () => {
 
 describe('AdminGuard', () => {
     describe('methods', () => {
-        it(`should asser that the user's 'roles' field includes 'admin'`, () => {
+        it(`should assert that the user's 'roles' field includes 'admin'`, () => {
             defineMethods({
                 'admin:todo.edit': {
                     schema: [EditTodoSchema],
                     guards: [AdminGuard],
                     method(entry) {
                         expectTypeOf(this.user).toMatchTypeOf<{ roles: 'admin'[] }>();
+                    }
+                }
+            })
+        })
+        
+        it(`should not lose the original param schema type`, () => {
+            defineMethods({
+                'admin:todo.edit': {
+                    schema: [EditTodoSchema],
+                    guards: [AdminGuard],
+                    method(entry) {
+                        expectTypeOf(entry).toEqualTypeOf<{
+                            _id: string,
+                            title: string,
+                            completed: boolean,
+                        }>()
                     }
                 }
             })
