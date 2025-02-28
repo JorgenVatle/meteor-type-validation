@@ -30,4 +30,11 @@ export const TodoEditSchema = v.pipe(
     })
 );
 
+export const TodosQueryOptions = v.object({
+    limit: v.optional(
+        v.pipe(v.number(), v.maxValue(255), v.integer()),
+        255,
+    ),
+})
+
 export type TodoDocument = v.InferOutput<typeof TodoDocument>;
