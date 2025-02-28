@@ -1,5 +1,6 @@
 import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import type { Meteor, Subscription } from 'meteor/meteor';
+import type { MergeDeep } from 'type-fest';
 import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
 import type { GuardFunction, GuardStatic } from '../guards/Guard';
 
@@ -16,7 +17,11 @@ export interface MethodDefinition<
         this: TGuards extends []
               ? Meteor.MethodThisType & TExtendedContext
               : ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext,
-        ...params: UnwrapSchemaOutput<TSchemas>
+        ...params: TGuards extends []
+                   ? UnwrapSchemaOutput<TSchemas>
+                   : MergeDeep<{
+            [key in keyof TGuards]: UnwrapSchemaOutput<InstanceType<TGuards[key]>['inputSchema']>
+        }[number], UnwrapSchemaOutput<TSchemas>>
     ) => TReturnType
 }
 export interface PublicationDefinition<
