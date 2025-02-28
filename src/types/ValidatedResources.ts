@@ -35,7 +35,9 @@ export interface PublicationDefinition<
         this: TGuards extends []
               ? Subscription & TExtendedContext
               : ValidatedThisType<NoInfer<TGuards>, Subscription> & TExtendedContext,
-        ...params: UnwrapSchemaOutput<TSchemas>
+        ...params: TGuards extends []
+                   ? UnwrapSchemaOutput<TSchemas>
+                   : UnwrapGuardedSchemaOutput<TSchemas, TGuards>
     ) => TReturnType
 }
 
