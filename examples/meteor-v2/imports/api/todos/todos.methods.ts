@@ -1,28 +1,27 @@
 import { defineMethods } from 'meteor-type-validation';
-import * as v from 'valibot';
 import { TodosCollection } from './todos.collection';
-import { TodosSchema } from './todos.schema';
+import { TodoCreateSchema, TodoEditSchema, TodosSelector } from './todos.schema';
 
 export default defineMethods({
     'todos.create': {
-        schema: [TodosSchema],
+        schema: [TodoCreateSchema],
         guards: [],
         method(todo) {
             TodosCollection.insert(todo);
         }
     },
     'todos.edit': {
-        schema: [TodosSchema],
+        schema: [TodosSelector, TodoEditSchema],
         guards: [],
-        method(todo) {
-            TodosCollection.update(todo._id, { $set: todo });
+        method(selector, todo) {
+            TodosCollection.update(selector, { $set: todo });
         }
     },
     'todos.delete': {
-        schema: [v.pick(TodosSchema, ['_id'])],
+        schema: [TodosSelector],
         guards: [],
-        method({ _id }) {
-            TodosCollection.remove(_id);
+        method(selector) {
+            TodosCollection.remove(selector);
         }
     }
 })
