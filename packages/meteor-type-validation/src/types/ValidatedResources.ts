@@ -102,18 +102,6 @@ export type UnwrapSchemaInput<TSchemas extends GenericSchema[]> = {
     [key in keyof TSchemas]: InferInput<TSchemas[key]>
 }
 
-type ValidatedThisType<
-    TGuards extends GuardStatic[] | GuardFunction[] | [],
-    TThisType extends _ResourceThisType = _ResourceThisType,
-> = TGuards extends GuardStatic[]
-    ? ValidatedStaticThisType<TGuards> & BaseContext<TThisType>
-    : TGuards extends GuardFunction[]
-      ? ValidatedFnThisType<TGuards> & BaseContext<TThisType>
-      : never;
-type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InferOutput<InstanceType<TGuards[number]>['contextSchema']>;
-type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[number]>;
-export type ResourceType = 'method' | 'publication';
-
 /**
  * Infer method/publication argument output types after applying input validation schemas from guard classes.
  */
@@ -123,12 +111,37 @@ type UnwrapGuardedSchemaOutput<TSchemas extends GenericSchema[], TGuards extends
     { arrayMergeMode: 'spread', recurseIntoArrays: true }
 >
 
+/**
+ * Infer the this-type of a publication/method handle after applying guard validators.
+ */
+type ValidatedThisType<
+    TGuards extends GuardStatic[] | GuardFunction[] | [],
+    TThisType extends _ResourceThisType = _ResourceThisType,
+> = TGuards extends GuardStatic[]
+    ? ValidatedStaticThisType<TGuards> & BaseContext<TThisType>
+    : TGuards extends GuardFunction[]
+      ? ValidatedFnThisType<TGuards> & BaseContext<TThisType>
+      : never;
+
+/**
+ * Infers the this-type of a static Guard class.
+ */
+type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InferOutput<InstanceType<TGuards[number]>['contextSchema']>;
+
+/**
+ * Infers the this-type of a Guard function/hook. (Non-class guard)
+ */
+type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[number]>;
+
+export type ResourceType = 'method' | 'publication';
+
 export interface ContextWrapper<
     TContext extends BaseContext = BaseContext,
     TType extends ResourceType = TContext extends Meteor.MethodThisType
-                                 ? 'method' : TContext extends Subscription
-                                              ? 'publication'
-                                              : never,
+                                 ? 'method'
+                                 : TContext extends Subscription
+                                   ? 'publication'
+                                   : never,
 > {
     type: TType,
     context: TContext,
