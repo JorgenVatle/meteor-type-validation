@@ -6,6 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/tests/build-output/.tsup" />
       <excludeFolder url="file://$MODULE_DIR$/tests/build-output/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/examples/meteor-v2/server/_bundle" />
       <excludePattern pattern=".meteor/local" />
       <excludePattern pattern="_vite-bundle" />
     </content>
