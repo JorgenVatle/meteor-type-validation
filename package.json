@@ -42,6 +42,7 @@
     "@types/meteor": "^2.9.8",
     "lodash-es": "^4.17.21",
     "tsup": "^8.0.2",
+    "type-fest": "^4.35.0",
     "typescript": "^5.7.3",
     "vitest": "^3.0.6"
   },
@@ -50,8 +51,5 @@
   },
   "peerDependencies": {
     "valibot": "^1.0.0-rc || ^1.0.0-beta || ^0.42.1"
-  },
-  "dependencies": {
-    "type-fest": "^4.35.0"
   }
 }
