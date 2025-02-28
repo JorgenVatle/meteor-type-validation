@@ -17,8 +17,7 @@
     "test": "vitest",
     "lint": "tsc --noEmit",
     "build": "tsup src/index.ts",
-    "prepack": "npm run build",
-    "release": "changeset publish"
+    "prepack": "npm run build"
   },
   "repository": {
     "type": "git",

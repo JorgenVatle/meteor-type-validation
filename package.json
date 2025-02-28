@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "npm run test --ws",
-    "build": "npm run build --ws"
+    "build": "npm run build --ws",
+    "release": "changeset publish"
   },
   "author": "",
   "license": "ISC",
