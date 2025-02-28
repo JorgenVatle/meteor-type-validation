@@ -98,8 +98,11 @@ type UnwrapGuardedSchemaOutput<
     TGuardSchemas extends InstanceType<TGuards[number]>['inputSchema'] = InstanceType<TGuards[number]>['inputSchema'],
 > = DefaultGuardInputSchema extends TGuardSchemas
     ? TSchemaOutput
-    : MergeDeep<TSchemaOutput, UnwrapSchemaOutput<TGuardSchemas>, { arrayMergeMode: 'spread', recurseIntoArrays: true }
->
+    : MergeDeep<
+        TSchemaOutput,
+        UnwrapSchemaOutput<TGuardSchemas>,
+        { arrayMergeMode: 'spread', recurseIntoArrays: true }
+    >
 
 /**
  * Infer the this-type of a publication/method handle after applying guard validators.
