@@ -12,6 +12,7 @@
   "dependencies": {
     "@babel/runtime": "^7.23.5",
     "meteor-node-stubs": "^1.2.7",
+    "meteor-type-validation": "^2.3.0",
     "meteor-vite": "^2.0.0",
     "valibot": "^1.0.0-rc.2"
   },
