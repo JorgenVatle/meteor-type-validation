@@ -9,6 +9,7 @@
   "scripts": {
     "test": "npm run test --ws",
     "build": "npm run build --ws",
+    "lint": "npm run lint --ws",
     "release": "changeset publish"
   },
   "author": "",
