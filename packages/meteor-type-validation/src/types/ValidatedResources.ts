@@ -2,7 +2,7 @@ import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import type { Meteor, Subscription } from 'meteor/meteor';
 import type { MergeDeep } from 'type-fest';
 import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
-import type { GuardFunction, GuardStatic } from '../guards';
+import type { DefaultGuardInputSchema, GuardFunction, GuardStatic } from '../guards';
 
 export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
@@ -94,11 +94,11 @@ export type UnwrapSchemaInput<TSchemas extends GenericSchema[]> = {
 type UnwrapGuardedSchemaOutput<
     TSchemas extends GenericSchema[],
     TGuards extends GuardStatic[],
-    TGuardSchemas extends GenericSchema[] = InstanceType<TGuards[number]>['inputSchema'],
-> = MergeDeep<
-    UnwrapSchemaOutput<TSchemas>,
-    UnwrapSchemaOutput<TGuardSchemas>,
-    { arrayMergeMode: 'spread', recurseIntoArrays: true }
+    TSchemaOutput extends UnwrapSchemaOutput<TSchemas> = UnwrapSchemaOutput<TSchemas>,
+    TGuardSchemas extends InstanceType<TGuards[number]>['inputSchema'] = InstanceType<TGuards[number]>['inputSchema'],
+> = TGuardSchemas extends DefaultGuardInputSchema
+    ? TSchemaOutput
+    : MergeDeep<TSchemaOutput, UnwrapSchemaOutput<TGuardSchemas>, { arrayMergeMode: 'spread', recurseIntoArrays: true }
 >
 
 /**

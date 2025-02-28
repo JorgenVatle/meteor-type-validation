@@ -17,7 +17,7 @@ export abstract class Guard {
     /**
      * Used to perform and potentially transform input parameters for guarded methods/publications.
      */
-    public abstract readonly inputSchema: v.GenericSchema[];
+    public readonly inputSchema: DefaultGuardInputSchema = [];
     
     /**
      * Whether validated context should be written to the handle's `this` type.
@@ -81,3 +81,5 @@ export type GuardFunction<
     context: BaseContext,
     params: UnwrapSchemaOutput<TSchemas>
 }) => asserts request;
+
+export type DefaultGuardInputSchema = v.GenericSchema[] | [v.GenericSchema<never>];
