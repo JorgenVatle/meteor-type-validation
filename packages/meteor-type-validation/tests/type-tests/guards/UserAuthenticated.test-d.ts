@@ -16,7 +16,7 @@ describe('methods', () => {
         })
     })
     
-    it(`should affect types from the provided schema`, () => {
+    it(`should not affect types from the provided schema`, () => {
         defineMethods({
             'todos.create': {
                 guards: [UserAuthenticated],
