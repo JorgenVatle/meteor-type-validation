@@ -56,11 +56,11 @@ export type WrappedContext<TBaseContext extends BaseContext = BaseContext> = TBa
 
 
 export type MethodDefinitionMap = {
-    [key in string]: MethodDefinition
+    [key in string]: Omit<MethodDefinition, 'method'> & { method: (...params: any) => any }
 }
 
 export type PublicationDefinitionMap = {
-    [key in string]: PublicationDefinition
+    [key in string]: Omit<PublicationDefinition, 'publish'> & { publish: (...params: any) => any }
 }
 
 export type ResourceDefinition = MethodDefinition | PublicationDefinition;
