@@ -95,7 +95,7 @@ type UnwrapGuardedSchemaOutput<
     TSchemas extends GenericSchema[],
     TGuards extends GuardStatic[],
     TSchemaOutput extends UnwrapSchemaOutput<TSchemas> = UnwrapSchemaOutput<TSchemas>,
-    TGuardSchemas extends InstanceType<TGuards[number]>['inputSchema'] = InstanceType<TGuards[number]>['inputSchema'],
+    TGuardSchemas extends InstanceType<TGuards[number]>['paramSchema'] = InstanceType<TGuards[number]>['paramSchema'],
 > = DefaultGuardInputSchema extends TGuardSchemas
     ? TSchemaOutput
     : MergeDeep<

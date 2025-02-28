@@ -6,7 +6,7 @@ export class BelongsToCurrentUser extends Guard {
     public readonly writeToParams = true;
     
     public readonly contextSchema = UserAuthenticated.contextSchema;
-    public readonly inputSchema = [
+    public readonly paramSchema = [
         v.pipe(
             v.object({}),
             v.transform((input) => Object.assign(input, { userId: this.context.userId! }))

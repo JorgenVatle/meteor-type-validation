@@ -17,7 +17,7 @@ export abstract class Guard {
     /**
      * Used to perform and potentially transform input parameters for guarded methods/publications.
      */
-    public readonly inputSchema: DefaultGuardInputSchema = [];
+    public readonly paramSchema: DefaultGuardInputSchema = [];
     
     /**
      * Whether validated context should be written to the handle's `this` type.
@@ -42,7 +42,7 @@ export abstract class Guard {
      */
     protected assertContext<
         TSelf extends Guard,
-    >(this: TSelf): asserts this is { context: v.InferOutput<TSelf['contextSchema']>, params: UnwrapSchemaOutput<TSelf['inputSchema']> } {
+    >(this: TSelf): asserts this is { context: v.InferOutput<TSelf['contextSchema']>, params: UnwrapSchemaOutput<TSelf['paramSchema']> } {
         // The context should be validated before this method is reachable, so no need to validate twice.
     }
     
@@ -59,9 +59,9 @@ export abstract class Guard {
                 Object.assign(this.context, context);
             }
         }
-        if (this.inputSchema) {
-            for (const index in this.inputSchema) {
-                const validated = await v.parseAsync(this.inputSchema[index], this.params[index]);
+        if (this.paramSchema) {
+            for (const index in this.paramSchema) {
+                const validated = await v.parseAsync(this.paramSchema[index], this.params[index]);
                 if (this.writeToParams) {
                     this.params[index] = validated;
                 }

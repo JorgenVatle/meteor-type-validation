@@ -7,7 +7,7 @@ export class CreatedByCurrentUser extends UserAuthenticated {
     public readonly writeToContext = false;
     
     
-    public readonly inputSchema = [
+    public readonly paramSchema = [
         v.object({
             createdBy: v.string(),
         }),
