@@ -19,7 +19,7 @@ export interface MethodDefinition<
               : ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext,
         ...params: TGuards extends []
                    ? UnwrapSchemaOutput<TSchemas>
-                   : MergeDeep<UnwrapSchemaOutput<TSchemas>, { [key in keyof TGuards]: UnwrapSchemaOutput<InstanceType<TGuards[key]>['inputSchema']> }[number], { arrayMergeMode: 'spread', recurseIntoArrays: true }>
+                   : UnwrapGuardedSchemaOutput<TSchemas, TGuards>
     ) => TReturnType
 }
 export interface PublicationDefinition<
@@ -111,6 +111,15 @@ type ValidatedThisType<
 type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InferOutput<InstanceType<TGuards[number]>['contextSchema']>;
 type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[number]>;
 export type ResourceType = 'method' | 'publication';
+
+/**
+ * Infer method/publication argument output types after applying input validation schemas from guard classes.
+ */
+type UnwrapGuardedSchemaOutput<TSchemas extends GenericSchema[], TGuards extends GuardStatic[]> = MergeDeep<
+    UnwrapSchemaOutput<TSchemas>,
+    { [key in keyof TGuards]: UnwrapSchemaOutput<InstanceType<TGuards[key]>['inputSchema']> }[number],
+    { arrayMergeMode: 'spread', recurseIntoArrays: true }
+>
 
 export interface ContextWrapper<
     TContext extends BaseContext = BaseContext,
