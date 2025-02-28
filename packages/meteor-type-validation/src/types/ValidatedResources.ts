@@ -13,14 +13,7 @@ export interface MethodDefinition<
     schema: [...TSchemas],
     guards: [...TGuards],
     rateLimiters?: RateLimiterRule[],
-    method: (
-        this: TGuards extends []
-              ? Meteor.MethodThisType & TExtendedContext
-              : ValidatedThisType<TGuards, Meteor.MethodThisType> & TExtendedContext,
-        ...params: TGuards extends []
-                   ? UnwrapSchemaOutput<TSchemas>
-                   : UnwrapGuardedSchemaOutput<TSchemas, TGuards>
-    ) => TReturnType
+    method: InferResourceHandleFn<TSchemas, TGuards, Meteor.MethodThisType & TExtendedContext, TReturnType>
 }
 export interface PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
@@ -31,14 +24,7 @@ export interface PublicationDefinition<
     schema: [...TSchemas],
     guards: [...TGuards],
     rateLimiters?: RateLimiterRule[],
-    publish: (
-        this: TGuards extends []
-              ? Subscription & TExtendedContext
-              : ValidatedThisType<NoInfer<TGuards>, Subscription> & TExtendedContext,
-        ...params: TGuards extends []
-                   ? UnwrapSchemaOutput<TSchemas>
-                   : UnwrapGuardedSchemaOutput<TSchemas, TGuards>
-    ) => TReturnType
+    publish: InferResourceHandleFn<TSchemas, TGuards, Subscription & TExtendedContext, TReturnType>
 }
 
 /**
@@ -132,6 +118,25 @@ type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InferOutput<Instan
  * Infers the this-type of a Guard function/hook. (Non-class guard)
  */
 type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[number]>;
+
+/**
+ * Infer a publication or method definition's handle function.
+ * Essentially the context that peer projects will have when defining methods and publications.
+ */
+type InferResourceHandleFn<
+    TSchemas extends GenericSchema[],
+    TGuards extends GuardStatic[],
+    TExtendedContext,
+    TReturnType,
+    TUnguardedOutput extends UnwrapSchemaOutput<TSchemas> = UnwrapSchemaOutput<TSchemas>,
+> = TGuards extends []
+    ? (this: TExtendedContext, ...params: TUnguardedOutput) => TReturnType
+    : (
+        this: TExtendedContext & ValidatedThisType<TGuards>,
+        ...params: TGuards extends []
+                   ? TUnguardedOutput
+                   : UnwrapGuardedSchemaOutput<TSchemas, TGuards>
+        ) => TReturnType
 
 export type ResourceType = 'method' | 'publication';
 
