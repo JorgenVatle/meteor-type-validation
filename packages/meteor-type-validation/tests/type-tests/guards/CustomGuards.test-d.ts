@@ -1,4 +1,4 @@
-import { defineMethods, definePublications } from 'src';
+import { defineMethods, definePublications, UserAuthenticated } from 'src';
 import { describe, expectTypeOf, it } from 'vitest';
 import { AdminGuard } from '../../lib/AdminGuard';
 import { CreatedByCurrentUser } from '../../lib/CreatedByCurrentUserGuard';
@@ -23,6 +23,18 @@ describe('CreatedByCurrentUser', () => {
                 'todo.edit': {
                     schema: [EditTodoSchema],
                     guards: [CreatedByCurrentUser],
+                    method(entry) {
+                        expectTypeOf(entry).toMatchTypeOf<{ createdBy: string }>()
+                    }
+                }
+            })
+        })
+        
+        it('can be used alongside other guards', () => {
+            defineMethods({
+                'todo.edit': {
+                    schema: [EditTodoSchema],
+                    guards: [UserAuthenticated, CreatedByCurrentUser],
                     method(entry) {
                         expectTypeOf(entry).toMatchTypeOf<{ createdBy: string }>()
                     }
