@@ -2,7 +2,9 @@
   "name": "meteor-v2",
   "private": true,
   "scripts": {
-    "start": "meteor run",
+    "start": "concurrently -n tsup,meteor -c dim,yellow -k npm:start:tsup npm:start:meteor",
+    "start:meteor": "meteor run",
+    "start:tsup": "tsup --watch",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer"
