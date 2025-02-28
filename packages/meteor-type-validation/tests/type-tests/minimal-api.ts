@@ -1,5 +1,5 @@
+import { defineMethods, definePublications, exposeMethods, exposePublications } from 'src';
 import * as v from 'valibot';
-import { defineMethods, definePublications, exposeMethods, exposePublications } from '../../src';
 
 export const AllMethods = defineMethods({
     'todo.add': {

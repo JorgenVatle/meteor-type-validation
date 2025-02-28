@@ -1,6 +1,6 @@
+import { defineMethods, definePublications } from 'src/Definitions';
+import { UserAuthenticated } from 'src/guards/UserAuthenticated';
 import { describe, expectTypeOf, it } from 'vitest';
-import { defineMethods, definePublications } from '../../../src/Definitions';
-import { UserAuthenticated } from '../../../src/guards/UserAuthenticated';
 import { CreateTodoSchema } from '../../lib/Schemas';
 
 describe('methods', () => {

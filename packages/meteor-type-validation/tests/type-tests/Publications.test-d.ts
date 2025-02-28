@@ -1,5 +1,5 @@
+import { definePublications } from 'src';
 import { expectTypeOf, it } from 'vitest';
-import { definePublications } from '../../src';
 import { QueryOptionsSchema, QueryTodoSchema } from '../lib/Schemas';
 
 it('should infer method params types from the provided schema', () => {

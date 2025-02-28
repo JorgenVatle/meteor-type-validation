@@ -1,5 +1,5 @@
+import { defineMethods } from 'src';
 import { expectTypeOf, it } from 'vitest';
-import { defineMethods } from '../../src';
 import { CreateTodoSchema } from '../lib/Schemas';
 
 it('should infer method params types from the provided schema', () => {

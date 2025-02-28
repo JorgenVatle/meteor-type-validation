@@ -1,6 +1,6 @@
 import { Meteor } from '@meteor';
+import { UserAuthenticated } from 'src/guards/UserAuthenticated';
 import * as v from 'valibot';
-import { UserAuthenticated } from '../../src/guards/UserAuthenticated';
 
 export class CreatedByCurrentUser extends UserAuthenticated {
     public readonly writeToParams = false;

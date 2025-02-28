@@ -1,6 +1,6 @@
+import { Guard } from 'src';
+import { UserGuard } from 'src/guards';
 import * as v from 'valibot';
-import { Guard } from '../../src';
-import { UserGuard } from '../../src/guards/UserGuard';
 
 export class AdminGuard extends Guard {
     

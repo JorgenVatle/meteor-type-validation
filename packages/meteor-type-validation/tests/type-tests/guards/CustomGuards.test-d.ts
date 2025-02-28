@@ -1,5 +1,5 @@
+import { defineMethods, definePublications } from 'src';
 import { describe, expectTypeOf, it } from 'vitest';
-import { defineMethods, definePublications } from '../../../src';
 import { AdminGuard } from '../../lib/AdminGuard';
 import { CreatedByCurrentUser } from '../../lib/CreatedByCurrentUserGuard';
 import { EditTodoSchema } from '../../lib/Schemas';

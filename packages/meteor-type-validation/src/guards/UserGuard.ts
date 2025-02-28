@@ -1,8 +1,8 @@
 import { Meteor } from '@meteor';
 import type { Meteor as _Meteor } from 'meteor/meteor';
 import * as v from 'valibot';
-import { UserAuthenticated } from '../../src/guards/UserAuthenticated';
 import { Guard } from './Guard';
+import { UserAuthenticated } from './UserAuthenticated';
 
 /**
  * Validate that user is logged in and attach the user object to the method/publication context.
