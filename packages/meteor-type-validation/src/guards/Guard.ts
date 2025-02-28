@@ -15,7 +15,13 @@ export abstract class Guard {
     public readonly contextSchema!: v.ObjectSchema<any, any> | v.ObjectSchemaAsync<any, any>;
     
     /**
-     * Used to perform and potentially transform input parameters for guarded methods/publications.
+     * Define a paramSchema to extend input validation for a method or publication handle.
+     *
+     * @note These schemas are executed after the handle's base schemas and only serve as further validation
+     * of user input. Essentially you cannot make input params more permissive, but you can make them more restrictive.
+     *
+     * Alternatively, you can use them to add additional fields to the user input. E.g. forcing input params to always
+     * include the current user's ID.
      */
     public readonly paramSchema: DefaultGuardInputSchema = [];
     
