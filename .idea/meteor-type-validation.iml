@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/tests/build-output/.tsup" />
       <excludeFolder url="file://$MODULE_DIR$/tests/build-output/dist" />
       <excludePattern pattern=".meteor/local" />
+      <excludePattern pattern="_vite-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
