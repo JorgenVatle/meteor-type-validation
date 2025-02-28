@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "concurrently -n tsup,meteor -c dim,yellow -k npm:start:tsup npm:start:meteor",
-    "start:meteor": "meteor run",
+    "start:meteor": "FORCE_COLOR=1 meteor run --raw-logs",
     "start:tsup": "tsup --watch",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
