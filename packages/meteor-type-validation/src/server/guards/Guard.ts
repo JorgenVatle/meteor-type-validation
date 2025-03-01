@@ -35,7 +35,7 @@ export abstract class Guard {
      * Whether to write validated input to input parameters before passing it onto the method or publication.
      * Keep in mind that method and publication handles' original validation schema is called before the guard's
      */
-    public readonly writeToParams: boolean = false;
+    public readonly writeToParams: 'replace' | 'patch' | false = false;
     
     /**
      * Optionally define to perform custom validation after the context has been validated.
@@ -68,9 +68,19 @@ export abstract class Guard {
         if (this.paramSchema) {
             for (const index in this.paramSchema) {
                 const validated = await v.parseAsync(this.paramSchema[index], this.params[index]);
-                if (this.writeToParams) {
-                    this.params[index] = validated;
+                const originalParam = this.params[index];
+                if (!this.writeToParams) {
+                    continue;
                 }
+                if (this.writeToParams === 'replace') {
+                    this.params[index] = validated;
+                    continue;
+                }
+                if (originalParam && typeof originalParam === 'object') {
+                    Object.assign(originalParam, validated);
+                    continue;
+                }
+                throw new Error('[Guard] Can only write params to input with an object type. If you wanted to rewrite params, make sure you set rewriteParams = true in your guard class.');
             }
         }
         await this.validate();
