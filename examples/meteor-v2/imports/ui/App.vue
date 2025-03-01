@@ -21,7 +21,7 @@
         <div v-else-if="user.loading">
           <p>Waiting on login...</p>
         </div>
-        <div>
+        <div v-else>
           <p>Todos should appear here</p>
         </div>
       </div>
