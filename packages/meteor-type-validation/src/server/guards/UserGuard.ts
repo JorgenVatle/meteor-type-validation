@@ -26,19 +26,22 @@ export class UserGuard extends Guard {
         createdAt: 1,
     }
     
-    public static readonly contextSchema = v.pipeAsync(
-        UserLoggedInGuard.contextSchema,
-        v.transformAsync(async (context) => {
-            const user = await Meteor.users.findOneAsync(context.userId, { fields: UserGuard.fields });
-            
-            // This shouldn't really happen, but let's check for it anyway.
-            if (!user) {
-                throw new Meteor.Error(500, 'Unable to retrieve user details!')
-            }
-            
-            return Object.assign(context, { user });
-        })
-    );
+    public static readonly contextSchema = Promise.await
+                                           ? v.pipe(UserLoggedInGuard.contextSchema, v.transform(this.getUser))
+                                           : v.pipeAsync(UserLoggedInGuard.contextSchema, v.transformAsync(this.getUser));
+    
+    private static async getUser(context: { userId: string }) {
+        // Recent versions of Meteor v3 will always return a promise here.
+        const userPromise = Meteor.users.findOne(context.userId, { fields: UserGuard.fields });
+        const user = Promise.await ? Promise.await(userPromise) : await userPromise;
+        
+        // This shouldn't really happen, but let's check for it anyway.
+        if (!user) {
+            throw new Meteor.Error(500, 'Unable to retrieve user details!')
+        }
+        
+        return Object.assign(context, { user });
+    }
     
     public readonly contextSchema = UserGuard.contextSchema;
     
