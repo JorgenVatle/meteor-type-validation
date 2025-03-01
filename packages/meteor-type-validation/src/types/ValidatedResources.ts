@@ -95,11 +95,11 @@ type UnwrapGuardedSchemaOutput<
     TSchemas extends GenericSchema[],
     TGuards extends GuardStatic[],
     TSchemaOutput extends UnwrapSchemaOutput<TSchemas> = UnwrapSchemaOutput<TSchemas>,
-    TStaticSchemas extends UnwrapGuardStaticSchemas<TGuards> = UnwrapGuardStaticSchemas<TGuards>
-> = any[] extends TStaticSchemas[number]
+    TGuardOutput extends UnwrapGuardStaticSchemas<TGuards> = UnwrapGuardStaticSchemas<TGuards>
+> = any[] extends TGuardOutput[number]
     ? MergeDeep<
         TSchemaOutput,
-        TStaticSchemas[number],
+        TGuardOutput[number],
         { arrayMergeMode: 'spread', recurseIntoArrays: true }
     >
     : TSchemaOutput
