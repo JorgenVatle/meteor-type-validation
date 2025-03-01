@@ -176,9 +176,9 @@ export class MeteorTypeValidation<
     
     protected withErrorHandler(method: (...params: unknown[]) => unknown): (...params: unknown[]) => any {
         const customErrorHandler = this.options.errorHandler?.bind(this);
-        return async function(this: WrappedContext & TExtendedContext, ...params: unknown[]) {
+        return function(this: WrappedContext & TExtendedContext, ...params: unknown[]) {
             try {
-                const result = await method.apply(this, params);
+                const result = Promise.await(method.apply(this, params));
                 this.logger?.debug(`Request completed in ${(performance.now() - this.startTime).toLocaleString()}ms`);
                 return result;
             } catch (error) {
@@ -210,25 +210,23 @@ export class MeteorTypeValidation<
         const api = this;
         const { run, type } = this.parseDefinition(definition);
         
-        const handle = function(this: BaseContext, ...params: unknown[]) {
+        const handle = async function(this: BaseContext, ...params: unknown[]) {
+            const contextPromise = api.extendContext({
+                type,
+                name,
+                context: this,
+            });
+            
+            const context = Promise.await ? Promise.await(contextPromise) : await contextPromise;
+            
             const request = api.validateRequest({
-                context: api.extendContext({
-                    type,
-                    name,
-                    context: this,
-                }),
+                context,
                 definition,
                 params,
             });
             
-            if (Promise.await) {
-                const { validatedContext, validatedParams } = Promise.await(request);
-                return run.apply(validatedContext, validatedParams);
-            }
-            
-            return request.then(({ validatedParams, validatedContext }) => {
-                return run.apply(validatedContext, validatedParams);
-            })
+            const { validatedParams } = Promise.await ? Promise.await(request) : await request;
+            return run.apply(context, validatedParams)
         };
         
         return this.withErrorHandler(handle);
@@ -253,6 +251,6 @@ export class MeteorTypeValidation<
 
 declare global {
     interface PromiseConstructor {
-        await?: <T>(promise: T) => Awaited<T>
+        await: <T>(promise: T) => Awaited<T>
     }
 }
