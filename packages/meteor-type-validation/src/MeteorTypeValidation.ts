@@ -64,7 +64,8 @@ export class MeteorTypeValidation<
     >(methods: {
         [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
     }): TMethods {
-        return methods as TMethods;
+        // @ts-expect-error The method() property is modified to accept schema input types instead of output schema types which are used by the actual definition
+        return methods;
     }
     
     public definePublications<
