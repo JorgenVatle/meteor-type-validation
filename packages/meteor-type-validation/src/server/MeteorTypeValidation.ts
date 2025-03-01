@@ -174,9 +174,10 @@ export class MeteorTypeValidation<
     
     protected withErrorHandler(method: (...params: unknown[]) => unknown): (...params: unknown[]) => any {
         const customErrorHandler = this.options.errorHandler?.bind(this);
-        return function(this: WrappedContext & TExtendedContext, ...params: unknown[]) {
+        return async function(this: WrappedContext & TExtendedContext, ...params: unknown[]) {
             try {
-                const result = Promise.await(method.apply(this, params));
+                const resultPromise = method.apply(this, params);
+                const result = Promise.await ? Promise.await(resultPromise) : await resultPromise;
                 this.logger?.debug(`Request completed in ${(performance.now() - this.startTime).toLocaleString()}ms`);
                 return result;
             } catch (error) {
