@@ -1,5 +1,5 @@
-import { defineMethods, definePublications } from 'src/Definitions';
-import { UserAuthenticated } from 'src/guards/UserAuthenticated';
+import { defineMethods, definePublications } from 'src/server/Definitions';
+import { UserAuthenticated } from 'src/server/guards/UserAuthenticated';
 import { describe, expectTypeOf, it } from 'vitest';
 import { CreateTodoSchema } from '../../lib/Schemas';
 

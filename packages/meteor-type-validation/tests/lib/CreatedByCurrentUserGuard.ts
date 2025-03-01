@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { UserAuthenticated } from 'src/guards/UserAuthenticated';
+import { UserAuthenticated } from 'src/server/guards/UserAuthenticated';
 import * as v from 'valibot';
 
 export class CreatedByCurrentUser extends UserAuthenticated {

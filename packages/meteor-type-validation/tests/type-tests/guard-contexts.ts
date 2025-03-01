@@ -1,5 +1,5 @@
 import { defineMethods, definePublications, exposeMethods, exposePublications } from 'src';
-import { UserAuthenticated } from 'src/guards/UserAuthenticated';
+import { UserAuthenticated } from 'src/server/guards/UserAuthenticated';
 import * as v from 'valibot';
 import { CreatedByCurrentUser } from '../lib/CreatedByCurrentUserGuard';
 

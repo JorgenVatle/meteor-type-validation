@@ -1,6 +1,6 @@
 import type { GenericSchema } from 'valibot';
 import * as v from 'valibot';
-import type { BaseContext, UnwrapSchemaOutput } from '../types/ValidatedResources';
+import type { BaseContext, UnwrapSchemaOutput } from '../../types/ValidatedResources';
 
 export abstract class Guard {
     constructor(

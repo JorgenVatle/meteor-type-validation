@@ -1,8 +1,8 @@
 import './types/meteor/ModuleAugmentation';
 
-export * from './guards';
-export * from './Definitions';
-export * from './MeteorTypeValidation';
+export * from './server/guards';
+export * from './server/Definitions';
+export * from './server/MeteorTypeValidation';
 export * from './client/MeteorApi';
 
 export type * from './types/ValidatedResources';

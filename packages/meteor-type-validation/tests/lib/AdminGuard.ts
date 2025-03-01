@@ -1,5 +1,5 @@
 import { Guard } from 'src';
-import { UserGuard } from 'src/guards';
+import { UserGuard } from 'src/server/guards';
 import * as v from 'valibot';
 
 export class AdminGuard extends Guard {
