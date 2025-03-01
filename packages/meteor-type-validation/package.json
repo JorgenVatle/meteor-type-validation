@@ -32,6 +32,7 @@
     "test": "vitest",
     "lint": "tsc --noEmit",
     "build": "tsup",
+    "build:watch": "tsup --clean false --watch",
     "prepack": "npm run build"
   },
   "repository": {
