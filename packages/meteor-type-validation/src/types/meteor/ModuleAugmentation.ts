@@ -31,3 +31,5 @@ declare module 'meteor/meteor' {
         ): Awaited<ReturnType<DefinedMethods[TName]>>;
     }
 }
+
+export {}
