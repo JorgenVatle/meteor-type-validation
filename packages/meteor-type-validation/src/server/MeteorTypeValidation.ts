@@ -148,7 +148,7 @@ export class MeteorTypeValidation<
         context: WrappedContext;
         definition: MethodDefinition | PublicationDefinition,
         params: unknown[]
-    }) {
+    }): Promise<{ validatedParams: unknown[] }> {
         // Run input validation on method arguments
         const validatedParams = definition.schema.map((schema, index) => {
             return parse(schema, params[index]);
