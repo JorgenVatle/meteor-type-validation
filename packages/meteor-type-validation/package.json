@@ -59,5 +59,6 @@
   },
   "directories": {
     "test": "tests"
-  }
+  },
+  "sideEffects": false
 }
