@@ -1,6 +1,6 @@
 import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import type { Meteor, Subscription } from 'meteor/meteor';
-import type { MergeDeep } from 'type-fest';
+import type { MergeDeep, UnionToIntersection } from 'type-fest';
 import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
 import { type GuardFunction, type GuardStatic } from '../guards';
 
@@ -96,10 +96,10 @@ type UnwrapGuardedSchemaOutput<
     TGuards extends GuardStatic[],
     TSchemaOutput extends UnwrapSchemaOutput<TSchemas> = UnwrapSchemaOutput<TSchemas>,
     TGuardOutput extends UnwrapGuardStaticSchemas<TGuards> = UnwrapGuardStaticSchemas<TGuards>
-> = any[] extends TGuardOutput[number]
+> = any[] extends TGuardOutput
     ? MergeDeep<
         TSchemaOutput,
-        TGuardOutput[number],
+        TGuardOutput,
         { arrayMergeMode: 'spread', recurseIntoArrays: true }
     >
     : TSchemaOutput
@@ -109,11 +109,11 @@ type UnwrapGuardedSchemaOutput<
  */
 type UnwrapGuardStaticSchemas<
     TGuards extends GuardStatic[],
-> = {
+> = UnionToIntersection<{
     [key in keyof TGuards]: [GenericSchema<{ __noSchemaSet: true }>] extends InstanceType<TGuards[key]>['paramSchema']
-                               ? [never]
+                               ? never
                                : UnwrapSchemaOutput<InstanceType<TGuards[key]>['paramSchema']>
-}
+}[number]>
 
 /**
  * Infer the this-type of a publication/method handle after applying guard validators.
