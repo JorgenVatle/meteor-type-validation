@@ -145,10 +145,10 @@ export class MeteorTypeValidation<
     }
     
     protected async validateRequest({ context, definition, params }: {
-        context: WrappedContext | Promise<WrappedContext>;
+        context: WrappedContext;
         definition: MethodDefinition | PublicationDefinition,
         params: unknown[]
-    }) {
+    }): Promise<{ validatedParams: unknown[] }> {
         // Run input validation on method arguments
         const validatedParams = definition.schema.map((schema, index) => {
             return parse(schema, params[index]);
@@ -161,16 +161,14 @@ export class MeteorTypeValidation<
             );
         }
         
-        const awaitedContext: WrappedContext = await context;
-        
         // Run guard validators
         for (const guard of definition.guards) {
-            await new guard(awaitedContext, validatedParams)._validate();
+            const validation = new guard(context, validatedParams)._validate();
+            Promise.await ? Promise.await(validation) : await validation;
         }
         
         return {
             validatedParams,
-            validatedContext: awaitedContext,
         }
     }
     
@@ -178,7 +176,8 @@ export class MeteorTypeValidation<
         const customErrorHandler = this.options.errorHandler?.bind(this);
         return async function(this: WrappedContext & TExtendedContext, ...params: unknown[]) {
             try {
-                const result = await method.apply(this, params);
+                const resultPromise = method.apply(this, params);
+                const result = Promise.await ? Promise.await(resultPromise) : await resultPromise;
                 this.logger?.debug(`Request completed in ${(performance.now() - this.startTime).toLocaleString()}ms`);
                 return result;
             } catch (error) {
@@ -210,18 +209,23 @@ export class MeteorTypeValidation<
         const api = this;
         const { run, type } = this.parseDefinition(definition);
         
-        const handle = function(this: BaseContext, ...params: unknown[]) {
-            return api.validateRequest({
-                context: api.extendContext({
-                    type,
-                    name,
-                    context: this,
-                }),
+        const handle = async function(this: BaseContext, ...params: unknown[]) {
+            const contextPromise = api.extendContext({
+                type,
+                name,
+                context: this,
+            });
+            
+            const context = Promise.await ? Promise.await(contextPromise) : await contextPromise;
+            
+            const request = api.validateRequest({
+                context,
                 definition,
                 params,
-            }).then(({ validatedContext, validatedParams }) => {
-                return run.apply(validatedContext, validatedParams);
             });
+            
+            const { validatedParams } = Promise.await ? Promise.await(request) : await request;
+            return run.apply(context, validatedParams)
         };
         
         return this.withErrorHandler(handle);

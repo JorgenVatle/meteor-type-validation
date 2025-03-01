@@ -26,9 +26,9 @@
             Logged in as <span class="text-indigo-200 font-medium">{{ user.data?.emails?.[0].address }}</span>
           </p>
           <div class="py-8">
-            <div class="grid grid-cols-[8rem,1fr]" v-for="todo in todos.data">
-              <div>
-                <input type="checkbox" class="checkbox" :checked="todo.completed">
+            <div class="grid grid-cols-[4rem,1fr] py-3" v-for="todo in todos.data">
+              <div class="pt-1">
+                <input type="checkbox" class="checkbox" :checked="todo.completed" @click="todos.complete(todo)">
               </div>
               <div>
                 <div>{{ todo.title }}</div>

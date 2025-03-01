@@ -1,7 +1,11 @@
 import { DefinedMethods, DefinedPublications, Meteor } from 'meteor/meteor';
 
-function callAsync<TName extends keyof DefinedMethods>(name: TName, ...params: Parameters<DefinedMethods[TName]>): ReturnType<DefinedMethods[TName]> {
-    // @ts-expect-error Type mismatch
+function callAsync<
+    TName extends keyof DefinedMethods
+>(
+    name: TName,
+    ...params: Parameters<DefinedMethods[TName]>
+): Promise<Awaited<ReturnType<DefinedMethods[TName]>>> {
     return Meteor.callAsync(name, ...params);
 }
 

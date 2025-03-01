@@ -20,7 +20,7 @@ export function useTodos() {
             todos.form.reset();
         },
         async complete(todo: TodoDocument) {
-            await MeteorApi.callAsync('todos.edit', { _id: todo._id }, { completed: true });
+            await MeteorApi.callAsync('todos.edit', { _id: todo._id }, { completed: !todo.completed });
         },
         form: {
             title: '',

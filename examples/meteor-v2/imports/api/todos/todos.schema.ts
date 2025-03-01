@@ -22,7 +22,7 @@ export const TodoCreateSchema = v.pipe(
 );
 
 export const TodoEditSchema = v.pipe(
-    v.omit(TodoDocument, ['_id', 'userId', 'createdAt', 'updatedAt']),
+    v.partial(v.omit(TodoDocument, ['_id', 'userId', 'createdAt', 'updatedAt'])),
     v.transform((input) => {
         return Object.assign(input, {
             updatedAt: new Date()
