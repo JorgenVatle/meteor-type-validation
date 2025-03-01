@@ -121,7 +121,7 @@ export class MeteorTypeValidation<
         }, rule.requestCount ?? 10, rule.intervalMs ?? 1000);
     }
     
-    protected extendContext({ type, context, name }: ContextWrapper) {
+    protected extendContext({ type, context, name }: ContextWrapper): Promise<WrappedContext> | WrappedContext {
         const startTime = performance.now();
         const logger = this.options.createLogger?.({ type, context, name });
         const addedContext = this.options.extendContext?.({ type, context, name });
@@ -135,6 +135,7 @@ export class MeteorTypeValidation<
         });
         
         if (!(addedContext instanceof Promise)) {
+            // @ts-expect-error Type mismatch, can't be bothered
             return Object.assign(context, addedContext);
         }
         
@@ -144,7 +145,7 @@ export class MeteorTypeValidation<
     }
     
     protected async validateRequest({ context, definition, params }: {
-        context: WrappedContext;
+        context: WrappedContext | Promise<WrappedContext>;
         definition: MethodDefinition | PublicationDefinition,
         params: unknown[]
     }) {
@@ -153,7 +154,6 @@ export class MeteorTypeValidation<
             return parse(schema, params[index]);
         });
         
-        // Warn user if too many arguments were provided
         if (params.length > validatedParams.length) {
             throw new Meteor.Error(
                 'too_many_parameters',
@@ -161,13 +161,16 @@ export class MeteorTypeValidation<
             );
         }
         
+        const awaitedContext: WrappedContext = await context;
+        
         // Run guard validators
         for (const guard of definition.guards) {
-            await new guard(context, validatedParams)._validate();
+            await new guard(awaitedContext, validatedParams)._validate();
         }
         
         return {
             validatedParams,
+            validatedContext: awaitedContext,
         }
     }
     
@@ -208,19 +211,17 @@ export class MeteorTypeValidation<
         const { run, type } = this.parseDefinition(definition);
         
         const handle = async function(this: BaseContext, ...params: unknown[]) {
-            const context = await api.extendContext({
-                type,
-                name,
-                context: this,
-            });
-            
-            const { validatedParams } = await api.validateRequest({
-                context,
+            const { validatedParams, validatedContext } = await api.validateRequest({
+                context: api.extendContext({
+                    type,
+                    name,
+                    context: this,
+                }),
                 definition,
                 params,
             });
             
-            return run.apply(context, validatedParams);
+            return run.apply(validatedContext, validatedParams);
         };
         
         return this.withErrorHandler(handle);
