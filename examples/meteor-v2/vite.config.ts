@@ -1,4 +1,3 @@
-import tailwind from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import { meteor } from 'meteor-vite/plugin';
 import Path from 'path';
@@ -12,7 +11,6 @@ export default defineConfig({
                 warnOnly: true,
             }
         }),
-        tailwind(),
         vue(),
     ],
     resolve: {
