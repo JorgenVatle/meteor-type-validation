@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/examples/meteor-v2/server/_bundle" />
       <excludeFolder url="file://$MODULE_DIR$/packages/meteor-type-validation/tests/build-output/.tsup" />
       <excludeFolder url="file://$MODULE_DIR$/packages/meteor-type-validation/tests/build-output/dist" />
-      <excludePattern pattern=".meteor/local" />
+      <excludeFolder url="file://$MODULE_DIR$/examples/meteor-v2/.meteor/local" />
       <excludePattern pattern="_vite-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
