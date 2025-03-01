@@ -7,7 +7,7 @@ import { useTracker } from '../useTracker';
 export function useCurrentUser() {
     const user = reactive({
         data: useTracker(() => Meteor.user()),
-        loggedIn: useTracker((): boolean => !!user.data),
+        loggedIn: useTracker((): boolean => !!Meteor.userId()),
         loading: useTracker(() => {
             if (Meteor.loggingIn()) {
                 return true;
