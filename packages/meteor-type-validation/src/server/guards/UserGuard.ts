@@ -6,6 +6,9 @@ import { UserLoggedInGuard } from './UserLoggedInGuard';
 
 /**
  * Validate that user is logged in and attach the user object to the method/publication context.
+ *
+ * @note If you don't need a full user object within your method/publication context, you should use
+ * {@link UserLoggedInGuard} instead to avoid spending time fetching data you won't use.
  */
 export class UserGuard extends Guard {
     
