@@ -35,7 +35,7 @@ export abstract class Guard {
      * Whether to write validated input to input parameters before passing it onto the method or publication.
      * Keep in mind that method and publication handles' original validation schema is called before the guard's
      */
-    public readonly writeToParams: 'replace' | 'patch' | false = false;
+    public abstract readonly writeToParams: 'replace' | 'patch' | false;
     
     /**
      * Optionally define to perform custom validation after the context has been validated.
