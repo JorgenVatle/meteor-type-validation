@@ -1,3 +1,3 @@
-import './meteor/ModuleAugmentation';
+export type * from './meteor/ModuleAugmentation';
 
 export * from './ValidatedResources';
