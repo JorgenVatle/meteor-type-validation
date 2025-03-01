@@ -34,10 +34,10 @@
                 {{ todo.title }}
               </div>
             </div>
-            <form class="flex gap-4">
+            <form class="flex gap-4" @submit.prevent="todos.create">
               <div class="w-full max-w-sm">
                   <label for="title" class="label label-text">Todo title</label>
-                  <input id="title" type="text" class="input input-bordered w-full" autocomplete="false" placeholder="Enter something you need to do...">
+                  <input id="title" type="text" class="input input-bordered w-full" autocomplete="false" v-model="todos.form.title" :placeholder="todos.form.placeholder">
               </div>
               <button class="btn btn-primary self-end">Add todo</button>
             </form>
