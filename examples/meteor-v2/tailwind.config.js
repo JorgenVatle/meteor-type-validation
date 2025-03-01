@@ -2,7 +2,7 @@
 module.exports = {
   content: [
       'client/**/*.{ts,html}',
-      'imports/**/*.{ts,vue}',
+      'imports/**/*.{ts,vue,css}',
   ],
   theme: {
     extend: {},
