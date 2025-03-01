@@ -30,6 +30,7 @@
     "testModule": "tests/main.js"
   },
   "devDependencies": {
+    "@types/meteor": "^2.9.8",
     "autoprefixer": "^10.4.20",
     "concurrently": "^9.1.2",
     "daisyui": "^4.12.24",
