@@ -6,6 +6,8 @@ type Plugin = Required<Options>['esbuildPlugins'][number];
 export default defineConfig({
     entry: [
         'src/index.ts',
+        'src/server/index.ts',
+        'src/client/index.ts',
     ],
     outDir: 'dist',
     format: ['esm', 'cjs'],
