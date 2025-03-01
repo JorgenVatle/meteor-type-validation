@@ -13,9 +13,11 @@
     "@babel/runtime": "^7.23.5",
     "@tailwindcss/vite": "^4.0.9",
     "@vitejs/plugin-vue": "^5.2.1",
+    "lodash-es": "^4.17.21",
     "meteor-node-stubs": "^1.2.7",
     "meteor-type-validation": "^2.3.0",
     "meteor-vite": "^2.0.0",
+    "pino": "^9.6.0",
     "tailwindcss": "^4.0.9",
     "valibot": "^1.0.0-rc.2",
     "vue": "^3.5.13"
