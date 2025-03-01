@@ -1,3 +1,4 @@
+import tailwind from '@tailwindcss/vite';
 import { meteor } from 'meteor-vite/plugin';
 import Path from 'path';
 import { defineConfig } from 'vite';
@@ -9,7 +10,8 @@ export default defineConfig({
             stubValidation: {
                 warnOnly: true,
             }
-        })
+        }),
+        tailwind(),
     ],
     resolve: {
         alias: {
