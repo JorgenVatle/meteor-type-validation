@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto py-16">
     <div class="grid gap-8">
       <div>
         <h1 class="text-2xl font-bold">
