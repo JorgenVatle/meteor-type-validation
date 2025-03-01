@@ -242,3 +242,9 @@ export class MeteorTypeValidation<
         };
     }
 }
+
+declare global {
+    interface PromiseConstructor {
+        await?: <T>(promise: T) => Awaited<T>
+    }
+}
