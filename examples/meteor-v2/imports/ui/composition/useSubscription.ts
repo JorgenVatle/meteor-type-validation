@@ -1,0 +1,20 @@
+import type { DefinedPublications } from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
+import { Tracker } from 'meteor/tracker';
+import { reactive } from 'vue';
+
+export function useSubscription<
+    TName extends keyof DefinedPublications,
+    TParams extends Parameters<DefinedPublications[TName]>
+>(name: TName, ...params: NoInfer<TParams>) {
+    const subscription = reactive({
+        ready: false,
+    });
+    
+    const computation = Tracker.autorun(() => {
+        const handle = Meteor.subscribe(name, ...params);
+        subscription.ready = handle.ready();
+    });
+    
+    return subscription;
+}
