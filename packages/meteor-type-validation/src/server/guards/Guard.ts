@@ -1,6 +1,6 @@
+import type { BaseContext, UnwrapSchemaOutput } from 'src/types';
 import type { GenericSchema } from 'valibot';
 import * as v from 'valibot';
-import type { BaseContext, UnwrapSchemaOutput } from '../../types/ValidatedResources';
 
 export abstract class Guard {
     constructor(
@@ -60,30 +60,46 @@ export abstract class Guard {
      */
     public async _validate() {
         if (this.contextSchema) {
-            const context = await v.parseAsync(this.contextSchema, this.context);
-            if (this.writeToContext) {
-                Object.assign(this.context, context);
-            }
+            const validation = v.parseAsync(this.contextSchema, this.context);
+            this.processContext(
+                Promise.await ? Promise.await(validation) : await validation
+            );
         }
         if (this.paramSchema) {
             for (const index in this.paramSchema) {
-                const validated = await v.parseAsync(this.paramSchema[index], this.params[index]);
-                const originalParam = this.params[index];
-                if (!this.writeToParams) {
-                    continue;
-                }
-                if (this.writeToParams === 'replace') {
-                    this.params[index] = validated;
-                    continue;
-                }
-                if (originalParam && typeof originalParam === 'object') {
-                    Object.assign(originalParam, validated);
-                    continue;
-                }
-                throw new Error('[Guard] Can only write params to input with an object type. If you wanted to rewrite params, make sure you set rewriteParams = true in your guard class.');
+                const validation = v.parseAsync(this.paramSchema[index], this.params[index]);
+                this.processParam(
+                    Promise.await ? Promise.await(validation) : await validation,
+                    // @ts-expect-error Index type infers to string
+                    index
+                );
             }
         }
-        await this.validate();
+        const validation = this.validate();
+        Promise.await ? Promise.await(validation) : await validation;
+    }
+    
+    private processContext(context?: any) {
+        if (!this.writeToContext) {
+            return;
+        }
+        Object.assign(this.context, context);
+    }
+    
+    private processParam(validated: any, index: number) {
+        const originalParam = this.params[index];
+        if (!this.writeToParams) {
+            return;
+        }
+        if (this.writeToParams === 'replace') {
+            this.params[index] = validated;
+            return;
+        }
+        if (originalParam && typeof originalParam === 'object') {
+            Object.assign(originalParam, validated);
+            return;
+        }
+        throw new Error('[Guard] Can only write params to input with an object type. If you wanted to rewrite params, make sure you set rewriteParams = true in your guard class.');
     }
 }
 
