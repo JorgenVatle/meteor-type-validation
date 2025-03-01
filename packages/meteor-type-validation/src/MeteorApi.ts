@@ -1,10 +1,15 @@
 import { DefinedMethods, DefinedPublications, Meteor } from 'meteor/meteor';
 
+function callAsync<TName extends keyof DefinedMethods>(name: TName, ...params: Parameters<DefinedMethods[TName]>): ReturnType<DefinedMethods[TName]> {
+    // @ts-expect-error Type mismatch
+    return Meteor.callAsync(name, ...params);
+}
+
 /**
  * Overrides for Meteor's default types to enforce type safety.
  */
 export const MeteorApi = {
-    callAsync: Meteor.callAsync<keyof DefinedMethods>,
+    callAsync,
     call: Meteor.call<keyof DefinedMethods>,
     subscribe: Meteor.subscribe<keyof DefinedPublications>,
 }
