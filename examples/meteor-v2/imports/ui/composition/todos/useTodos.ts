@@ -15,12 +15,21 @@ export function useTodos() {
         async create() {
             await MeteorApi.callAsync('todos.create', {
                 completed: false,
-                title: faker.lorem.sentence()
+                title: todos.form.title || todos.form.placeholder
             });
+            todos.form.reset();
         },
         async complete(todo: TodoDocument) {
             await MeteorApi.callAsync('todos.edit', { _id: todo._id }, { completed: true });
-        }
+        },
+        form: {
+            title: '',
+            placeholder: faker.lorem.sentence(),
+            reset() {
+                this.title = '';
+                this.placeholder = faker.lorem.sentence();
+            }
+        },
     });
     
     return todos;
