@@ -13,6 +13,8 @@ import { UserLoggedInGuard } from './UserLoggedInGuard';
 export class UserGuard extends Guard {
     
     public readonly writeToContext = true;
+    public readonly writeToParams = false;
+    public readonly paramSchema = [];
     
     /**
      * Fields to retrieve and store alongside current context.
