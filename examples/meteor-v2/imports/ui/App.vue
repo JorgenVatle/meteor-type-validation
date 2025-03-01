@@ -28,7 +28,7 @@
           <div class="py-8">
             <div class="grid grid-cols-[4rem,1fr] py-3" v-for="todo in todos.data">
               <div class="pt-1">
-                <input type="checkbox" class="checkbox" :checked="todo.completed">
+                <input type="checkbox" class="checkbox" :checked="todo.completed" @click="todos.complete(todo)">
               </div>
               <div>
                 <div>{{ todo.title }}</div>
