@@ -14,7 +14,7 @@ export default defineConfig({
     dts: true,
     external: [],
     platform: 'node',
-    target: ['es2022'],
+    target: ['es2022', 'chrome'],
     skipNodeModulesBundle: true,
     sourcemap: true,
     treeshake: true,
