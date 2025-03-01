@@ -26,12 +26,13 @@
             Logged in as <span class="text-indigo-200 font-medium">{{ user.data?.emails?.[0].address }}</span>
           </p>
           <div class="py-8">
-            <div class="grid grid-cols-2" v-for="todo in todos.data">
+            <div class="grid grid-cols-[8rem,1fr]" v-for="todo in todos.data">
               <div>
                 <input type="checkbox" class="checkbox" :checked="todo.completed">
               </div>
               <div>
-                {{ todo.title }}
+                <div>{{ todo.title }}</div>
+                <div class="text-gray-500 text-xs">{{ todo.userId }}</div>
               </div>
             </div>
             <form class="flex gap-4" @submit.prevent="todos.create">
