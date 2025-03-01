@@ -109,7 +109,8 @@
   },
   "include": [
     "src",
-    "tests"
+    "tests",
+    "tsup.config.ts"
   ],
   "exclude": [
     "./tests/build-output"
