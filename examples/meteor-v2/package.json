@@ -30,8 +30,10 @@
     "testModule": "tests/main.js"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.20",
     "concurrently": "^9.1.2",
     "daisyui": "^4.12.24",
+    "postcss": "^8.5.3",
     "tsup": "^7.2.0",
     "typescript": "^5.7.3",
     "vite": "^4.5.9"
