@@ -16,7 +16,7 @@
     "@vitejs/plugin-vue": "^5.2.1",
     "lodash-es": "^4.17.21",
     "meteor-node-stubs": "^1.2.7",
-    "meteor-type-validation": "^2.3.0",
+    "meteor-type-validation": "file:../../packages/meteor-type-validation",
     "meteor-vite": "^2.0.0",
     "pino": "^9.6.0",
     "tailwindcss": "^3.4.17",
