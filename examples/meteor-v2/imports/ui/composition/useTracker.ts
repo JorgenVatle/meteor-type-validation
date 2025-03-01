@@ -1,5 +1,5 @@
 import { Tracker } from 'meteor/tracker';
-import { reactive } from 'vue';
+import { onUnmounted, reactive } from 'vue';
 
 export function useTracker<TReturnType>(compute: () => TReturnType) {
     const tracker = reactive({
@@ -10,6 +10,8 @@ export function useTracker<TReturnType>(compute: () => TReturnType) {
         // @ts-ignore
         tracker.data = compute()
     });
+    
+    onUnmounted(() => computation.stop());
     
     return tracker;
 }
