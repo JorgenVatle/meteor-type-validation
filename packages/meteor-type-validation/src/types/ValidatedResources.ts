@@ -2,7 +2,7 @@ import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import type { Meteor, Subscription } from 'meteor/meteor';
 import type { MergeDeep } from 'type-fest';
 import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
-import type { DefaultGuardInputSchema, GuardFunction, GuardStatic } from '../guards';
+import { type GuardFunction, type GuardStatic } from '../guards';
 
 export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
@@ -95,14 +95,25 @@ type UnwrapGuardedSchemaOutput<
     TSchemas extends GenericSchema[],
     TGuards extends GuardStatic[],
     TSchemaOutput extends UnwrapSchemaOutput<TSchemas> = UnwrapSchemaOutput<TSchemas>,
-    TGuardSchemas extends InstanceType<TGuards[number]>['paramSchema'] = InstanceType<TGuards[number]>['paramSchema'],
-> = DefaultGuardInputSchema extends TGuardSchemas
-    ? TSchemaOutput
-    : MergeDeep<
+    TStaticSchemas extends UnwrapGuardStaticSchemas<TGuards> = UnwrapGuardStaticSchemas<TGuards>
+> = any[] extends TStaticSchemas[number]
+    ? MergeDeep<
         TSchemaOutput,
-        UnwrapSchemaOutput<TGuardSchemas>,
+        TStaticSchemas[number],
         { arrayMergeMode: 'spread', recurseIntoArrays: true }
     >
+    : TSchemaOutput
+
+/**
+ * Infer schema output from a list of static guard classes
+ */
+type UnwrapGuardStaticSchemas<
+    TGuards extends GuardStatic[],
+> = {
+    [key in keyof TGuards]: [GenericSchema<{ __noSchemaSet: true }>] extends InstanceType<TGuards[key]>['paramSchema']
+                               ? [never]
+                               : UnwrapSchemaOutput<InstanceType<TGuards[key]>['paramSchema']>
+}
 
 /**
  * Infer the this-type of a publication/method handle after applying guard validators.

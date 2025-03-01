@@ -88,4 +88,4 @@ export type GuardFunction<
     params: UnwrapSchemaOutput<TSchemas>
 }) => asserts request;
 
-export type DefaultGuardInputSchema = v.GenericSchema[] | [v.GenericSchema<never>];
+export type DefaultGuardInputSchema = v.GenericSchema[]
