@@ -121,7 +121,7 @@ Meteor.subscribe<'topics'>('topics', {
 
 We also export a type helper that have these rules pre-applied, so you won't have to repeat yourself.
 ```ts
-import { MeteorApi } from 'meteor-type-validation';
+import { MeteorApi } from 'meteor-type-validation/client';
 
 // Typo checks
 MeteorApi.call('topics.creatE') // type error: Argument of type `topics.creatE` is...
