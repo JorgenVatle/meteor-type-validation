@@ -25,7 +25,16 @@
           <p>
             Logged in as <span class="text-indigo-200 font-medium">{{ user.data?.emails?.[0].address }}</span>
           </p>
-          <p>Todos should appear here</p>
+          <div class="py-8">
+            <div class="grid grid-cols-2" v-for="todo in todos.data">
+              <div>
+                <input type="checkbox" class="checkbox" :checked="todo.completed">
+              </div>
+              <div>
+                {{ todo.title }}
+              </div>
+            </div>
+          </div>
           <div>
             <button class="btn" @click="user.logout()">Log out</button>
           </div>
@@ -38,8 +47,10 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useTodos } from './composition/todos/useTodos';
 import { useCurrentUser } from './composition/users/useCurrentUser';
 
 const count = ref(0);
 const user = useCurrentUser();
+const todos = useTodos();
 </script>
