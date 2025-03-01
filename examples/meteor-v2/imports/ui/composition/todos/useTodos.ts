@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { MeteorApi } from 'meteor-type-validation';
+import { MeteorApi } from 'meteor-type-validation/client';
 import { computed, reactive } from 'vue';
 import { TodosCollection } from '../../../api/todos/todos.collection';
 import type { TodoDocument } from '../../../api/todos/todos.schema';
