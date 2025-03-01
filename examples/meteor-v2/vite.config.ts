@@ -6,7 +6,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
     plugins: [
         meteor({
-            clientEntry: 'client/entry-meteor.js',
+            clientEntry: 'client/entry-vite.ts',
             stubValidation: {
                 warnOnly: true,
             }
