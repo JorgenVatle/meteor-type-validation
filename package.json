@@ -16,5 +16,8 @@
   "license": "ISC",
   "workspaces": [
     "packages/meteor-type-validation"
-  ]
+  ],
+  "devDependencies": {
+    "@changesets/cli": "^2.28.1"
+  }
 }
