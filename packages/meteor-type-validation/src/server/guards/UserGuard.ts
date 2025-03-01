@@ -28,9 +28,11 @@ export class UserGuard extends Guard {
         createdAt: 1,
     }
     
+    protected static readonly contextSchemaSync = v.pipe(UserLoggedInGuard.contextSchema, v.transform(this.getUser));
     public static readonly contextSchema = Promise.await
-                                           ? v.pipe(UserLoggedInGuard.contextSchema, v.transform(this.getUser))
-                                           : v.pipeAsync(UserLoggedInGuard.contextSchema, v.transformAsync(this.getUser));
+                                           ? this.contextSchemaSync
+                                           // @ts-expect-error We're forcing this to the synchronous type to avoid type inference issues in Meteor v2
+                                           : (v.pipeAsync(UserLoggedInGuard.contextSchema, v.transformAsync(this.getUser))) as typeof UserGuard.contextSchemaSync;
     
     private static async getUser(context: { userId: string }) {
         // Recent versions of Meteor v3 will always return a promise here.
