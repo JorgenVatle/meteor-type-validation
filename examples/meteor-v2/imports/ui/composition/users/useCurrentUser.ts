@@ -21,6 +21,16 @@ export function useCurrentUser() {
             const email = faker.internet.email();
             const password = faker.internet.password();
             await Accounts.createUserAsync({ email, password });
+        },
+        logout() {
+            return new Promise<void>((resolve, reject) => {
+                Meteor.logout((error) => {
+                    if (error) {
+                        return reject(error);
+                    }
+                    resolve();
+                });
+            })
         }
     });
     
