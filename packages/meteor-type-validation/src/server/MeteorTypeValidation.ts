@@ -210,7 +210,10 @@ export class MeteorTypeValidation<
         const api = this;
         const { run, type } = this.parseDefinition(definition);
         
-        const handle = function(this: BaseContext, ...params: unknown[]) {
+        const handle = Meteor.wrapAsync(function(this: BaseContext, ...args: unknown[]) {
+            const params = args.slice(0,-1);
+            const callback = args[args.length - 1] as (error: any, result?: any) => void;
+            
             return api.validateRequest({
                 context: api.extendContext({
                     type,
@@ -219,10 +222,10 @@ export class MeteorTypeValidation<
                 }),
                 definition,
                 params,
-            }).then(({ validatedContext, validatedParams }) => {
-                return run.apply(validatedContext, validatedParams);
-            });
-        };
+            }).then(({ validatedParams, validatedContext }) => {
+                callback(null, run.apply(validatedContext, validatedParams));
+            }).catch((error) => callback(error));
+        });
         
         return this.withErrorHandler(handle);
     }
