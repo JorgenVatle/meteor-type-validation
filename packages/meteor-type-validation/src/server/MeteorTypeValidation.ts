@@ -145,7 +145,7 @@ export class MeteorTypeValidation<
     }
     
     protected async validateRequest({ context, definition, params }: {
-        context: WrappedContext | Promise<WrappedContext>;
+        context: WrappedContext;
         definition: MethodDefinition | PublicationDefinition,
         params: unknown[]
     }) {
@@ -161,16 +161,14 @@ export class MeteorTypeValidation<
             );
         }
         
-        const awaitedContext: WrappedContext = await context;
-        
         // Run guard validators
         for (const guard of definition.guards) {
-            await new guard(awaitedContext, validatedParams)._validate();
+            const validation = new guard(context, validatedParams)._validate();
+            Promise.await ? Promise.await(validation) : await validation;
         }
         
         return {
             validatedParams,
-            validatedContext: awaitedContext,
         }
     }
     
