@@ -60,14 +60,14 @@ export abstract class Guard {
      */
     public async _validate() {
         if (this.contextSchema) {
-            const validation = v.parseAsync(this.contextSchema, this.context);
+            const validation = this.parseAsync(this.contextSchema, this.context);
             this.processContext(
                 Promise.await ? Promise.await(validation) : await validation
             );
         }
         if (this.paramSchema) {
             for (const index in this.paramSchema) {
-                const validation = v.parseAsync(this.paramSchema[index], this.params[index]);
+                const validation = this.parseAsync(this.paramSchema[index], this.params[index]);
                 this.processParam(
                     Promise.await ? Promise.await(validation) : await validation,
                     // @ts-expect-error Index type infers to string
@@ -77,6 +77,13 @@ export abstract class Guard {
         }
         const validation = this.validate();
         Promise.await ? Promise.await(validation) : await validation;
+    }
+    
+    private parseAsync(schema: v.GenericSchema | v.GenericSchemaAsync, input: unknown) {
+        if (schema.async && Promise.await) {
+            throw new Error('[Guard] Async schemas are not supported in Meteor v2. Use a normal synchronous schema instead.');
+        }
+        return v.parseAsync(schema, input);
     }
     
     private processContext(context?: any) {
