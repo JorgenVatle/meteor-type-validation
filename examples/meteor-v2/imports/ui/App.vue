@@ -34,6 +34,13 @@
                 {{ todo.title }}
               </div>
             </div>
+            <form class="flex gap-4">
+              <div class="w-full max-w-sm">
+                  <label for="title" class="label label-text">Todo title</label>
+                  <input id="title" type="text" class="input input-bordered w-full" autocomplete="false" placeholder="Enter something you need to do...">
+              </div>
+              <button class="btn btn-primary self-end">Add todo</button>
+            </form>
           </div>
           <div>
             <button class="btn" @click="user.logout()">Log out</button>
