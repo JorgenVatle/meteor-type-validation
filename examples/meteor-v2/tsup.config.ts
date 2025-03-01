@@ -14,4 +14,5 @@ export default defineConfig({
         '.vue': 'empty',
     },
     external: ['meteor'],
+    noExternal: ['meteor-type-validation']
 })
