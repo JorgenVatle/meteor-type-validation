@@ -21,8 +21,14 @@
         <div v-else-if="user.loading">
           <p>Waiting on login...</p>
         </div>
-        <div v-else>
+        <div class="grid gap-6" v-else>
+          <p>
+            Logged in as <span class="text-indigo-200 font-medium">{{ user.data?.emails?.[0].address }}</span>
+          </p>
           <p>Todos should appear here</p>
+          <div>
+            <button class="btn" @click="user.logout()">Log out</button>
+          </div>
         </div>
       </div>
     </div>
