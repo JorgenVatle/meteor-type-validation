@@ -2,6 +2,7 @@ import { faker } from '@faker-js/faker';
 import { MeteorApi } from 'meteor-type-validation';
 import { computed, reactive } from 'vue';
 import { TodosCollection } from '../../../api/todos/todos.collection';
+import type { TodoDocument } from '../../../api/todos/todos.schema';
 import { useSubscription } from '../useSubscription';
 import { useTracker } from '../useTracker';
 import 'meteor/meteor';
@@ -16,6 +17,9 @@ export function useTodos() {
                 completed: false,
                 title: faker.lorem.sentence()
             });
+        },
+        async complete(todo: TodoDocument) {
+            await MeteorApi.callAsync('todos.edit', { _id: todo._id }, { completed: true });
         }
     });
     
