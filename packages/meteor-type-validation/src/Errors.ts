@@ -1,5 +1,5 @@
-import { Meteor } from '@meteor';
 import { startCase } from 'lodash-es';
+import { Meteor } from 'meteor/meteor';
 import { flatten, type UnknownSchema, ValiError } from 'valibot';
 
 export function formatValibotError(error: ValiError<UnknownSchema>) {

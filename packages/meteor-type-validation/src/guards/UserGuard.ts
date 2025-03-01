@@ -1,5 +1,5 @@
-import { Meteor } from '@meteor';
 import type { Meteor as _Meteor } from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
 import * as v from 'valibot';
 import { Guard } from './Guard';
 import { UserAuthenticated } from './UserAuthenticated';

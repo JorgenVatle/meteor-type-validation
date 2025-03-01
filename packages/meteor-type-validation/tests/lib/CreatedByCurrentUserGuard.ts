@@ -1,4 +1,4 @@
-import { Meteor } from '@meteor';
+import { Meteor } from 'meteor/meteor';
 import { UserAuthenticated } from 'src/guards/UserAuthenticated';
 import * as v from 'valibot';
 

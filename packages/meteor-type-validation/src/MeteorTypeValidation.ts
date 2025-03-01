@@ -1,5 +1,5 @@
 /// <reference types="meteor/globals/ddp-rate-limiter" />
-import { Meteor } from '@meteor';
+import { Meteor } from 'meteor/meteor';
 import { performance } from 'node:perf_hooks';
 import type Pino from 'pino';
 import { type GenericSchema, parse, ValiError } from 'valibot';

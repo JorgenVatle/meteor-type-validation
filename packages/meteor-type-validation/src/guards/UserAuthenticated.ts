@@ -1,4 +1,4 @@
-import { Meteor } from '@meteor';
+import { Meteor } from 'meteor/meteor';
 import * as v from 'valibot';
 import { Guard } from './Guard';
 
