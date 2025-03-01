@@ -1,3 +1,3 @@
-import 'src/types/meteor/ModuleAugmentation';
+export type * from '../types/meteor/ModuleAugmentation';
 
 export * from './MeteorApi';
