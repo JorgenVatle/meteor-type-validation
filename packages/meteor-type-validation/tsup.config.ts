@@ -1,4 +1,4 @@
-import * as pc from 'picocolors';
+import pc from 'picocolors';
 import { defineConfig, type Options } from 'tsup';
 
 type Plugin = Required<Options>['esbuildPlugins'][number];
