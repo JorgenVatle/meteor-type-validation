@@ -12,6 +12,7 @@ export default defineConfig({
     target: ['es2022'],
     skipNodeModulesBundle: true,
     sourcemap: true,
+    treeshake: true,
     clean: true,
     noExternal: ['lodash-es', 'meteor'],
     esbuildPlugins: [
