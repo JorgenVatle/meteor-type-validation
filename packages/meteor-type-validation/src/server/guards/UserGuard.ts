@@ -2,7 +2,7 @@ import type { Meteor as _Meteor } from 'meteor/meteor';
 import { Meteor } from 'meteor/meteor';
 import * as v from 'valibot';
 import { Guard } from './Guard';
-import { UserAuthenticated } from './UserAuthenticated';
+import { UserLoggedInGuard } from './UserLoggedInGuard';
 
 /**
  * Validate that user is logged in and attach the user object to the method/publication context.
@@ -24,7 +24,7 @@ export class UserGuard extends Guard {
     }
     
     public static readonly contextSchema = v.pipeAsync(
-        UserAuthenticated.contextSchema,
+        UserLoggedInGuard.contextSchema,
         v.transformAsync(async (context) => {
             const user = await Meteor.users.findOneAsync(context.userId, { fields: UserGuard.fields });
             

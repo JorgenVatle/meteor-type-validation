@@ -1,5 +1,5 @@
 import { defineMethods, definePublications } from 'src/server/Definitions';
-import { UserAuthenticated } from 'src/server/guards/UserAuthenticated';
+import { UserLoggedInGuard } from 'src/server/guards/UserLoggedInGuard';
 import { describe, expectTypeOf, it } from 'vitest';
 import { CreateTodoSchema } from '../../lib/Schemas';
 
@@ -7,7 +7,7 @@ describe('methods', () => {
     it(`should infer that this.userId is not null`, () => {
         defineMethods({
             'todos.create': {
-                guards: [UserAuthenticated],
+                guards: [UserLoggedInGuard],
                 schema: [CreateTodoSchema],
                 method(todo) {
                     expectTypeOf(this.userId).toEqualTypeOf<string>();
@@ -19,7 +19,7 @@ describe('methods', () => {
     it(`should not affect types from the provided schema`, () => {
         defineMethods({
             'todos.create': {
-                guards: [UserAuthenticated],
+                guards: [UserLoggedInGuard],
                 schema: [CreateTodoSchema],
                 method(todo) {
                     expectTypeOf(todo).toEqualTypeOf<{
@@ -37,7 +37,7 @@ describe('publications', () => {
     it(`should infer that this.userId is not null`, () => {
         definePublications({
             'todos': {
-                guards: [UserAuthenticated],
+                guards: [UserLoggedInGuard],
                 schema: [CreateTodoSchema],
                 publish(todo) {
                     expectTypeOf(this.userId).toEqualTypeOf<string>();

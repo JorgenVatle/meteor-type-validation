@@ -1,12 +1,12 @@
 import { defineMethods, definePublications, exposeMethods, exposePublications } from 'src';
-import { UserAuthenticated } from 'src/server/guards/UserAuthenticated';
+import { UserLoggedInGuard } from 'src/server/guards/UserLoggedInGuard';
 import * as v from 'valibot';
 import { CreatedByCurrentUser } from '../lib/CreatedByCurrentUserGuard';
 
 export const AllMethods = defineMethods({
     'user:todo.add': {
         schema: [v.object({ title: v.string() })],
-        guards: [UserAuthenticated],
+        guards: [UserLoggedInGuard],
         method(entry) {
             entry.title = ''
             this.userId = '';

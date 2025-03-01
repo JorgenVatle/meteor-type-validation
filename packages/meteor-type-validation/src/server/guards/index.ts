@@ -1,3 +1,3 @@
 export * from './Guard';
-export * from './UserAuthenticated';
+export * from './UserLoggedInGuard';
 export * from './UserGuard';

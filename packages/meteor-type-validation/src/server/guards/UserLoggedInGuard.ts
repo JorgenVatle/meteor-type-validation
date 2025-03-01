@@ -6,7 +6,7 @@ import { Guard } from './Guard';
  * Checks whether the current user is logged in.
  * Throws a 401 error if not.
  */
-export class UserAuthenticated extends Guard {
+export class UserLoggedInGuard extends Guard {
     
     public readonly writeToContext = false;
     public static readonly contextSchema = v.object({
@@ -21,5 +21,5 @@ export class UserAuthenticated extends Guard {
         ),
     });
     
-    public readonly contextSchema = UserAuthenticated.contextSchema;
+    public readonly contextSchema = UserLoggedInGuard.contextSchema;
 }
