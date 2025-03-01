@@ -5,6 +5,9 @@ import { Guard } from './Guard';
 /**
  * Checks whether the current user is logged in.
  * Throws a 401 error if not.
+ *
+ * Does less checks than {@link UserGuard} which may be desirable if you don't need a full user object within
+ * your publication/method context.
  */
 export class UserLoggedInGuard extends Guard {
     
