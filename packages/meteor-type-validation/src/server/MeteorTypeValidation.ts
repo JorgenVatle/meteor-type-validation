@@ -7,11 +7,12 @@ import type {
     ContextWrapper,
     MethodDefinition,
     MethodDefinitionMap,
+    MethodDefinitionResult,
     PublicationDefinition,
     PublicationDefinitionMap,
+    PublicationDefinitionResult,
     RateLimiterRule,
     ResourceType,
-    UnwrapSchemaInput,
     WrappedContext,
 } from 'src/types';
 import { type GenericSchema, parse, ValiError } from 'valibot';
@@ -53,11 +54,7 @@ export class MeteorTypeValidation<
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
         TMethods extends {
-            [key in keyof TSchemas | keyof TGuards | keyof TResult]: {
-                guards: any,
-                schema: any,
-                method: (...params: UnwrapSchemaInput<NoInfer<TSchemas>[key]>) => NoInfer<TResult>[key];
-            }
+            [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinitionResult<TSchemas[key], TResult[key]>
         }
     >(methods: {
         [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
@@ -71,12 +68,7 @@ export class MeteorTypeValidation<
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
         TPublications extends {
-            [key in keyof TSchemas | keyof TGuards | keyof TResult]: {
-                schema: any,
-                guards: any,
-                publish: (...params: UnwrapSchemaInput<NoInfer<TSchemas>[key]>) => NoInfer<TResult>[key]
-                rateLimiters?: RateLimiterRule[]
-            }
+            [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinitionResult<TSchemas[key], TResult[key]>
         }
     >(publications: {
         [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>

@@ -27,6 +27,18 @@ export type PublicationDefinition<
     publish: InferResourceHandleFn<TSchemas, TGuards, Subscription & TExtendedContext, TReturnType>
 }
 
+export type MethodDefinitionResult<TSchemas extends GenericSchema[], TResult> = {
+    guards: any,
+    schema: any,
+    method: (...params: UnwrapSchemaInput<TSchemas>) => NoInfer<TResult>;
+}
+
+export type PublicationDefinitionResult<TSchemas extends GenericSchema[], TResult> = {
+    guards: any,
+    schema: any,
+    publish: (...params: UnwrapSchemaInput<TSchemas>) => NoInfer<TResult>;
+}
+
 /**
  * This is left empty so you can augment it with any custom context types you want to be
  * injected into the `this` type of your method/publication handlers.
