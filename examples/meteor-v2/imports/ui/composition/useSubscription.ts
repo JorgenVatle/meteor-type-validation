@@ -5,8 +5,7 @@ import { onUnmounted, reactive } from 'vue';
 
 export function useSubscription<
     TName extends keyof DefinedPublications,
-    TParams extends Parameters<DefinedPublications[TName]>
->(name: TName, ...params: NoInfer<TParams>) {
+>(name: TName, ...params: Parameters<DefinedPublications[TName]>) {
     const subscription = reactive({
         ready: false,
     });
