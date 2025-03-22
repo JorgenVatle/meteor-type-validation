@@ -1,5 +1,4 @@
 import { Guard } from 'src';
-import { UserGuard } from 'src/server/guards';
 import * as v from 'valibot';
 
 export class AdminGuard extends Guard {
@@ -8,17 +7,14 @@ export class AdminGuard extends Guard {
     public readonly paramSchema = [];
     public readonly writeToContext = false;
     
-    public readonly contextSchema = v.pipeAsync(
-        UserGuard.contextSchema,
-        v.objectAsync({
-            userId: v.string(),
-            user: v.pipe(v.any(), v.object({
-                roles: v.pipe(
-                    v.array(v.picklist(['admin'])),
-                )
-            })),
-        }),
-    )
+    public readonly contextSchema = v.objectAsync({
+        userId: v.string(),
+        user: v.pipe(v.any(), v.object({
+            roles: v.pipe(
+                v.array(v.picklist(['admin'])),
+            )
+        })),
+    }),
     
 }
 
