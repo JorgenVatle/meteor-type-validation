@@ -11,7 +11,10 @@ import { Guard } from './Guard';
  */
 export class UserLoggedInGuard extends Guard {
     
+    public readonly paramSchema = [];
+    public readonly writeToParams = false;
     public readonly writeToContext = false;
+    
     public static readonly contextSchema = v.object({
         userId: v.pipe(
             v.nullable(v.string()),
