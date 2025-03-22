@@ -12,7 +12,7 @@ export default defineConfig({
     ],
     outDir: 'dist',
     format: ['esm', 'cjs'],
-    experimentalDts: true,
+    dts: true,
     external: [],
     platform: 'node',
     target: ['es2022'],
