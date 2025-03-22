@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import * as v from 'valibot';
-import { Guard } from './Guard';
+import { type DefaultGuardInputSchema, Guard } from './Guard';
 
 /**
  * Checks whether the current user is logged in.
@@ -11,7 +11,7 @@ import { Guard } from './Guard';
  */
 export class UserLoggedInGuard extends Guard {
     
-    public readonly paramSchema = [];
+    public readonly paramSchema: DefaultGuardInputSchema = [];
     public readonly writeToParams = false;
     public readonly writeToContext = false;
     
