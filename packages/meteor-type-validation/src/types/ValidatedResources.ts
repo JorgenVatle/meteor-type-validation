@@ -112,9 +112,7 @@ type UnwrapGuardStaticSchemas<
 > = UnionToIntersection<{
     [key in keyof TGuards]: [GenericSchema<{ __noSchemaSet: true }>] extends InstanceType<TGuards[key]>['paramSchema']
                                ? never
-                               : InstanceType<TGuards[key]>['paramSchema'] extends never[]
-                                 ? never
-                                 : UnwrapSchemaOutput<InstanceType<TGuards[key]>['paramSchema']>
+                               : UnwrapSchemaOutput<InstanceType<TGuards[key]>['paramSchema']>
 }[number]>
 
 /**
