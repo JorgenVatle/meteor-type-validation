@@ -1,11 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { UserLoggedInGuard } from 'src/server/guards/UserLoggedInGuard';
 import * as v from 'valibot';
+import { Guard } from '../../src';
 
-export class CreatedByCurrentUser extends UserLoggedInGuard {
+export class CreatedByCurrentUser extends Guard {
     public readonly writeToParams = false;
     public readonly writeToContext = false;
     
+    public readonly contextSchema = UserLoggedInGuard.contextSchema;
     
     public readonly paramSchema = [
         v.object({
