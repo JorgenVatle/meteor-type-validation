@@ -14,7 +14,7 @@ export class AdminGuard extends Guard {
                 v.array(v.picklist(['admin'])),
             )
         })),
-    }),
+    });
     
 }
 
