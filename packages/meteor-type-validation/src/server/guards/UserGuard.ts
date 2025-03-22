@@ -1,7 +1,7 @@
 import type { Meteor as _Meteor } from 'meteor/meteor';
 import { Meteor } from 'meteor/meteor';
 import * as v from 'valibot';
-import { Guard } from './Guard';
+import { type DefaultGuardInputSchema, Guard } from './Guard';
 import { UserLoggedInGuard } from './UserLoggedInGuard';
 
 /**
@@ -14,7 +14,7 @@ export class UserGuard extends Guard {
     
     public readonly writeToContext = true;
     public readonly writeToParams = false;
-    public readonly paramSchema = [];
+    public readonly paramSchema: DefaultGuardInputSchema = [];
     
     /**
      * Fields to retrieve and store alongside current context.
