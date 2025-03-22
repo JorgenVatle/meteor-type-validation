@@ -53,13 +53,11 @@ export class MeteorTypeValidation<
         TSchemas extends Record<keyof TGuards, GenericSchema[]>,
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
-        TMethods extends {
-            [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinitionResult<TSchemas[key], TResult[key]>
-        }
     >(methods: {
         [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
-    }): TMethods {
-        // @ts-expect-error The method() property is modified to accept schema input types instead of output schema types which are used by the actual definition
+    }): {
+        [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinitionResult<TSchemas[key], TResult[key]>
+    } {
         return methods;
     }
     
@@ -67,18 +65,16 @@ export class MeteorTypeValidation<
         TSchemas extends Record<keyof TGuards, GenericSchema[]>,
         TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
         TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
-        TPublications extends {
-            [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinitionResult<TSchemas[key], TResult[key]>
-        }
     >(publications: {
         [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
-    }): TPublications {
+    }): {
+        [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinitionResult<TSchemas[key], TResult[key]>
+    } {
         if (Meteor.isClient && !Meteor.isProduction) {
             const logger = this.options?.createLogger?.({ type: 'publication', name: '<internal definition>', context: {} as any }) || console;
             logger.warn(new Error(`Publication definition included in client bundle. This is generally unwanted as publications should only live on the server.`));
         }
         
-        // @ts-expect-error Type mismatch
         return publications;
     }
     
