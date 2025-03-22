@@ -4,23 +4,23 @@ import type { MergeDeep, UnionToIntersection } from 'type-fest';
 import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
 import { type GuardFunction, type GuardStatic } from '../server/guards';
 
-export interface MethodDefinition<
+export type MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown
-> {
+> = {
     schema: [...TSchemas],
     guards: [...TGuards],
     rateLimiters?: RateLimiterRule[],
     method: InferResourceHandleFn<TSchemas, TGuards, Meteor.MethodThisType & TExtendedContext, TReturnType>
 }
-export interface PublicationDefinition<
+export type PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown,
-> {
+> = {
     schema: [...TSchemas],
     guards: [...TGuards],
     rateLimiters?: RateLimiterRule[],
