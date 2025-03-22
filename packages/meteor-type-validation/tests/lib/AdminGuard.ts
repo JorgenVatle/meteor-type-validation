@@ -4,7 +4,9 @@ import * as v from 'valibot';
 
 export class AdminGuard extends Guard {
     
-    public writeToContext = false;
+    public readonly writeToParams = false;
+    public readonly paramSchema = [];
+    public readonly writeToContext = false;
     
     public readonly contextSchema = v.pipeAsync(
         UserGuard.contextSchema,
