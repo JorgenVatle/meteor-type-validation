@@ -115,6 +115,8 @@
     "client"
   ],
   "exclude": [
+    "**/node_modules",
+    "**/.*/",
     "server/_bundle"
   ]
 }
