@@ -1,4 +1,5 @@
 /// <reference types="meteor/globals/ddp-rate-limiter" />
+/// <reference path="../env.d.ts" />
 import { Meteor } from 'meteor/meteor';
 import { performance } from 'node:perf_hooks';
 import type Pino from 'pino';
@@ -235,11 +236,5 @@ export class MeteorTypeValidation<
             type: 'method',
             run: definition.method,
         };
-    }
-}
-
-declare global {
-    interface PromiseConstructor {
-        await?: <T>(promise: T) => Awaited<T>
     }
 }
