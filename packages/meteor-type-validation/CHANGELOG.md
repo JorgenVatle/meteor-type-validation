@@ -1,5 +1,18 @@
 # meteor-type-validation
 
+## 2.4.0-beta.7
+
+### Minor Changes
+
+- 6eb95b7: Rename `UserAuthenticated` guard class to `UserLoggedInGuard` to more explicitly indicate its purpose.
+
+  - Add support for both Meteor v3 and v2 to `UserGuard`
+  - Require `writeToParams`, `paramSchema` and `contextSchema` to be explicitly defined within Guard classes.
+
+### Patch Changes
+
+- 4ab352b: Add missing generic properties to built-in guard classes
+
 ## 2.4.0-beta.6
 
 ### Minor Changes
