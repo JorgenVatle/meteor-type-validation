@@ -109,5 +109,11 @@
   },
   "include": [
     "src",
+    "tests"
   ],
+  "exclude": [
+    "**/node_modules",
+    "**/.*/",
+    "./tests/build-output"
+  ]
 }
