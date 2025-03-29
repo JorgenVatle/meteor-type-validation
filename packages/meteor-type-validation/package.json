@@ -27,6 +27,16 @@
         "default": "./dist/client.js"
       }
     },
+    "./utils": {
+      "import": {
+        "types": "./dist/utils.d.mts",
+        "default": "./dist/utils.mjs"
+      },
+      "require": {
+        "types": "./dist/utils.d.ts",
+        "default": "./dist/utils.js"
+      }
+    },
     "./types": {
       "import": {
         "types": "./dist/types/index.d.mts"
