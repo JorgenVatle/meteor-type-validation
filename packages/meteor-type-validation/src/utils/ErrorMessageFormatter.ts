@@ -12,4 +12,10 @@ export const ErrorMessageFormatter = {
             key,
         }
     },
-} satisfies Record<string, (issue: Issue) => { message: string, key: string | null, reason: string }>
+} satisfies Record<string, (issue: Issue) => FormattedErrorMessage>;
+
+export type FormattedErrorMessage = {
+    message: string,
+    key: string | null,
+    reason: string,
+}
