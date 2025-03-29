@@ -30,6 +30,11 @@ describe('formatted Valibot errors', () => {
         expect(formattedError.message).toContain('Invalid type');
     });
     
+    it('should have a "details.errors" property', () => {
+        expect(formattedError.details.errors).toBeDefined();
+        expect(formattedError.details.errors.length).toBeGreaterThan(0);
+    });
+    
 });
 
 function getValidationError<TSchema extends v.GenericSchema>(schema: TSchema, input: any): v.ValiError<TSchema> {
