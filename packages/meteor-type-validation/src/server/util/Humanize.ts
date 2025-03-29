@@ -37,7 +37,14 @@ function extname(text: string): string {
     return (index === -1) ? '' : ext;
 }
 
-export function humanize(text?: string | number | null): string {
+/**
+ * Takes an object key and attempts to convert it to a more human-readable format.
+ * @example
+ * humanizeProperty('_id') // "ID"
+ * humanizeProperty('createdAt') // "Created at"
+ * humanizeProperty('created_at') // "Created at"
+ */
+export function humanizeProperty(text?: string | number | null): string {
     text = text ?? '';
     text = text.toString(); // might be a number
     text = text.trim();

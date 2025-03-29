@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { flatten, type UnknownSchema, ValiError } from 'valibot';
-import { humanize } from './util/Humanize';
+import { humanizeProperty } from './util/Humanize';
 
 export function formatValibotError(error: ValiError<UnknownSchema>) {
     const errors: { message: string, reason?: string, key: string }[] = [];
@@ -9,7 +9,7 @@ export function formatValibotError(error: ValiError<UnknownSchema>) {
     Object.entries(nested).forEach(([key, messages]) => {
         messages?.forEach((message) => {
             errors.push({
-                message: message.replace('Invalid type: Expected', `Expected ${humanize(key)} to be`),
+                message: message.replace('Invalid type: Expected', `Expected ${humanizeProperty(key)} to be`),
                 reason: message,
                 key,
             })
