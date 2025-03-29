@@ -16,7 +16,16 @@ export default defineConfig({
                 if (id.startsWith('meteor/meteor')) {
                     // This should probably be refactored if we build with Vite instead of tsup
                     // Currently serves as stubs for the test environment.
-                    return `export const Meteor = globalThis.Meteor || { Error: Error }`;
+                    // language=js
+                    return `export const Meteor = globalThis.Meteor || {
+                        Error: class MeteorError extends Error {
+                            constructor(code, message, details) {
+                                super(message);
+                                this.code = code;
+                                this.details = details;
+                            }
+                        }
+                    }`;
                 }
             }
         }
