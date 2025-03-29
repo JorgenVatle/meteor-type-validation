@@ -50,6 +50,16 @@ describe('formatted Valibot errors', () => {
                 {}
             );
             expect(errors[0].message).toEqual('Title is required');
+        });
+        
+        it('should not modify custom error messages', () => {
+            const { errors } = prepareError(
+                v.object({
+                    title: v.string('You need to set a title!')
+                }),
+                { title: 123 }
+            );
+            expect(errors[0].message).toEqual('You need to set a title!');
         })
     })
     
