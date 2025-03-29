@@ -3,22 +3,20 @@ import * as v from 'valibot';
 import { describe, expect, it } from 'vitest';
 
 describe('formatted Valibot errors', () => {
-    const error = getValidationError(
-        v.object({
-            title: v.string(),
-            completed: v.boolean(),
-            createdAt: v.date(),
-            order: v.object({
-                id: v.string(),
-                items: v.array(v.object({
-                    productId: v.string(),
-                    quantity: v.number(),
-                })),
-            }),
+    const schema = v.object({
+        title: v.string(),
+        completed: v.boolean(),
+        createdAt: v.date(),
+        order: v.object({
+            id: v.string(),
+            items: v.array(v.object({
+                productId: v.string(),
+                quantity: v.number(),
+            })),
         }),
-        { title: 123 }
-    );
-   const formattedError = formatValibotError(error);
+    });
+    const error = getValidationError(schema, { title: 123 });
+    const formattedError = formatValibotError(error);
     
     it('should be an instance of Error', () => {
         expect(formattedError).toBeInstanceOf(Error);
@@ -29,10 +27,10 @@ describe('formatted Valibot errors', () => {
     });
     
     it('should should have a main error message', () => {
-       expect(formattedError.message).toContain('Invalid type');
+        expect(formattedError.message).toContain('Invalid type');
     });
     
-})
+});
 
 function getValidationError<TSchema extends v.GenericSchema>(schema: TSchema, input: any): v.ValiError<TSchema> {
     try {
