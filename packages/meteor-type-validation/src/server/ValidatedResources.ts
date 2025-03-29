@@ -2,7 +2,7 @@ import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import type { Meteor, Subscription } from 'meteor/meteor';
 import type { MergeDeep, UnionToIntersection } from 'type-fest';
 import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
-import { type GuardFunction, type GuardStatic } from '../server/guards';
+import { type GuardFunction, type GuardStatic } from './guards';
 
 export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
