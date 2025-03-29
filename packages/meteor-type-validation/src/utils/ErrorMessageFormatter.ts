@@ -15,7 +15,7 @@ export const ErrorMessageFormatter = {
     invalidType: (issue: Issue) => {
         const key = v.getDotPath(issue);
         return {
-            message: `${humanizeProperty(key)} must be of type ${issue.expected}`,
+            message: `${humanizeProperty(key) || 'Value'} must be of type ${issue.expected}`,
             reason: issue.message,
             key,
         }
