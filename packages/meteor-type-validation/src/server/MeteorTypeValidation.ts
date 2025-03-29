@@ -18,7 +18,7 @@ import type {
 } from './DefinitionTypeHelpers';
 import type { GuardStatic } from './guards';
 import { Logger } from './Logger';
-import { formatValibotError } from './util/FormatValibotError';
+import { formatValibotError } from './utils/FormatValibotError';
 
 export class MeteorTypeValidation<
     TAddedContext = {},
