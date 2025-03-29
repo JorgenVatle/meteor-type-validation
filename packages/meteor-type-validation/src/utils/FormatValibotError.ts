@@ -43,7 +43,7 @@ export function formatIssue(issue: v.BaseIssue<unknown>): FormattedErrorMessage 
     }
 }
 
-class MeteorValiError extends Meteor.Error {
+export class MeteorValiError extends Meteor.Error {
     constructor(message: string, details: string | object) {
         super(
             'ValiError',
