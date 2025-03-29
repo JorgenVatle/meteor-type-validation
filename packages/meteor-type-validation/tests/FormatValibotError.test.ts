@@ -41,12 +41,15 @@ describe('formatted Valibot errors', () => {
     });
     
     describe('required object keys', () => {
-        const error = getValidationError(v.object({ title: v.string() }), {});
-        const formattedError = formatValibotError(error);
-        const formattedDetails = formattedError.details.errors[0];
         
         it('should humanize default error messages', () => {
-            expect(formattedDetails.message).toEqual('Title is required');
+            const { errors } = prepareError(
+                v.object({
+                    title: v.string()
+                }),
+                {}
+            );
+            expect(errors[0].message).toEqual('Title is required');
         })
     })
     
@@ -61,5 +64,17 @@ function getValidationError<TSchema extends v.GenericSchema>(schema: TSchema, in
             throw error;
         }
         return error;
+    }
+}
+
+function prepareError<TSchema extends v.GenericSchema>(schema: TSchema, input: any) {
+    const rawError = getValidationError(schema, input);
+    const valiError = formatValibotError(rawError);
+    const { issues, errors } = valiError.details;
+    
+    return {
+        issues,
+        errors,
+        valiError,
     }
 }
