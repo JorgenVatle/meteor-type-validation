@@ -1,28 +1,46 @@
 import { Meteor } from 'meteor/meteor';
-import { type BaseSchema, flatten, ValiError } from 'valibot';
-import { humanizeProperty } from './Humanize';
+import * as v from 'valibot';
+import { type BaseSchema, getDotPath, ValiError } from 'valibot';
+import { ErrorMessageFormatter, type FormattedErrorMessage } from './ErrorMessageFormatter';
 
 export function formatValibotError(error: ValiError<BaseSchema<any, any, any>>) {
-    const errors: { message: string, reason?: string, key: string }[] = [];
-    const { nested, root } = flatten(error.issues) as { nested: Record<string, string[]>, root: string[] };
+    const errors: FormattedErrorMessage[] = error.issues.map((issue) => formatIssue(issue));
     
-    Object.entries(nested).forEach(([key, messages]) => {
-        messages?.forEach((message) => {
-            errors.push({
-                message: message.replace('Invalid type: Expected', `Expected ${humanizeProperty(key)} to be`),
-                reason: message,
-                key,
-            })
-        })
+    return new MeteorError('ValiError', error.message, {
+        errors,
+        issues: error.issues
     });
+}
+
+function isDefaultMessage(issue: v.BaseIssue<unknown>) {
+    const message = issue.message;
+    if (message.includes('Invalid key: Expected')) {
+        return true;
+    }
+    return false;
+}
+
+export function formatIssue(issue: v.BaseIssue<unknown>): FormattedErrorMessage {
     
-    root?.forEach((message) => {
-        errors.push({
-            message,
-            key: '[root]'
-        })
-    });
-    return new MeteorError('ValiError', error.message, { errors, issues: error.issues });
+    if (!isDefaultMessage(issue)) {
+        return {
+            key: getDotPath(issue),
+            message: issue.message,
+            reason: issue.message,
+        }
+    }
+    
+    if (issue.type === 'object') {
+        if (issue.received === 'undefined') {
+            return ErrorMessageFormatter.required(issue);
+        }
+    }
+    
+    return {
+        message: issue.message,
+        key: getDotPath(issue),
+        reason: issue.message,
+    }
 }
 
 class MeteorError extends Meteor.Error {
