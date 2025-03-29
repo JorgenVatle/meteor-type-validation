@@ -1,19 +1,26 @@
-import { DefinedMethods, DefinedPublications, Meteor } from 'meteor/meteor';
+import { Meteor, MethodName, MethodParams, MethodResult, PublicationName, PublicationParams } from 'meteor/meteor';
 
-function callAsync<
-    TName extends keyof DefinedMethods
->(
-    name: TName,
-    ...params: Parameters<DefinedMethods[TName]>
-): Promise<Awaited<ReturnType<DefinedMethods[TName]>>> {
-    return Meteor.callAsync(name, ...params);
-}
 
 /**
  * Overrides for Meteor's default types to enforce type safety.
  */
 export const MeteorApi = {
-    callAsync,
-    call: Meteor.call<keyof DefinedMethods>,
-    subscribe: Meteor.subscribe<keyof DefinedPublications>,
+    callAsync: Meteor.callAsync as <TName extends MethodName>(
+        name: TName,
+        ...params: MethodParams<TName>
+    ) => Promise<MethodResult<TName>>,
+    
+    call: Meteor.call as <TName extends MethodName>(
+        name: TName,
+        ...params: [
+            ...MethodParams<TName>,
+            callback?: (error?: Error, response?: MethodResult<TName>
+            ) => void
+        ]
+    ) => void,
+    
+    subscribe: Meteor.subscribe as <TName extends PublicationName>(
+        name: TName,
+        ...params: PublicationParams<TName>
+    ) => Meteor.SubscriptionHandle,
 }
