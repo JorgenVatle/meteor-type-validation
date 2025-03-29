@@ -2,6 +2,10 @@
 import { Meteor } from 'meteor/meteor';
 import { performance } from 'node:perf_hooks';
 import type Pino from 'pino';
+import { type GenericSchema, parse, ValiError } from 'valibot';
+import { formatValibotError } from './Errors';
+import type { GuardStatic } from './guards';
+import { Logger } from './Logger';
 import type {
     BaseContext,
     ContextWrapper,
@@ -14,11 +18,7 @@ import type {
     RateLimiterRule,
     ResourceType,
     WrappedContext,
-} from 'src/types';
-import { type GenericSchema, parse, ValiError } from 'valibot';
-import { formatValibotError } from './Errors';
-import type { GuardStatic } from './guards';
-import { Logger } from './Logger';
+} from './ValidatedResources';
 
 export class MeteorTypeValidation<
     TAddedContext = {},
