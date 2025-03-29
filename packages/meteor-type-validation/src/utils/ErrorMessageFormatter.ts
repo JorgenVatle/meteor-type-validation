@@ -12,6 +12,14 @@ export const ErrorMessageFormatter = {
             key,
         }
     },
+    invalidType: (issue: Issue) => {
+        const key = v.getDotPath(issue);
+        return {
+            message: `${humanizeProperty(key)} must be of type ${issue.expected}`,
+            reason: issue.message,
+            key,
+        }
+    },
 } satisfies Record<string, (issue: Issue) => FormattedErrorMessage>;
 
 export type FormattedErrorMessage = {
