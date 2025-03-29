@@ -44,10 +44,13 @@ function extname(text: string): string {
  * humanizeProperty('createdAt') // "Created at"
  * humanizeProperty('created_at') // "Created at"
  */
-export function humanizeProperty(text?: string | number | null): string {
+export function humanizeProperty(text?: string | number | null, { stripExt = true } = {}): string {
     text = text ?? '';
     text = text.toString(); // might be a number
     text = text.trim();
+    if (stripExt) {
+        text = text.replace(extname(text), '');
+    }
     text = text.replace(extname(text), '');
     text = underscore(text);
     text = text.replace(/[\W_]+/g, ' ');
