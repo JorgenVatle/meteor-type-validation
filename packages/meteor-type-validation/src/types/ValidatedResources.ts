@@ -153,7 +153,7 @@ type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[n
  * Infer a publication or method definition's handle function.
  * Essentially the context that peer projects will have when defining methods and publications.
  */
-type InferResourceHandleFn<
+export type InferResourceHandleFn<
     TSchemas extends GenericSchema[],
     TGuards extends GuardStatic[],
     TExtendedContext,
