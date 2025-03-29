@@ -35,6 +35,11 @@ describe('formatted Valibot errors', () => {
         expect(formattedError.details.errors.length).toBeGreaterThan(0);
     });
     
+    it('should have a "details.issues" property', () => {
+        expect(formattedError.details.issues).toBeDefined();
+        expect(formattedError.details.issues.length).toBeGreaterThan(0);
+    });
+    
 });
 
 function getValidationError<TSchema extends v.GenericSchema>(schema: TSchema, input: any): v.ValiError<TSchema> {
