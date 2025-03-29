@@ -1,4 +1,5 @@
 /// <reference types="meteor/globals/ddp-rate-limiter" />
+/// <reference path="../types/meteor/ModuleAugmentation.ts" />
 import { Meteor } from 'meteor/meteor';
 import { performance } from 'node:perf_hooks';
 import type Pino from 'pino';
