@@ -44,7 +44,7 @@ function extname(text: string): string {
  * humanizeProperty('createdAt') // "Created at"
  * humanizeProperty('created_at') // "Created at"
  */
-export function humanizeProperty(text?: string | number | null, { stripExt = true } = {}): string {
+export function humanizeProperty(text?: string | number | null, { stripExt = false } = {}): string {
     text = text ?? '';
     text = text.toString(); // might be a number
     text = text.trim();
