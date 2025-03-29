@@ -48,9 +48,11 @@ export type ValiErrorDetails = {
     issues: v.BaseIssue<unknown>[]
 }
 
+
 export class MeteorValiError extends Meteor.Error {
     // @ts-expect-error Meteor's type definitions incorrectly sets this to string.
-    public readonly details!: ValiErrorDetails;
+    declare details: ValiErrorDetails;
+    
     constructor(message: string, details: ValiErrorDetails) {
         super(
             'ValiError',
