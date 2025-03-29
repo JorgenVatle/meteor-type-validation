@@ -1,7 +1,6 @@
+import { Guard, UserLoggedInGuard } from '@meteor-type-validation/server';
 import { Meteor } from 'meteor/meteor';
-import { UserLoggedInGuard } from 'src/server/guards/UserLoggedInGuard';
 import * as v from 'valibot';
-import { Guard } from '../../src';
 
 export class CreatedByCurrentUser extends Guard {
     public readonly writeToParams = false;

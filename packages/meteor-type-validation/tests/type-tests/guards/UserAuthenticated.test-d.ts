@@ -1,5 +1,4 @@
-import { defineMethods, definePublications } from 'src/server/Definitions';
-import { UserLoggedInGuard } from 'src/server/guards/UserLoggedInGuard';
+import { defineMethods, definePublications, UserLoggedInGuard } from '@meteor-type-validation/server';
 import { describe, expectTypeOf, it } from 'vitest';
 import { CreateTodoSchema } from '../../lib/Schemas';
 
