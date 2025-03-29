@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { flatten, type UnknownSchema, ValiError } from 'valibot';
-import { humanizeProperty } from './util/Humanize';
+import { humanizeProperty } from './Humanize';
 
 export function formatValibotError(error: ValiError<UnknownSchema>) {
     const errors: { message: string, reason?: string, key: string }[] = [];

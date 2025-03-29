@@ -16,9 +16,9 @@ import type {
     ResourceType,
     WrappedContext,
 } from './DefinitionTypeHelpers';
-import { formatValibotError } from './Errors';
 import type { GuardStatic } from './guards';
 import { Logger } from './Logger';
+import { formatValibotError } from './util/FormatValibotError';
 
 export class MeteorTypeValidation<
     TAddedContext = {},
