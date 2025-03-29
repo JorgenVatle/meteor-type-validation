@@ -40,6 +40,16 @@ describe('formatted Valibot errors', () => {
         expect(formattedError.details.issues.length).toBeGreaterThan(0);
     });
     
+    describe('required object keys', () => {
+        const error = getValidationError(v.object({ title: v.string() }), {});
+        const formattedError = formatValibotError(error);
+        const formattedDetails = formattedError.details.errors[0];
+        
+        it('should humanize default error messages', () => {
+            expect(formattedDetails.message).toEqual('Title is required');
+        })
+    })
+    
 });
 
 function getValidationError<TSchema extends v.GenericSchema>(schema: TSchema, input: any): v.ValiError<TSchema> {
