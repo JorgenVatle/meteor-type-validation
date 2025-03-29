@@ -32,6 +32,7 @@
     "paths": {
       "@meteor-type-validation/server": ["./src/server/index.ts"],
       "@meteor-type-validation/client": ["./src/client/index.ts"],
+      "@meteor-type-validation/utils": ["./src/utils/index.ts"],
       "@meteor-type-validation/types": ["./src/types/index.ts"],
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
