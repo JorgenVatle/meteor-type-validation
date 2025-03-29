@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import { flatten, type UnknownSchema, ValiError } from 'valibot';
+import { type BaseSchema, flatten, ValiError } from 'valibot';
 import { humanizeProperty } from './Humanize';
 
-export function formatValibotError(error: ValiError<UnknownSchema>) {
+export function formatValibotError(error: ValiError<BaseSchema<any, any, any>>) {
     const errors: { message: string, reason?: string, key: string }[] = [];
-    const { nested, root } = flatten<never>(error.issues) as { nested: Record<string, string[]>, root: string[] };
+    const { nested, root } = flatten(error.issues) as { nested: Record<string, string[]>, root: string[] };
     
     Object.entries(nested).forEach(([key, messages]) => {
         messages?.forEach((message) => {
