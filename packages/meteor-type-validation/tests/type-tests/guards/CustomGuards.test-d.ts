@@ -1,4 +1,4 @@
-import { defineMethods, definePublications, UserLoggedInGuard } from 'src';
+import { defineMethods, definePublications, UserLoggedInGuard } from '@meteor-type-validation/server';
 import { describe, expectTypeOf, it } from 'vitest';
 import { AdminGuard } from '../../lib/AdminGuard';
 import { CreatedByCurrentUser } from '../../lib/CreatedByCurrentUserGuard';

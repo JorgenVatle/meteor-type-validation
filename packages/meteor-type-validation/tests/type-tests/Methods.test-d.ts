@@ -1,4 +1,4 @@
-import { defineMethods } from 'src';
+import { defineMethods } from '@meteor-type-validation/server';
 import { expectTypeOf, it } from 'vitest';
 import { CreateTodoSchema } from '../lib/Schemas';
 

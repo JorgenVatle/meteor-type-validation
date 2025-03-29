@@ -1,4 +1,4 @@
-import { Guard } from 'src';
+import { Guard } from '@meteor-type-validation/server';
 import * as v from 'valibot';
 
 export class AdminGuard extends Guard {

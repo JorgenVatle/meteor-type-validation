@@ -1,4 +1,4 @@
-import { definePublications } from 'src';
+import { definePublications } from '@meteor-type-validation/server';
 import { expectTypeOf, it } from 'vitest';
 import { QueryOptionsSchema, QueryTodoSchema } from '../lib/Schemas';
 

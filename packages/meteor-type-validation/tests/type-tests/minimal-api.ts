@@ -1,4 +1,4 @@
-import { defineMethods, definePublications, exposeMethods, exposePublications } from 'src';
+import { defineMethods, definePublications, exposeMethods, exposePublications } from '@meteor-type-validation/server';
 import * as v from 'valibot';
 
 export const AllMethods = defineMethods({

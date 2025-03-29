@@ -1,5 +1,10 @@
-import { UserLoggedInGuard } from '@meteor-type-validation/server';
-import { defineMethods, definePublications, exposeMethods, exposePublications } from 'src';
+import {
+    defineMethods,
+    definePublications,
+    exposeMethods,
+    exposePublications,
+    UserLoggedInGuard,
+} from '@meteor-type-validation/server';
 import * as v from 'valibot';
 import { CreatedByCurrentUser } from '../lib/CreatedByCurrentUserGuard';
 
