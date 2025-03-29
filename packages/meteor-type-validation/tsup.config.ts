@@ -8,6 +8,7 @@ export default defineConfig({
         index: 'src/index.ts',
         client: 'src/client/index.ts',
         types: 'src/types/index.ts',
+        utils: 'src/utils/index.ts',
     },
     outDir: 'dist',
     format: ['esm', 'cjs'],
