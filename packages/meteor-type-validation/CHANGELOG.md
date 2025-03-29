@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.4.0-beta.10
+
+### Minor Changes
+
+- 84a4f93: Use namespaced export for resource definition type helpers.
+
 ## 2.4.0-beta.9
 
 ### Minor Changes
