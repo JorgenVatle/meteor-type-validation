@@ -4,12 +4,11 @@ import { defineConfig, type Options } from 'tsup';
 type Plugin = Required<Options>['esbuildPlugins'][number];
 
 export default defineConfig({
-    entry: [
-        'src/index.ts',
-        'src/server/index.ts',
-        'src/client/index.ts',
-        'src/types/index.ts'
-    ],
+    entry: {
+        index: 'src/index.ts',
+        client: 'src/client/index.ts',
+        types: 'src/types/index.ts',
+    },
     outDir: 'dist',
     format: ['esm', 'cjs'],
     dts: true,
@@ -19,6 +18,7 @@ export default defineConfig({
     skipNodeModulesBundle: true,
     sourcemap: true,
     treeshake: true,
+    splitting: false,
     clean: true,
     noExternal: ['lodash-es', 'meteor'],
     esbuildPlugins: [
