@@ -20,7 +20,7 @@ export default defineConfig({
     treeshake: true,
     splitting: false,
     clean: true,
-    noExternal: ['lodash-es', 'meteor'],
+    noExternal: ['meteor'],
     esbuildPlugins: [
         meteorImportStubs({
             'meteor': (symbol) => `export const Meteor = ${symbol}.Meteor || globalThis.Meteor`,
