@@ -51,7 +51,6 @@ export function humanizeProperty(text?: string | number | null, { stripExt = tru
     if (stripExt) {
         text = text.replace(extname(text), '');
     }
-    text = text.replace(extname(text), '');
     text = underscore(text);
     text = text.replace(/[\W_]+/g, ' ');
     
