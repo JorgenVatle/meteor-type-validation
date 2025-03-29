@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.4.0-beta.11
+
+### Patch Changes
+
+- ad626f6: Fix namespacing for resource types export
+
 ## 2.4.0-beta.10
 
 ### Minor Changes
