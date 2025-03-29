@@ -2,9 +2,9 @@ import { defineGuard, defineMethods } from '@meteor-type-validation/server';
 import * as v from 'valibot';
 import { describe, expectTypeOf, it } from 'vitest';
 
-describe('defineGuard', () => {
+describe('defineGuard methods', () => {
     describe('contextSchema', () => {
-        it('should infer the context type from the provided schema', () => {
+        it('is included in the method\'s context', () => {
             defineMethods({
                 'todo.create': {
                     guards: [defineGuard({
