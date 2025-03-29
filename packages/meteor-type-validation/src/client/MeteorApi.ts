@@ -1,4 +1,12 @@
-import { Meteor, MethodName, MethodParams, MethodResult, PublicationName, PublicationParams } from 'meteor/meteor';
+import {
+    Meteor,
+    MethodName,
+    MethodParams,
+    MethodResult,
+    PublicationName,
+    PublicationParams,
+    SubscribeCallbacks,
+} from 'meteor/meteor';
 
 
 /**
@@ -21,6 +29,9 @@ export const MeteorApi = {
     
     subscribe: Meteor.subscribe as <TName extends PublicationName>(
         name: TName,
-        ...params: PublicationParams<TName>
+        ...params: [
+            ...PublicationParams<TName>,
+            callbacks?: SubscribeCallbacks,
+        ]
     ) => Meteor.SubscriptionHandle,
 }
