@@ -9,7 +9,7 @@ declare module 'meteor/meteor' {
     export type MethodResult<TName extends MethodName> = ReturnType<DefinedMethods[TName]>;
     export type PublicationResult<TName extends PublicationName> = ReturnType<DefinedPublications[TName]>;
     
-    module Meteor {
+    namespace Meteor {
         function subscribe<
             TName extends keyof DefinedPublications
         >(
