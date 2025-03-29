@@ -9,10 +9,22 @@ declare module 'meteor/meteor' {
     export type MethodResult<TName extends MethodName> = Awaited<ReturnType<DefinedMethods[TName]>>;
     export type PublicationResult<TName extends PublicationName> = ReturnType<DefinedPublications[TName]>;
     
+    /**
+     * Meteor.subscribe() options type. Remains untyped in current versions of @types/meteor
+     * @link https://docs.meteor.com/api/meteor.html#Meteor-subscribe
+     */
+    export type SubscribeCallbacks = () => void | {
+        onReady?: () => void,
+        onStop?: (error?: Error) => void,
+    }
+    
     namespace Meteor {
         function subscribe<
             TName extends PublicationName
-        >(name: TName, ...params: PublicationParams<TName>): Meteor.SubscriptionHandle;
+        >(name: TName, ...params: [
+            ...PublicationParams<TName>,
+            callbacks?: SubscribeCallbacks,
+        ]): Meteor.SubscriptionHandle;
         
         function call<
             TName extends MethodName
