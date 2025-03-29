@@ -9,7 +9,7 @@ describe('defineGuard methods', () => {
                 'todo.create': {
                     guards: [defineGuard({
                         contextSchema: v.object({ userId: v.string(), sessionStartedAt: v.date() }),
-                        paramSchema: [v.object({ title: v.string() })],
+                        paramSchema: [],
                         writeToContext: true,
                         writeToParams: false,
                     })],
