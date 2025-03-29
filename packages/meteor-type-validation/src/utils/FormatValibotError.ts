@@ -43,8 +43,15 @@ export function formatIssue(issue: v.BaseIssue<unknown>): FormattedErrorMessage 
     }
 }
 
+export type ValiErrorDetails = {
+    errors: FormattedErrorMessage[],
+    issues: v.BaseIssue<unknown>[]
+}
+
 export class MeteorValiError extends Meteor.Error {
-    constructor(message: string, details: string | object) {
+    // @ts-expect-error Meteor's type definitions incorrectly sets this to string.
+    public readonly details!: ValiErrorDetails;
+    constructor(message: string, details: ValiErrorDetails) {
         super(
             'ValiError',
             message,
