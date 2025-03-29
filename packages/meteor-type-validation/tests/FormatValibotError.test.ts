@@ -73,6 +73,13 @@ describe('formatted Valibot errors', () => {
         });
     });
     
+    describe('base schemas', () => {
+        it('should humanize default error messages', () => {
+            const { errors } = prepareError(v.string(), 123);
+            expect(errors[0].message).toEqual('Value must be of type string');
+        })
+    })
+    
     
 });
 
