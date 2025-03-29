@@ -1,5 +1,12 @@
 # meteor-type-validation
 
+## 2.4.0-beta.12
+
+### Patch Changes
+
+- 6550f57: Include Meteor core module augmentation types in type validation server index module
+- 5092b80: Correct package.json module paths for /types exports
+
 ## 2.4.0-beta.11
 
 ### Patch Changes
