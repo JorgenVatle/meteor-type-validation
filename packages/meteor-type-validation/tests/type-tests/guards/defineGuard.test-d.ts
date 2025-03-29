@@ -22,4 +22,34 @@ describe('defineGuard methods', () => {
             })
         })
     })
+    
+    describe('paramsSchema', () => {
+        it('will extend the method\'s params type when writeToParams is enabled', () => {
+            defineMethods({
+                'todo.create': {
+                    guards: [defineGuard({
+                        contextSchema: v.object({}),
+                        paramSchema: [
+                            v.pipe(
+                                v.object({ orderId: v.string() }),
+                                v.transform((input) => {
+                                    return {
+                                        ...input,
+                                        order: { createdAt: new Date() }
+                                    }
+                                })
+                            )
+                        ],
+                        writeToContext: false,
+                        writeToParams: 'patch',
+                    })],
+                    schema: [v.object({ orderId: v.string() })],
+                    method(entry) {
+                        expectTypeOf(entry).toEqualTypeOf<{ orderId: string, order: { createdAt: Date } }>();
+                        expectTypeOf(entry).not.toEqualTypeOf<{ 'unexpected-key': true }>();
+                    }
+                }
+            })
+        })
+    })
 })
