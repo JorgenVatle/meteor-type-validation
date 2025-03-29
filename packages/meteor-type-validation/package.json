@@ -39,10 +39,10 @@
     },
     "./types": {
       "import": {
-        "types": "./dist/types/index.d.mts"
+        "types": "./dist/types.d.mts"
       },
       "require": {
-        "types": "./dist/types/index.d.ts"
+        "types": "./dist/types.d.ts"
       }
     }
   },
