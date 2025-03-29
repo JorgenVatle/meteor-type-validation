@@ -111,7 +111,8 @@
     "src",
     "tests",
     "vite.config.ts",
-    "tsup.config.ts"
+    "tsup.config.ts",
+    "env.d.ts"
   ],
   "exclude": [
     "**/node_modules",
