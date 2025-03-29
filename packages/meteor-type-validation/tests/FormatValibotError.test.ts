@@ -21,7 +21,7 @@ describe('formatted Valibot errors', () => {
    const formattedError = formatValibotError(error);
     
     it('should be an instance of Error', () => {
-        expect(formattedError.error).toBeInstanceOf(Error);
+        expect(formattedError).toBeInstanceOf(Error);
     });
     
     it('should have a "details" property', () => {
