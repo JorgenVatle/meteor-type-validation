@@ -40,9 +40,9 @@ describe('formatted Valibot errors', () => {
         expect(formattedError.details.issues.length).toBeGreaterThan(0);
     });
     
-    describe('required object keys', () => {
+    describe('object schemas', () => {
         
-        it('should humanize default error messages', () => {
+        it('should humanize error messages for missing keys', () => {
             const { errors } = prepareError(
                 v.object({
                     title: v.string()
@@ -52,7 +52,7 @@ describe('formatted Valibot errors', () => {
             expect(errors[0].message).toEqual('Title is required');
         });
         
-        it('should not modify custom error messages', () => {
+        it('should not modify custom error messages for schema properties', () => {
             const { errors } = prepareError(
                 v.object({
                     title: v.string('You need to set a title!')
@@ -60,11 +60,9 @@ describe('formatted Valibot errors', () => {
                 { title: 123 }
             );
             expect(errors[0].message).toEqual('You need to set a title!');
-        })
-    });
-    
-    describe('invalid types', () => {
-        it('should humanize default error messages', () => {
+        });
+        
+        it('should humanize default error messages for invalid types', () => {
             const { errors } = prepareError(
                 v.object({
                     title: v.string()
@@ -73,7 +71,8 @@ describe('formatted Valibot errors', () => {
             );
             expect(errors[0].message).toEqual('Title must be of type string');
         });
-    })
+    });
+    
     
 });
 
