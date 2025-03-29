@@ -6,7 +6,7 @@ import {
     UserLoggedInGuard,
 } from '@meteor-type-validation/server';
 import * as v from 'valibot';
-import { CreatedByCurrentUser } from '../lib/CreatedByCurrentUserGuard';
+import { CreatedByCurrentUser } from '../../lib/CreatedByCurrentUserGuard';
 
 export const AllMethods = defineMethods({
     'user:todo.add': {
