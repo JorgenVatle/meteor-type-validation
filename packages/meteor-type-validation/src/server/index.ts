@@ -1,3 +1,3 @@
 export * from './guards';
-export * from './Definitions';
+export * from './ShorthandFunctions';
 export * from './MeteorTypeValidation';
