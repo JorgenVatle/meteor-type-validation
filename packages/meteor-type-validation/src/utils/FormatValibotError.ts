@@ -17,6 +17,9 @@ function isDefaultMessage(issue: v.BaseIssue<unknown>) {
     if (message.includes('Invalid key: Expected')) {
         return true;
     }
+    if (message.includes('Invalid type: Expected')) {
+        return true;
+    }
     return false;
 }
 
@@ -36,11 +39,8 @@ export function formatIssue(issue: v.BaseIssue<unknown>): FormattedErrorMessage 
         }
     }
     
-    return {
-        message: issue.message,
-        key: getDotPath(issue),
-        reason: issue.message,
-    }
+    
+    return ErrorMessageFormatter.invalidType(issue);
 }
 
 export type ValiErrorDetails = {
