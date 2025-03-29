@@ -52,6 +52,18 @@ describe('formatted Valibot errors', () => {
             expect(errors[0].message).toEqual('Title is required');
         });
         
+        it('should humanize nested property keys', () => {
+            const { errors, issues } = prepareError(
+                v.object({
+                    order: v.object({
+                        id: v.string(),
+                    }),
+                }),
+                { order: { id: 123 } }
+            );
+            expect(errors[0].message).toEqual('Order ID must be of type string');
+        })
+        
         it('should not modify custom error messages for schema properties', () => {
             const { errors } = prepareError(
                 v.object({
