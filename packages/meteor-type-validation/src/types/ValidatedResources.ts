@@ -4,36 +4,36 @@ import type { MergeDeep, UnionToIntersection } from 'type-fest';
 import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
 import { type GuardFunction, type GuardStatic } from '../server/guards';
 
-export type MethodDefinition<
+export interface MethodDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown
-> = {
+> {
     schema: [...TSchemas],
     guards: [...TGuards],
     rateLimiters?: RateLimiterRule[],
     method: InferResourceHandleFn<TSchemas, TGuards, Meteor.MethodThisType & TExtendedContext, TReturnType>
 }
-export type PublicationDefinition<
+export interface PublicationDefinition<
     TSchemas extends GenericSchema[] = GenericSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown,
-> = {
+> {
     schema: [...TSchemas],
     guards: [...TGuards],
     rateLimiters?: RateLimiterRule[],
     publish: InferResourceHandleFn<TSchemas, TGuards, Subscription & TExtendedContext, TReturnType>
 }
 
-export type MethodDefinitionResult<TSchemas extends GenericSchema[], TResult> = {
+export interface MethodDefinitionResult<TSchemas extends GenericSchema[], TResult> {
     guards: any,
     schema: any,
     method: (...params: UnwrapSchemaInput<TSchemas>) => NoInfer<TResult>;
 }
 
-export type PublicationDefinitionResult<TSchemas extends GenericSchema[], TResult> = {
+export interface PublicationDefinitionResult<TSchemas extends GenericSchema[], TResult> {
     guards: any,
     schema: any,
     publish: (...params: UnwrapSchemaInput<TSchemas>) => NoInfer<TResult>;
