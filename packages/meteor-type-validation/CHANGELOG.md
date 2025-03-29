@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.4.0-beta.8
+
+### Patch Changes
+
+- cfab321: Prevent internal Promise.await declaration for Meteor V2 from being exported into peer projects.
+
 ## 2.4.0-beta.7
 
 ### Minor Changes
