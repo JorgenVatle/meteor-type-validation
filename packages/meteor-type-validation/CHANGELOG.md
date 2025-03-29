@@ -1,5 +1,18 @@
 # meteor-type-validation
 
+## 2.4.0-beta.9
+
+### Minor Changes
+
+- 00321dc: Export method/publication definition types as interfaces instead of types to allow for easier extension of the base types by peer projects.
+- 09bef99: - Extend Meteor core Meteor.subscribe() method type with untyped subscribe callbacks parameter
+  - Refactor Meteor type declarations to utilize helper types instead of directly accessing resource definition maps for inferring types.
+  - Simplify file structure for package dist. Fixes an issue where some types would only be available in a type chunk file.
+  - Improve error formatting for Valibot error messages.
+  - Add helper function for programmatically composing guard classes.
+- d1ed589: - Improve default error message formatting for validation errors.
+  - Export MeteorValiError class and ValiErrorDetails types for easier error checks in peer projects
+
 ## 2.4.0-beta.8
 
 ### Patch Changes
