@@ -61,6 +61,18 @@ describe('formatted Valibot errors', () => {
             );
             expect(errors[0].message).toEqual('You need to set a title!');
         })
+    });
+    
+    describe('invalid types', () => {
+        it('should humanize default error messages', () => {
+            const { errors } = prepareError(
+                v.object({
+                    title: v.string()
+                }),
+                { title: 123 }
+            );
+            expect(errors[0].message).toEqual('Title must be of type string');
+        });
     })
     
 });
