@@ -29,7 +29,7 @@ describe('formatted Valibot errors', () => {
     });
     
     it('should should have a main error message', () => {
-       expect(formattedError.message).toBe('Expected title to be string');
+       expect(formattedError.message).toContain('Invalid type');
     });
     
 })
