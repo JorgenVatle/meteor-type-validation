@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { performance } from 'node:perf_hooks';
 import type Pino from 'pino';
 import { type GenericSchema, parse, ValiError } from 'valibot';
+import { formatValibotError } from '../utils/FormatValibotError';
 import type {
     BaseContext,
     ContextWrapper,
@@ -18,7 +19,6 @@ import type {
 } from './DefinitionTypeHelpers';
 import type { GuardStatic } from './guards';
 import { Logger } from './Logger';
-import { formatValibotError } from './utils/FormatValibotError';
 
 export class MeteorTypeValidation<
     TAddedContext = {},
