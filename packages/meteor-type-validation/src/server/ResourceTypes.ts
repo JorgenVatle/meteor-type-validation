@@ -121,11 +121,16 @@ type UnwrapGuardedSchemaOutput<
  */
 type UnwrapGuardStaticSchemas<
     TGuards extends GuardStatic[],
-> = UnionToIntersection<{
+> = UnionToIntersection<FilterUndefinedGuards<TGuards>[number]>
+
+/**
+ * Filter out guard classes that have no params schemas defined.
+ */
+type FilterUndefinedGuards<TGuards extends GuardStatic[]> = {
     [key in keyof TGuards]: [GenericSchema<{ __noSchemaSet: true }>] extends InstanceType<TGuards[key]>['paramSchema']
-                               ? never
-                               : UnwrapSchemaOutput<InstanceType<TGuards[key]>['paramSchema']>
-}[number]>
+                            ? never
+                            : UnwrapSchemaOutput<InstanceType<TGuards[key]>['paramSchema']>
+};
 
 /**
  * Infer the this-type of a publication/method handle after applying guard validators.
