@@ -75,7 +75,6 @@
     "@types/meteor": "^2.9.8",
     "picocolors": "^1.1.1",
     "tsup": "^8.4.0",
-    "type-fest": "^4.40.1",
     "typescript": "^5.8.2",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.6"
@@ -89,5 +88,8 @@
   "directories": {
     "test": "tests"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "dependencies": {
+    "type-fest": "^4.40.1"
+  }
 }
