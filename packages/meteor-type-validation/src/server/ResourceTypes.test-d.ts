@@ -142,7 +142,7 @@ describe('UnwrapGuardStaticSchemas', () => {
         ]);
         
         it('unwraps the first guard param schema', () => {
-            expectTypeOf(result).toEqualTypeOf([{ userId: 'foo' }]);
+            expectTypeOf(result).toEqualTypeOf<readonly [{ userId: string }]>();
         })
     })
     
@@ -188,7 +188,7 @@ describe('UnwrapGuardedSchemaOutput', () => {
         });
         
         it('unwraps the first guard param schema', () => {
-            expectTypeOf(result).toEqualTypeOf([{ userId: 'foo' }]);
+            expectTypeOf(result).toEqualTypeOf<[{ userId: string }]>();
         })
     })
     
@@ -244,7 +244,7 @@ class SingleGuardInputSchema extends Guard {
         v.object({
             userId: v.string(),
         })
-    ];
+    ] as const;
 }
 
 class MultiParamSchemaGuard extends Guard {
