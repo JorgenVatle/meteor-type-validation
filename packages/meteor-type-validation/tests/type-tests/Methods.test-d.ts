@@ -107,4 +107,27 @@ describe('return types', () => {
             _id: number;
         }>()
     })
+});
+
+it('allows empty schema lists to indicate no params', () => {
+    defineMethods({
+        'todos.refresh': {
+            schema: [],
+            guards: [],
+            method() {}
+        }
+    })
+})
+
+it('will warn about defining parameters not set in the schema', () => {
+    defineMethods({
+        'todos.refresh': {
+            schema: [],
+            guards: [],
+            // @ts-expect-error
+            method(params) {
+            
+            }
+        }
+    })
 })
