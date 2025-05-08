@@ -105,29 +105,27 @@ export type UnwrapSchemaInput<TSchemas extends ValibotSchema[]> = {
  * @internal
  */
 export type UnwrapGuardedSchemaOutput<
-    TSchemas extends ValibotSchema[],
-    TGuards extends GuardStatic[],
-    TSchemaOutput extends UnwrapSchemaOutput<TSchemas> = UnwrapSchemaOutput<TSchemas>,
-    TGuardOutput extends UnwrapGuardStaticSchemas<TGuards> = UnwrapGuardStaticSchemas<TGuards>
-> = any[] extends TGuardOutput
-    ? MergeDeep<
-        TSchemaOutput,
-        TGuardOutput,
-        { arrayMergeMode: 'spread', recurseIntoArrays: true }
-    >
-    : TSchemaOutput
+    TSchemas extends readonly ValibotSchema[],
+    TGuards extends readonly GuardStatic[],
+    TSchemaOutput extends readonly unknown[] = UnwrapSchemaOutput<TSchemas>,
+    TGuardOutput extends readonly unknown[] = UnwrapGuardStaticSchemas<TGuards>,
+> = MergeDeep<
+    TSchemaOutput extends [] ? [{}] : TSchemaOutput,
+    TGuardOutput extends [] ? [{}] : TGuardOutput,
+    { recurseIntoArrays: true, arrayMergeMode: 'replace' }
+>;
 
 /**
  * Infer schema output from a list of static guard classes
  * @internal
  */
 export type UnwrapGuardStaticSchemas<
-    TGuards extends GuardStatic[],
-> = UnionToIntersection<{
-    [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<any, infer TParamsSchema>
+    TGuards extends readonly GuardStatic[],
+> = {
+    readonly [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<any, infer TParamsSchema>
                             ? UnwrapSchemaOutput<TParamsSchema>
                             : never
-}[number]>
+}[number]
 
 /**
  * Infer the this-type of a publication/method handle after applying guard validators.
