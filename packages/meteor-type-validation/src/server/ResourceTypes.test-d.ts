@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 import { type GuardStatic, UserLoggedInGuard } from './guards';
-import type { ValidatedStaticThisType } from './InternalResourceTypes';
+import type { ValidatedStaticThisType } from './ResourceTypes';
 
 describe('ValidatedStaticThisType', () => {
     function unwrapThis<TGuards extends GuardStatic[]>(guards: TGuards) {

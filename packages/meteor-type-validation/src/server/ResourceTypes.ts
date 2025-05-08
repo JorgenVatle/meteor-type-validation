@@ -9,7 +9,8 @@ import {
     type InferInput,
     type InferOutput,
 } from 'valibot';
-import { type GuardFunction, type GuardStatic } from './guards';
+import { Guard, type GuardFunction, type GuardStatic } from './guards';
+import type { ValidatedStaticThisType } from './InternalResourceTypes';
 
 export interface MethodDefinition<
     TSchemas extends ValibotSchema[] = ValibotSchema[],
@@ -154,11 +155,13 @@ type ValidatedThisType<
 /**
  * Infers the this-type of a static Guard class.
  */
-type ValidatedStaticThisType<
+export type ValidatedStaticThisType<
     TGuards extends GuardStatic[]
-> = InferOutput<
-    Exclude<InstanceType<TGuards[number]>['contextSchema'], undefined>
->;
+> = {
+    [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<infer TSchema extends ValibotSchema, any>
+                            ? InferOutput<TSchema>
+                            : never
+}[number];
 
 /**
  * Infers the this-type of a Guard function/hook. (Non-class guard)
