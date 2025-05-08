@@ -168,7 +168,7 @@ export type ValidatedStaticThisType<
 > = UnionToIntersection<{
     [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<infer TSchema extends ValibotSchema, any>
                             ? InferOutput<TSchema>
-                            : never
+                            : {}
         
 }[number]>;
 
