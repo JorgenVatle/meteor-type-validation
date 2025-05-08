@@ -10,7 +10,6 @@ import {
     type InferOutput,
 } from 'valibot';
 import { Guard, type GuardFunction, type GuardStatic } from './guards';
-import type { ValidatedStaticThisType } from './InternalResourceTypes';
 
 export interface MethodDefinition<
     TSchemas extends ValibotSchema[] = ValibotSchema[],
