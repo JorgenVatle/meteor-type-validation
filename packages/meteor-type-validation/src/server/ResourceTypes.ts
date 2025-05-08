@@ -1,7 +1,14 @@
 import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import type { Meteor, Subscription } from 'meteor/meteor';
 import type { MergeDeep, UnionToIntersection } from 'type-fest';
-import { type BaseIssue, type BaseSchema, type BaseSchemaAsync, type InferInput, type InferOutput } from 'valibot';
+import {
+    type BaseIssue,
+    type BaseSchema,
+    type BaseSchemaAsync,
+    type GenericSchema,
+    type InferInput,
+    type InferOutput,
+} from 'valibot';
 import { Guard, type GuardFunction, type GuardStatic } from './guards';
 
 interface BaseResourceDefinition<
@@ -144,9 +151,15 @@ export type UnwrapGuardStaticSchemas<
     TGuards extends readonly GuardStatic[],
 > = {
     readonly [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<any, infer TParamsSchema extends ValibotSchemaList>
-                            ? TParamsSchema
+                            ? FilterEmptySchemas<TParamsSchema>
                             : never
 }[number]
+
+type FilterEmptySchemas<
+    TSchemas extends ValibotSchemaList
+> = TSchemas extends never[]
+    ? [GenericSchema<{}>]
+    : TSchemas
 
 /**
  * Infer the this-type of a publication/method handle after applying guard validators.
