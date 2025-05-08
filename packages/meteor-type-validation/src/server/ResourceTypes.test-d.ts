@@ -3,6 +3,7 @@ import { describe, expectTypeOf, it } from 'vitest';
 import { Guard, type GuardStatic, UserLoggedInGuard } from './guards';
 import type {
     InferResourceHandleFn,
+    UnwrapGuardStaticSchemas,
     ValibotSchema,
     ValidatedStaticThisType,
     ValidatedThisType,
@@ -91,17 +92,6 @@ describe('InferResourceHandleFn', () => {
     }
     
     describe('single guard input schema', () => {
-        class SingleGuardInputSchema extends Guard {
-            public readonly writeToParams = false;
-            public readonly writeToContext = false;
-            public readonly contextSchema = undefined;
-            public readonly paramSchema = [
-                v.object({
-                    userId: v.string(),
-                })
-            ];
-        }
-        
         const result = createResourceHandle({
             guards: [SingleGuardInputSchema],
         });
@@ -156,6 +146,23 @@ describe('InferResourceHandleFn', () => {
     })
 })
 
+describe('UnwrapGuardStaticSchemas', () => {
+    function unwrapGuardSchemas<TGuards extends GuardStatic[]>(guard: TGuards) {
+        return {} as UnwrapGuardStaticSchemas<TGuards>
+    }
+    
+    describe('single guard input schema', () => {
+        const result = unwrapGuardSchemas([
+            SingleGuardInputSchema,
+        ]);
+        
+        it('unwraps the first guard param schema', () => {
+            expectTypeOf(result).toEqualTypeOf([{ userId: 'foo' }]);
+        })
+    })
+    
+})
+
 class ExtraContextGuard extends Guard {
     public readonly paramSchema = [];
     public readonly writeToParams = false;
@@ -170,4 +177,15 @@ class UndefinedContextGuard extends Guard {
     public readonly writeToParams = false;
     public readonly writeToContext = false;
     public readonly contextSchema = undefined;
+}
+
+class SingleGuardInputSchema extends Guard {
+    public readonly writeToParams = false;
+    public readonly writeToContext = false;
+    public readonly contextSchema = undefined;
+    public readonly paramSchema = [
+        v.object({
+            userId: v.string(),
+        })
+    ];
 }
