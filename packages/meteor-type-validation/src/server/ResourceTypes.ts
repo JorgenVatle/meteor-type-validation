@@ -89,7 +89,7 @@ export type UnwrapPublications<TPublications extends PublicationDefinitionMap> =
  * This is the argument's type as it is received inside the method handle.
  * The input type (the type the caller should adhere to) is inferred from {@link UnwrapSchemaInput}
  */
-export type UnwrapSchemaOutput<TSchemas extends ValibotSchema[]> = {
+export type UnwrapSchemaOutput<TSchemas extends readonly ValibotSchema[]> = {
     [key in keyof TSchemas]: InferOutput<TSchemas[key]>
 }
 
