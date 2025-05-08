@@ -51,25 +51,27 @@ export class MeteorTypeValidation<
     }
     
     public defineMethods<
-        TSchemas extends Record<keyof TGuards, GenericSchema[]>,
-        TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
-        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
+        TSchemas extends Record<TKeys, GenericSchema[]>,
+        TGuards extends Record<TKeys,  GuardStatic[]>,
+        TResult extends Record<TKeys, unknown>,
+        const TKeys extends keyof TGuards | keyof TSchemas | keyof TResult,
     >(methods: {
-        [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
+        [key in TKeys]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
     }): {
-        [key in keyof TSchemas | keyof TGuards | keyof TResult]: MethodDefinitionResult<TSchemas[key], TResult[key]>
+        [key in TKeys]: MethodDefinitionResult<TSchemas[key], TResult[key]>
     } {
         return methods;
     }
     
     public definePublications<
-        TSchemas extends Record<keyof TGuards, GenericSchema[]>,
-        TGuards extends Record<keyof TSchemas | keyof TResult, GuardStatic[]>,
-        TResult extends Record<keyof TSchemas | keyof TGuards, unknown>,
+        TSchemas extends Record<TKeys, GenericSchema[]>,
+        TGuards extends Record<TKeys,  GuardStatic[]>,
+        TResult extends Record<TKeys, unknown>,
+        const TKeys extends keyof TGuards | keyof TSchemas | keyof TResult,
     >(publications: {
-        [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
+        [key in TKeys]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
     }): {
-        [key in keyof TSchemas | keyof TGuards | keyof TResult]: PublicationDefinitionResult<TSchemas[key], TResult[key]>
+        [key in TKeys]: PublicationDefinitionResult<TSchemas[key], TResult[key]>
     } {
         if (Meteor.isClient && !Meteor.isProduction) {
             const logger = this.options?.createLogger?.({ type: 'publication', name: '<internal definition>', context: {} as any }) || console;
