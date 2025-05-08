@@ -201,5 +201,5 @@ class MultiParamSchemaGuard extends Guard {
                 ])
             ),
         })
-    ];
+    ] as const;
 }
