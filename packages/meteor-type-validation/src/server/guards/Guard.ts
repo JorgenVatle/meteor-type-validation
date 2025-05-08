@@ -2,7 +2,7 @@ import type { GenericSchema } from 'valibot';
 import * as v from 'valibot';
 import type { BaseContext, UnwrapSchemaOutput, ValibotSchema } from '../ResourceTypes';
 
-export abstract class Guard {
+export abstract class Guard<TContextSchema extends ValibotSchema | undefined = ValibotSchema> {
     constructor(
         public readonly context: BaseContext,
         protected readonly params: unknown[]
@@ -12,7 +12,7 @@ export abstract class Guard {
      * Used to perform validation on the current method or publication's `this` context.
      * Handy for checking that a user is logged in by checking for the presence of `this.userId`.
      */
-    public abstract readonly contextSchema: ValibotSchema;
+    public abstract readonly contextSchema: TContextSchema;
     
     /**
      * Define a paramSchema to extend input validation for a method or publication handle.
@@ -48,7 +48,12 @@ export abstract class Guard {
      */
     protected assertContext<
         TSelf extends Guard,
-    >(this: TSelf): asserts this is { context: v.InferOutput<TSelf['contextSchema']>, params: UnwrapSchemaOutput<TSelf['paramSchema']> } {
+    >(this: TSelf): asserts this is {
+        context: TSelf['contextSchema'] extends ValibotSchema
+                 ? v.InferOutput<TSelf['contextSchema']>
+                 : never,
+        params: UnwrapSchemaOutput<TSelf['paramSchema']>
+    } {
         // The context should be validated before this method is reachable, so no need to validate twice.
     }
     
