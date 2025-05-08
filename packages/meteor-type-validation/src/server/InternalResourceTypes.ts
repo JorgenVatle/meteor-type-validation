@@ -5,7 +5,7 @@ import type { ValibotSchema } from './ResourceTypes';
 export type ValidatedStaticThisType<
     TGuards extends GuardStatic[]
 > = {
-    [key in keyof TGuards]: InstanceType<TGuards[key]>['contextSchema'] extends Guard<infer TSchema extends ValibotSchema, any>
+    [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<infer TSchema extends ValibotSchema, any>
                             ? InferOutput<TSchema>
                             : never
 }[number];
