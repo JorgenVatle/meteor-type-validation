@@ -186,6 +186,7 @@ describe('QueryValidationGuard', () => {
     }
     
     describe('methods', () => {
+        
         it(`can infer parameter types only from the guard's schema type`, () => {
             defineMethods({
                 'channel.messages': {
@@ -194,6 +195,29 @@ describe('QueryValidationGuard', () => {
                     method(query, options) {
                         expectTypeOf(query).toEqualTypeOf<{ channelId: string }>();
                         expectTypeOf(options).toMatchTypeOf<{ limit: number }>();
+                    }
+                }
+            })
+        })
+    })
+})
+
+describe('UndefinedContextSchemaGuard', () => {
+    class UndefinedContextSchemaGuard extends Guard {
+        public readonly writeToParams = false;
+        public readonly writeToContext = false;
+        public readonly contextSchema = undefined;
+        public readonly paramSchema = [];
+    }
+    
+    describe('methods', () => {
+        it(`does not cause type errors when used`, () => {
+            defineMethods({
+                'todo.edit': {
+                    schema: [EditTodoSchema],
+                    guards: [UndefinedContextSchemaGuard],
+                    method(entry) {
+                        expectTypeOf(entry).toMatchTypeOf<{ createdBy: string }>()
                     }
                 }
             })
