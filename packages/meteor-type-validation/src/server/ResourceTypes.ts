@@ -161,11 +161,11 @@ type MergeParams<
  */
 export type UnwrapGuardStaticSchemas<
     TGuards extends readonly GuardStatic[],
-> = {
+> = UnionToIntersection<{
     readonly [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<any, infer TParamsSchema extends ValibotSchemaList>
                             ? FilterEmptySchemas<TParamsSchema>
                             : never
-}[number]
+}[number]>
 
 type FilterEmptySchemas<
     TSchemas extends ValibotSchemaList
