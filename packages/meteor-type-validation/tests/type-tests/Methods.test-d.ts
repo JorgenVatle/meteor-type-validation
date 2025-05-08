@@ -85,13 +85,26 @@ describe('return types', () => {
                 return { _id: 123, ...entry }
             }
         },
+        'todo.delete': {
+            schema: [CreateTodoSchema],
+            guards: [],
+            method(entry) {
+                return { _id: 123 }
+            }
+        }
     });
     const methods = exposeMethods(specification);
     
-    expectTypeOf(methods['todo.create']).returns.toEqualTypeOf<{
-        _id: number;
-        title: string;
-        completed: boolean;
-        createdAt: Date,
-    }>()
+    it('preserves return types', () => {
+        expectTypeOf(methods['todo.create']).returns.toEqualTypeOf<{
+            _id: number;
+            title: string;
+            completed: boolean;
+            createdAt: Date,
+        }>()
+        
+        expectTypeOf(methods['todo.delete']).returns.toEqualTypeOf<{
+            _id: number;
+        }>()
+    })
 })
