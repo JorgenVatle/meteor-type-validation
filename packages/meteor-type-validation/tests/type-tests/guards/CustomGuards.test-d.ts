@@ -15,7 +15,7 @@ describe('CreatedByCurrentUser', () => {
             v.object({
                 createdBy: v.string(),
             }),
-        ]
+        ] as const;
         
         public validate() {
             this.assertContext();
