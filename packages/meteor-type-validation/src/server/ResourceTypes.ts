@@ -146,10 +146,17 @@ type FilterUndefinedGuards<TGuards extends GuardStatic[]> = {
 export type ValidatedThisType<
     TGuards extends GuardStatic[] | GuardFunction[] | [],
     TThisType extends _ResourceThisType = _ResourceThisType,
+> = InferValidatedGuardContext<TGuards> & BaseContext<TThisType>;
+
+/**
+ * Retrieve the context (this) type from the provided list of guard classes and functions.
+ */
+type InferValidatedGuardContext<
+    TGuards extends GuardStatic[] | GuardFunction[] | [],
 > = TGuards extends GuardStatic[]
-    ? ValidatedStaticThisType<TGuards> & BaseContext<TThisType>
+    ? ValidatedStaticThisType<TGuards>
     : TGuards extends GuardFunction[]
-      ? ValidatedFnThisType<TGuards> & BaseContext<TThisType>
+      ? ValidatedFnThisType<TGuards>
       : never;
 
 /**
