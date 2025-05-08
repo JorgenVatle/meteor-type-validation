@@ -122,7 +122,7 @@ export type UnwrapGuardedSchemaOutput<
 export type UnwrapGuardStaticSchemas<
     TGuards extends readonly GuardStatic[],
 > = {
-    readonly [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<any, infer TParamsSchema>
+    readonly [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<any, infer TParamsSchema extends readonly ValibotSchema[]>
                             ? UnwrapSchemaOutput<TParamsSchema>
                             : never
 }[number]
