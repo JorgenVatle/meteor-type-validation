@@ -154,7 +154,11 @@ type ValidatedThisType<
 /**
  * Infers the this-type of a static Guard class.
  */
-type ValidatedStaticThisType<TGuards extends GuardStatic[]> = InferOutput<InstanceType<TGuards[number]>['contextSchema']>;
+type ValidatedStaticThisType<
+    TGuards extends GuardStatic[]
+> = InferOutput<
+    Exclude<InstanceType<TGuards[number]>['contextSchema'], undefined>
+>;
 
 /**
  * Infers the this-type of a Guard function/hook. (Non-class guard)
