@@ -2,7 +2,10 @@ import type { GenericSchema } from 'valibot';
 import * as v from 'valibot';
 import type { BaseContext, UnwrapSchemaOutput, ValibotSchema } from '../ResourceTypes';
 
-export abstract class Guard<TContextSchema extends ValibotSchema | undefined = ValibotSchema> {
+export abstract class Guard<
+    TContextSchema extends ValibotSchema | undefined = ValibotSchema,
+    TParamsSchema extends DefaultGuardInputSchema = DefaultGuardInputSchema,
+> {
     constructor(
         public readonly context: BaseContext,
         protected readonly params: unknown[]
@@ -23,7 +26,7 @@ export abstract class Guard<TContextSchema extends ValibotSchema | undefined = V
      * Alternatively, you can use them to add additional fields to the user input. E.g. forcing input params to always
      * include the current user's ID.
      */
-    public abstract readonly paramSchema: DefaultGuardInputSchema;
+    public abstract readonly paramSchema: TParamsSchema;
     
     /**
      * Whether validated context should be written to the handle's `this` type.
