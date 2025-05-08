@@ -102,6 +102,10 @@ describe('InferResourceHandleFn', () => {
             expectTypeOf(result).parameter(0).toEqualTypeOf({ userId: '1' });
         })
         
+        it('only has a single parameter', () => {
+            expectTypeOf(result).parameter(1).toBeUndefined();
+        })
+        
         it('does not allow unspecified fields', () => {
             expectTypeOf(result).parameters.not.toEqualTypeOf([{ extra: 1 }])
         })
