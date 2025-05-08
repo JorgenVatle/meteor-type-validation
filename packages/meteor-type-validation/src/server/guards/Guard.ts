@@ -1,10 +1,10 @@
 import type { GenericSchema } from 'valibot';
 import * as v from 'valibot';
-import type { BaseContext, UnwrapSchemaOutput, ValibotSchema } from '../ResourceTypes';
+import type { BaseContext, UnwrapSchemaOutput, ValibotSchema, ValibotSchemaList } from '../ResourceTypes';
 
 export abstract class Guard<
     TContextSchema extends DefaultGuardContextSchema = DefaultGuardContextSchema,
-    TParamsSchema extends DefaultGuardInputSchema = DefaultGuardInputSchema,
+    TParamsSchema extends ValibotSchemaList = ValibotSchemaList,
 > {
     constructor(
         public readonly context: BaseContext,
@@ -130,4 +130,3 @@ export type GuardFunction<
 }) => asserts request;
 
 export type DefaultGuardContextSchema = ValibotSchema | undefined;
-export type DefaultGuardInputSchema = readonly ValibotSchema[];
