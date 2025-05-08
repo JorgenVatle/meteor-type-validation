@@ -142,6 +142,7 @@ type FilterUndefinedGuards<TGuards extends GuardStatic[]> = {
 
 /**
  * Infer the this-type of a publication/method handle after applying guard validators.
+ * @internal
  */
 export type ValidatedThisType<
     TGuards extends GuardStatic[] | GuardFunction[] | [],
