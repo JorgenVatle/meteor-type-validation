@@ -27,7 +27,7 @@ describe('ValidatedStaticThisType', () => {
 
 describe('ValidatedThisType', () => {
     function unwrapThis<TGuards extends GuardStatic[]>(guards: TGuards) {
-        return null as ValidatedThisType<TGuards>
+        return {} as ValidatedThisType<TGuards>
     }
     
     const result = unwrapThis([
