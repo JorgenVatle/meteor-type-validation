@@ -1,6 +1,6 @@
 import type { GenericSchema } from 'valibot';
 import * as v from 'valibot';
-import type { BaseContext, UnwrapSchemaOutput } from '../ResourceTypes';
+import type { BaseContext, UnwrapSchemaOutput, ValibotSchema } from '../ResourceTypes';
 
 export abstract class Guard {
     constructor(
@@ -12,7 +12,7 @@ export abstract class Guard {
      * Used to perform validation on the current method or publication's `this` context.
      * Handy for checking that a user is logged in by checking for the presence of `this.userId`.
      */
-    public abstract readonly contextSchema: v.ObjectSchema<any, any> | v.ObjectSchemaAsync<any, any>;
+    public abstract readonly contextSchema: ValibotSchema;
     
     /**
      * Define a paramSchema to extend input validation for a method or publication handle.
@@ -121,4 +121,4 @@ export type GuardFunction<
     params: UnwrapSchemaOutput<TSchemas>
 }) => asserts request;
 
-export type DefaultGuardInputSchema = v.GenericSchema[]
+export type DefaultGuardInputSchema = ValibotSchema[];
