@@ -107,26 +107,6 @@ describe('InferResourceHandleFn', () => {
     })
     
     describe('Multiple guard param schemas', () => {
-        class MultiParamSchemaGuard extends Guard {
-            public readonly writeToParams = false;
-            public readonly writeToContext = false;
-            public readonly contextSchema = undefined;
-            public readonly paramSchema = [
-                v.object({
-                    userId: v.string(),
-                }),
-                v.object({
-                    fields: v.array(
-                        v.picklist([
-                            '_id',
-                            'userId',
-                            'createdAt',
-                        ])
-                    ),
-                })
-            ];
-        }
-        
         const result = createResourceHandle({
             guards: [MultiParamSchemaGuard],
         });
@@ -161,6 +141,20 @@ describe('UnwrapGuardStaticSchemas', () => {
         })
     })
     
+    describe('multiple guard input schemas', () => {
+        const result = unwrapGuardSchemas([
+            MultiParamSchemaGuard,
+        ]);
+        
+        it('unwraps the first guard param schema', () => {
+            expectTypeOf(result[0]).toEqualTypeOf({ userId: 'foo' });
+        })
+        
+        it('unwraps the second guard param schema', () => {
+            expectTypeOf(result[1]).toEqualTypeOf({ fields: ['_id', 'userId', 'createdAt'] });
+        })
+    })
+    
 })
 
 class ExtraContextGuard extends Guard {
@@ -186,6 +180,26 @@ class SingleGuardInputSchema extends Guard {
     public readonly paramSchema = [
         v.object({
             userId: v.string(),
+        })
+    ];
+}
+
+class MultiParamSchemaGuard extends Guard {
+    public readonly writeToParams = false;
+    public readonly writeToContext = false;
+    public readonly contextSchema = undefined;
+    public readonly paramSchema = [
+        v.object({
+            userId: v.string(),
+        }),
+        v.object({
+            fields: v.array(
+                v.picklist([
+                    '_id',
+                    'userId',
+                    'createdAt',
+                ])
+            ),
         })
     ];
 }
