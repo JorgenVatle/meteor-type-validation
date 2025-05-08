@@ -49,6 +49,7 @@ describe('ValidatedThisType', () => {
         it('merges context with the default guard context', () => {
             expectTypeOf(result).toMatchTypeOf<{ userId: string }>();
             expectTypeOf(result).toMatchTypeOf<{ extra: string }>();
+            expectTypeOf(result.userId).toEqualTypeOf<string>();
         });
         
         it('does not result in "any"', () => {
