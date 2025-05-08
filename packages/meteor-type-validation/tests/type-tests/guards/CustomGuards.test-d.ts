@@ -219,6 +219,18 @@ describe('UndefinedContextSchemaGuard', () => {
                     method() {}
                 }
             })
+        });
+        
+        it('does not lose the original base context type', () => {
+            defineMethods({
+                'todo.edit': {
+                    schema: [EditTodoSchema],
+                    guards: [UndefinedContextSchemaGuard],
+                    method() {
+                        expectTypeOf(this).toMatchTypeOf<{ userId: string | null }>();
+                    }
+                }
+            })
         })
     })
 })
