@@ -3,7 +3,7 @@ import * as v from 'valibot';
 import type { BaseContext, UnwrapSchemaOutput, ValibotSchema } from '../ResourceTypes';
 
 export abstract class Guard<
-    TContextSchema extends ValibotSchema | undefined = ValibotSchema,
+    TContextSchema extends DefaultGuardContextSchema = DefaultGuardContextSchema,
     TParamsSchema extends DefaultGuardInputSchema = DefaultGuardInputSchema,
 > {
     constructor(
@@ -129,4 +129,5 @@ export type GuardFunction<
     params: UnwrapSchemaOutput<TSchemas>
 }) => asserts request;
 
+export type DefaultGuardContextSchema = ValibotSchema | undefined;
 export type DefaultGuardInputSchema = ValibotSchema[];
