@@ -1,11 +1,18 @@
 import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import type { Meteor, Subscription } from 'meteor/meteor';
 import type { MergeDeep, UnionToIntersection } from 'type-fest';
-import { GenericSchema, type InferInput, type InferOutput } from 'valibot';
+import {
+    type BaseIssue,
+    type BaseSchema,
+    type BaseSchemaAsync,
+    GenericSchema,
+    type InferInput,
+    type InferOutput,
+} from 'valibot';
 import { type GuardFunction, type GuardStatic } from './guards';
 
 export interface MethodDefinition<
-    TSchemas extends GenericSchema[] = GenericSchema[],
+    TSchemas extends ValibotSchema[] = ValibotSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown
@@ -16,7 +23,7 @@ export interface MethodDefinition<
     method: InferResourceHandleFn<TSchemas, TGuards, Meteor.MethodThisType & TExtendedContext, TReturnType>
 }
 export interface PublicationDefinition<
-    TSchemas extends GenericSchema[] = GenericSchema[],
+    TSchemas extends ValibotSchema[] = ValibotSchema[],
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown,
@@ -27,13 +34,13 @@ export interface PublicationDefinition<
     publish: InferResourceHandleFn<TSchemas, TGuards, Subscription & TExtendedContext, TReturnType>
 }
 
-export interface MethodDefinitionResult<TSchemas extends GenericSchema[], TResult> {
+export interface MethodDefinitionResult<TSchemas extends ValibotSchema[], TResult> {
     guards: any,
     schema: any,
     method: (...params: UnwrapSchemaInput<TSchemas>) => NoInfer<TResult>;
 }
 
-export interface PublicationDefinitionResult<TSchemas extends GenericSchema[], TResult> {
+export interface PublicationDefinitionResult<TSchemas extends ValibotSchema[], TResult> {
     guards: any,
     schema: any,
     publish: (...params: UnwrapSchemaInput<TSchemas>) => NoInfer<TResult>;
@@ -89,14 +96,14 @@ export type UnwrapPublications<TPublications extends PublicationDefinitionMap> =
  * This is the argument's type as it is received inside the method handle.
  * The input type (the type the caller should adhere to) is inferred from {@link UnwrapSchemaInput}
  */
-export type UnwrapSchemaOutput<TSchemas extends GenericSchema[]> = {
+export type UnwrapSchemaOutput<TSchemas extends ValibotSchema[]> = {
     [key in keyof TSchemas]: InferOutput<TSchemas[key]>
 }
 
 /**
  * Argument types for the provided schemas as it should be passed by the caller of the method/publication.
  */
-export type UnwrapSchemaInput<TSchemas extends GenericSchema[]> = {
+export type UnwrapSchemaInput<TSchemas extends ValibotSchema[]> = {
     [key in keyof TSchemas]: InferInput<TSchemas[key]>
 }
 
@@ -104,7 +111,7 @@ export type UnwrapSchemaInput<TSchemas extends GenericSchema[]> = {
  * Infer method/publication argument output types after applying input validation schemas from guard classes.
  */
 type UnwrapGuardedSchemaOutput<
-    TSchemas extends GenericSchema[],
+    TSchemas extends ValibotSchema[],
     TGuards extends GuardStatic[],
     TSchemaOutput extends UnwrapSchemaOutput<TSchemas> = UnwrapSchemaOutput<TSchemas>,
     TGuardOutput extends UnwrapGuardStaticSchemas<TGuards> = UnwrapGuardStaticSchemas<TGuards>
@@ -159,7 +166,7 @@ type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[n
  * Essentially the context that peer projects will have when defining methods and publications.
  */
 export type InferResourceHandleFn<
-    TSchemas extends GenericSchema[],
+    TSchemas extends ValibotSchema[],
     TGuards extends GuardStatic[],
     TExtendedContext,
     TReturnType,
@@ -187,3 +194,6 @@ export interface ContextWrapper<
     context: TContext,
     name: string;
 }
+
+export type ValibotSchema = BaseSchema<unknown, unknown, BaseIssue<unknown>>;
+export type AsyncValibotSchema = BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>;
