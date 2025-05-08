@@ -49,7 +49,7 @@ export interface MethodDefinitionResult<
     ) => NoInfer<TResult>;
 }
 
-export interface PublicationDefinitionResultMethodDefinitionResult<
+export interface PublicationDefinitionResult<
     TSchemas extends ValibotSchemaList = ValibotSchemaList,
     TGuards extends GuardStatic[] = GuardStatic[],
     TResult = unknown,
