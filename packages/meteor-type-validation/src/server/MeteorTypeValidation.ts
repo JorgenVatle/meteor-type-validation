@@ -59,7 +59,7 @@ export class MeteorTypeValidation<
     >(methods: {
         [key in TKeys]: MethodDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
     }): {
-        [key in TKeys]: MethodDefinitionResult<TSchemas[key], TResult[key]>
+        [key in TKeys]: MethodDefinitionResult<TSchemas[key], TGuards[key], TResult[key]>
     } {
         // @ts-expect-error The parameters for input and output handles are different on purpose.
         return methods;
@@ -73,7 +73,7 @@ export class MeteorTypeValidation<
     >(publications: {
         [key in TKeys]: PublicationDefinition<TSchemas[key], TGuards[key], TExtendedContext, TResult[key]>
     }): {
-        [key in TKeys]: PublicationDefinitionResult<TSchemas[key], TResult[key]>
+        [key in TKeys]: PublicationDefinitionResult<TSchemas[key], TGuards[key], TResult[key]>
     } {
         if (Meteor.isClient && !Meteor.isProduction) {
             const logger = this.options?.createLogger?.({ type: 'publication', name: '<internal definition>', context: {} as any }) || console;

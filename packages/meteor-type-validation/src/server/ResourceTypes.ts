@@ -37,16 +37,28 @@ export interface PublicationDefinition<
     publish: InferResourceHandleFn<TSchemas, TGuards, Subscription & TExtendedContext, TReturnType>
 }
 
-export interface MethodDefinitionResult<TSchemas extends ValibotSchemaList, TResult> {
+export interface MethodDefinitionResult<
+    TSchemas extends ValibotSchemaList = ValibotSchemaList,
+    TGuards extends GuardStatic[] = GuardStatic[],
+    TResult = unknown,
+> {
     guards: any,
     schema: any,
-    method: (...params: UnwrapSchemaInput<TSchemas>) => NoInfer<TResult>;
+    method: (
+        ...params: UnwrapGuardedSchemaInput<TSchemas, TGuards>
+    ) => NoInfer<TResult>;
 }
 
-export interface PublicationDefinitionResult<TSchemas extends ValibotSchemaList, TResult> {
+export interface PublicationDefinitionResultMethodDefinitionResult<
+    TSchemas extends ValibotSchemaList = ValibotSchemaList,
+    TGuards extends GuardStatic[] = GuardStatic[],
+    TResult = unknown,
+>  {
     guards: any,
     schema: any,
-    publish: (...params: UnwrapSchemaInput<TSchemas>) => NoInfer<TResult>;
+    publish: (
+        ...params: UnwrapGuardedSchemaInput<TSchemas, TGuards>
+    ) => NoInfer<TResult>;;
 }
 
 /**
@@ -130,8 +142,8 @@ export type UnwrapGuardedSchemaInput<
     TSchemas extends ValibotSchemaList,
     TGuards extends readonly GuardStatic[],
 > = MergeParams<
-    UnwrapSchemaInput<FilterEmptySchemas<TSchemas>>,
-    UnwrapSchemaInput<UnwrapGuardStaticSchemas<TGuards>>
+    TSchemas extends [] ? [] : UnwrapSchemaInput<FilterEmptySchemas<TSchemas>>,
+    TGuards extends [] ? [] :UnwrapSchemaInput<UnwrapGuardStaticSchemas<TGuards>>
 >;
 
 type MergeParams<
