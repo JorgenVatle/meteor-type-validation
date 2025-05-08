@@ -1,4 +1,4 @@
-import { defineMethods } from '@meteor-type-validation/server';
+import { defineMethods, exposeMethods } from '@meteor-type-validation/server';
 import * as v from 'valibot';
 import { describe, expectTypeOf, it } from 'vitest';
 import { CreateTodoSchema } from '../lib/Schemas';
@@ -44,6 +44,7 @@ it('defined methods should yield a map with schema input types, not output types
 
 
 describe('larger method objects', () => {
+    
     it('does not impact the types of other methods within the same object', () => {
         const methods = defineMethods({
             'todo.create': {
@@ -73,4 +74,24 @@ describe('larger method objects', () => {
             }
         });
     })
+})
+
+describe('return types', () => {
+    const specification = defineMethods({
+        'todo.create': {
+            schema: [CreateTodoSchema],
+            guards: [],
+            method(entry) {
+                return { _id: 123, ...entry }
+            }
+        },
+    });
+    const methods = exposeMethods(specification);
+    
+    expectTypeOf(methods['todo.create']).returns.toEqualTypeOf<{
+        _id: number;
+        title: string;
+        completed: boolean;
+        createdAt: Date,
+    }>()
 })
