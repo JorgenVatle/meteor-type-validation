@@ -89,7 +89,7 @@ export type UnwrapPublications<TPublications extends PublicationDefinitionMap> =
  * This is the argument's type as it is received inside the method handle.
  * The input type (the type the caller should adhere to) is inferred from {@link UnwrapSchemaInput}
  */
-export type UnwrapSchemaOutput<TSchemas extends readonly ValibotSchema[]> = {
+export type UnwrapSchemaOutput<TSchemas extends ValibotSchemaList> = {
     [key in keyof TSchemas]: InferOutput<TSchemas[key]>
 }
 
@@ -105,7 +105,7 @@ export type UnwrapSchemaInput<TSchemas extends ValibotSchema[]> = {
  * @internal
  */
 export type UnwrapGuardedSchemaOutput<
-    TSchemas extends readonly ValibotSchema[],
+    TSchemas extends ValibotSchemaList,
     TGuards extends readonly GuardStatic[],
     TSchemaOutput extends readonly unknown[] = UnwrapSchemaOutput<TSchemas>,
     TGuardOutput extends readonly unknown[] = UnwrapGuardStaticSchemas<TGuards>,
@@ -122,7 +122,7 @@ export type UnwrapGuardedSchemaOutput<
 export type UnwrapGuardStaticSchemas<
     TGuards extends readonly GuardStatic[],
 > = {
-    readonly [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<any, infer TParamsSchema extends readonly ValibotSchema[]>
+    readonly [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<any, infer TParamsSchema extends ValibotSchemaList>
                             ? UnwrapSchemaOutput<TParamsSchema>
                             : never
 }[number]
