@@ -6,6 +6,7 @@ import type {
     UnwrapGuardedSchemaOutput,
     UnwrapGuardStaticSchemas,
     ValibotSchema,
+    ValibotSchemaList,
     ValidatedStaticThisType,
     ValidatedThisType,
 } from './ResourceTypes';
@@ -176,7 +177,7 @@ describe('UnwrapGuardStaticSchemas', () => {
 describe('UnwrapGuardedSchemaOutput', () => {
     function unwrapGuardedSchema<
         const TGuards extends GuardStatic[],
-        const TSchemas extends ValibotSchema[] = [],
+        const TSchemas extends ValibotSchemaList = [v.GenericSchema<{}>],
     >(resource: { guards: TGuards; schema: TSchemas }) {
         return {} as UnwrapGuardedSchemaOutput<TSchemas, TGuards>
     }
