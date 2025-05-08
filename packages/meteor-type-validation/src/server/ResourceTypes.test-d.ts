@@ -115,6 +115,41 @@ describe('InferResourceHandleFn', () => {
             expectTypeOf(result).parameters.not.toEqualTypeOf([{ extra: 1 }])
         })
     })
+    
+    describe('Multiple guard param schemas', () => {
+        class MultiParamSchemaGuard extends Guard {
+            public readonly writeToParams = false;
+            public readonly writeToContext = false;
+            public readonly contextSchema = undefined;
+            public readonly paramSchema = [
+                v.object({
+                    userId: v.string(),
+                }),
+                v.object({
+                    fields: v.array(
+                        v.picklist([
+                            '_id',
+                            'userId',
+                            'createdAt',
+                        ])
+                    ),
+                })
+            ];
+        }
+        
+        const result = createResourceHandle({
+            guards: [MultiParamSchemaGuard],
+        });
+        
+        
+        it('infers input types from the guard', () => {
+            expectTypeOf(result).parameters.toMatchTypeOf([{ userId: '1' }])
+        })
+        
+        it('does not allow unspecified fields', () => {
+            expectTypeOf(result).parameters.not.toEqualTypeOf([{ extra: 1 }])
+        })
+    })
 })
 
 class ExtraContextGuard extends Guard {
