@@ -30,6 +30,11 @@ describe('ValidatedThisType', () => {
         return null as ValidatedThisType<TGuards>
     }
     
+    const result = unwrapThis([
+        UserLoggedInGuard,
+        ExtraContextGuard,
+    ]);
+    
     it('can unwrap the this context for a single guard class', () => {
         const result = unwrapThis([
             UserLoggedInGuard,
@@ -38,21 +43,15 @@ describe('ValidatedThisType', () => {
         expectTypeOf(result).toMatchTypeOf<{ userId: string | null }>();
     });
     
-    describe('custom guards', () => {
-        const result = unwrapThis([
-            UserLoggedInGuard,
-            ExtraContextGuard,
-        ]);
-        
-        it('merges context with the default guard context', () => {
-            expectTypeOf(result).toMatchTypeOf<{ userId: string | null }>();
-            expectTypeOf(result).toMatchTypeOf<{ extra: string }>();
-        });
-        
-        it('does not result in "any"', () => {
-            expectTypeOf(result).not.toMatchTypeOf<{ somethingElse: string }>();
-        })
+    it('merges context with the default guard context', () => {
+        expectTypeOf(result).toMatchTypeOf<{ userId: string | null }>();
+        expectTypeOf(result).toMatchTypeOf<{ extra: string }>();
+    });
+    
+    it('does not result in "any"', () => {
+        expectTypeOf(result).not.toMatchTypeOf<{ somethingElse: string }>();
     })
+    
 });
 
 class ExtraContextGuard extends Guard {
