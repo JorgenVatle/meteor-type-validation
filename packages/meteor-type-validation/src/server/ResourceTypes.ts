@@ -168,7 +168,7 @@ export type ValidatedStaticThisType<
 /**
  * Infers the this-type of a Guard function/hook. (Non-class guard)
  */
-type ValidatedFnThisType<TGuards extends GuardFunction[]> = ReturnType<TGuards[number]>;
+type ValidatedFnThisType<TGuards extends GuardFunction[]> = UnionToIntersection<ReturnType<TGuards[number]>>;
 
 /**
  * Infer a publication or method definition's handle function.
