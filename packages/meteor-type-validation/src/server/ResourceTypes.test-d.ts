@@ -1,7 +1,12 @@
 import * as v from 'valibot';
 import { describe, expectTypeOf, it } from 'vitest';
 import { Guard, type GuardStatic, UserLoggedInGuard } from './guards';
-import type { ValidatedStaticThisType, ValidatedThisType } from './ResourceTypes';
+import type {
+    InferResourceHandleFn,
+    ValibotSchema,
+    ValidatedStaticThisType,
+    ValidatedThisType,
+} from './ResourceTypes';
 
 describe('ValidatedStaticThisType', () => {
     function unwrapThis<TGuards extends GuardStatic[]>(guards: TGuards) {
@@ -70,9 +75,43 @@ describe('ValidatedThisType', () => {
             expectTypeOf(result).not.toMatchTypeOf<{ somethingElse: string }>();
         })
     })
-    
-    
 });
+
+describe('InferResourceHandleFn', () => {
+    function createResourceHandle<
+        TSchemas extends ValibotSchema[] = [],
+        TGuards extends GuardStatic[] = [],
+        TExtendedContext = {},
+    >(handle: {
+        schema?: TSchemas;
+        guards?: TGuards;
+        extendedContext?: TExtendedContext;
+    }) {
+        return {} as InferResourceHandleFn<TSchemas, TGuards, TExtendedContext, unknown>
+    }
+    
+    describe('single guard input schema', () => {
+        class SingleGuardInputSchema extends Guard {
+            public readonly writeToParams = false;
+            public readonly writeToContext = false;
+            public readonly contextSchema = undefined;
+            public readonly paramSchema = [
+                v.object({
+                    userId: v.string(),
+                })
+            ];
+        }
+        
+        const result = createResourceHandle({
+            guards: [SingleGuardInputSchema],
+        });
+        
+        
+        it('infers input types from the guard', () => {
+            expectTypeOf(result).parameters.toEqualTypeOf([{ userId: '1' }])
+        })
+    })
+})
 
 class ExtraContextGuard extends Guard {
     public readonly paramSchema = [];
