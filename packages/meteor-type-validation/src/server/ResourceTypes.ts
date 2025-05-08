@@ -1,14 +1,7 @@
 import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import type { Meteor, Subscription } from 'meteor/meteor';
 import type { MergeDeep, UnionToIntersection } from 'type-fest';
-import {
-    type BaseIssue,
-    type BaseSchema,
-    type BaseSchemaAsync,
-    GenericSchema,
-    type InferInput,
-    type InferOutput,
-} from 'valibot';
+import { type BaseIssue, type BaseSchema, type BaseSchemaAsync, type InferInput, type InferOutput } from 'valibot';
 import { Guard, type GuardFunction, type GuardStatic } from './guards';
 
 export interface MethodDefinition<
@@ -125,19 +118,15 @@ type UnwrapGuardedSchemaOutput<
 
 /**
  * Infer schema output from a list of static guard classes
+ * @internal
  */
-type UnwrapGuardStaticSchemas<
+export type UnwrapGuardStaticSchemas<
     TGuards extends GuardStatic[],
-> = UnionToIntersection<FilterUndefinedGuards<TGuards>[number]>
-
-/**
- * Filter out guard classes that have no params schemas defined.
- */
-type FilterUndefinedGuards<TGuards extends GuardStatic[]> = {
-    [key in keyof TGuards]: [GenericSchema<{ __noSchemaSet: true }>] extends InstanceType<TGuards[key]>['paramSchema']
-                            ? never
-                            : UnwrapSchemaOutput<InstanceType<TGuards[key]>['paramSchema']>
-};
+> = UnionToIntersection<{
+    [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<any, infer TParamsSchema>
+                            ? UnwrapSchemaOutput<TParamsSchema>
+                            : never
+}[number]>
 
 /**
  * Infer the this-type of a publication/method handle after applying guard validators.
