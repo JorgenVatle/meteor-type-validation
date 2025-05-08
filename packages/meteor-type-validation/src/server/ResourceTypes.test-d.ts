@@ -1,3 +1,4 @@
+import type { GenericSchema } from 'valibot';
 import * as v from 'valibot';
 import { describe, expectTypeOf, it } from 'vitest';
 import { Guard, type GuardStatic, UserLoggedInGuard } from './guards';
@@ -80,7 +81,7 @@ describe('ValidatedThisType', () => {
 
 describe('InferResourceHandleFn', () => {
     function createResourceHandle<
-        TSchemas extends ValibotSchema[] = [],
+        TSchemas extends ValibotSchema[] = [GenericSchema<{}>],
         TGuards extends GuardStatic[] = [],
         TExtendedContext = {},
     >(handle: {
