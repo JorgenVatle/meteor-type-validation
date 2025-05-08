@@ -5,7 +5,7 @@ import { type BaseIssue, type BaseSchema, type BaseSchemaAsync, type InferInput,
 import { Guard, type GuardFunction, type GuardStatic } from './guards';
 
 export interface MethodDefinition<
-    TSchemas extends ValibotSchema[] = ValibotSchema[],
+    TSchemas extends ValibotSchemaList = ValibotSchemaList,
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown
@@ -16,7 +16,7 @@ export interface MethodDefinition<
     method: InferResourceHandleFn<TSchemas, TGuards, Meteor.MethodThisType & TExtendedContext, TReturnType>
 }
 export interface PublicationDefinition<
-    TSchemas extends ValibotSchema[] = ValibotSchema[],
+    TSchemas extends ValibotSchemaList = ValibotSchemaList,
     TGuards extends GuardStatic[] = GuardStatic[],
     TExtendedContext extends ExtendedContext = ExtendedContext,
     TReturnType = unknown,
@@ -27,13 +27,13 @@ export interface PublicationDefinition<
     publish: InferResourceHandleFn<TSchemas, TGuards, Subscription & TExtendedContext, TReturnType>
 }
 
-export interface MethodDefinitionResult<TSchemas extends ValibotSchema[], TResult> {
+export interface MethodDefinitionResult<TSchemas extends ValibotSchemaList, TResult> {
     guards: any,
     schema: any,
     method: (...params: UnwrapSchemaInput<TSchemas>) => NoInfer<TResult>;
 }
 
-export interface PublicationDefinitionResult<TSchemas extends ValibotSchema[], TResult> {
+export interface PublicationDefinitionResult<TSchemas extends ValibotSchemaList, TResult> {
     guards: any,
     schema: any,
     publish: (...params: UnwrapSchemaInput<TSchemas>) => NoInfer<TResult>;
@@ -96,7 +96,7 @@ export type UnwrapSchemaOutput<TSchemas extends ValibotSchemaList> = {
 /**
  * Argument types for the provided schemas as it should be passed by the caller of the method/publication.
  */
-export type UnwrapSchemaInput<TSchemas extends ValibotSchema[]> = {
+export type UnwrapSchemaInput<TSchemas extends ValibotSchemaList> = {
     [key in keyof TSchemas]: InferInput<TSchemas[key]>
 }
 
@@ -171,7 +171,7 @@ type ValidatedFnThisType<TGuards extends GuardFunction[]> = UnionToIntersection<
  * @internal
  */
 export type InferResourceHandleFn<
-    TSchemas extends ValibotSchema[],
+    TSchemas extends ValibotSchemaList,
     TGuards extends GuardStatic[],
     TExtendedContext,
     TReturnType,

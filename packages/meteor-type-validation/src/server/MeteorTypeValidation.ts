@@ -18,7 +18,7 @@ import type {
     PublicationDefinitionResult,
     RateLimiterRule,
     ResourceType,
-    ValibotSchema,
+    ValibotSchemaList,
     WrappedContext,
 } from './ResourceTypes';
 
@@ -52,7 +52,7 @@ export class MeteorTypeValidation<
     }
     
     public defineMethods<
-        TSchemas extends Record<TKeys, ValibotSchema[]>,
+        TSchemas extends Record<TKeys, ValibotSchemaList>,
         TGuards extends Record<TKeys,  GuardStatic[]>,
         TResult extends Record<TKeys, unknown>,
         const TKeys extends keyof TGuards | keyof TSchemas | keyof TResult,
@@ -65,7 +65,7 @@ export class MeteorTypeValidation<
     }
     
     public definePublications<
-        TSchemas extends Record<TKeys, ValibotSchema[]>,
+        TSchemas extends Record<TKeys, ValibotSchemaList>,
         TGuards extends Record<TKeys,  GuardStatic[]>,
         TResult extends Record<TKeys, unknown>,
         const TKeys extends keyof TGuards | keyof TSchemas | keyof TResult,
