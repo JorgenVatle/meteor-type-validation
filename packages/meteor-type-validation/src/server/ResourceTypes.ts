@@ -109,7 +109,19 @@ export type UnwrapGuardedSchemaOutput<
     TGuards extends readonly GuardStatic[],
 > = MergeParams<
     UnwrapSchemaOutput<TSchemas>,
-    UnwrapGuardStaticSchemas<TGuards>
+    UnwrapSchemaOutput<UnwrapGuardStaticSchemas<TGuards>>
+>;
+
+/**
+ * Infer input types for the provided guards and schemas.
+ * @internal
+ */
+export type UnwrapGuardedSchemaInput<
+    TSchemas extends ValibotSchemaList,
+    TGuards extends readonly GuardStatic[],
+> = MergeParams<
+    UnwrapSchemaInput<TSchemas>,
+    UnwrapSchemaInput<UnwrapGuardStaticSchemas<TGuards>>
 >;
 
 type MergeParams<
@@ -129,7 +141,7 @@ export type UnwrapGuardStaticSchemas<
     TGuards extends readonly GuardStatic[],
 > = {
     readonly [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<any, infer TParamsSchema extends ValibotSchemaList>
-                            ? UnwrapSchemaOutput<TParamsSchema>
+                            ? TParamsSchema
                             : never
 }[number]
 
