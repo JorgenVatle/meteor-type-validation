@@ -5,6 +5,7 @@ import type {
     InferResourceHandleFn,
     UnwrapGuardedSchemaOutput,
     UnwrapGuardStaticSchemas,
+    UnwrapSchemaOutput,
     ValibotSchema,
     ValibotSchemaList,
     ValidatedStaticThisType,
@@ -134,7 +135,7 @@ describe('InferResourceHandleFn', () => {
 
 describe('UnwrapGuardStaticSchemas', () => {
     function unwrapGuardSchemas<const TGuards extends GuardStatic[]>(guard: TGuards) {
-        return {} as UnwrapGuardStaticSchemas<TGuards>
+        return [] as UnwrapSchemaOutput<UnwrapGuardStaticSchemas<TGuards>>
     }
     
     describe('single guard input schema', () => {
