@@ -11,8 +11,21 @@ export class QueryValidationGuard extends Guard {
             channelId: v.string(),
         }),
         v.object({
-            fields: v.record(v.picklist(['title', 'completed', 'createdAt']), v.literal(1)),
-            limit: v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(100)),
+            fields: v.record(
+                v.picklist([
+                    'title',
+                    'message',
+                    'user.name',
+                    'createdAt'
+                ]),
+                v.literal(1)
+            ),
+            limit: v.pipe(
+                v.number(),
+                v.integer(),
+                v.minValue(1),
+                v.maxValue(100)
+            ),
         })
     ];
     
