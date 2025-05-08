@@ -146,6 +146,10 @@ describe('InferResourceHandleFn', () => {
             expectTypeOf(result).parameter(0).toMatchTypeOf({ userId: '1' });
         })
         
+        it('infers input types from the second guard schema', () => {
+            expectTypeOf(result).parameter(1).toMatchTypeOf({ fields: ['_id', 'userId', 'createdAt'] });
+        })
+        
         it('does not allow unspecified fields', () => {
             expectTypeOf(result).parameters.not.toEqualTypeOf([{ extra: 1 }])
         })
