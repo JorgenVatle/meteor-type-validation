@@ -151,7 +151,13 @@ describe('UnwrapGuardStaticSchemas', () => {
         })
         
         it('unwraps the second guard param schema', () => {
-            expectTypeOf(result[1]).toEqualTypeOf({ fields: ['_id', 'userId', 'createdAt'] });
+            expectTypeOf(result[1]).toEqualTypeOf<{ fields: Array<'_id' | 'userId' | 'createdAt'> }>();
+        });
+        
+        it('does not allow unspecified fields', () => {
+            expectTypeOf(result[1]).not.toEqualTypeOf({ extra: 1 });
+            expectTypeOf(result[1]).not.toEqualTypeOf<{ fields: Array<'_id' | 'userId' | 'createdAt' | 'extra'> }>();
+            
         })
     })
     
