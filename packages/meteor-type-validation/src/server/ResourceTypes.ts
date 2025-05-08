@@ -158,11 +158,12 @@ export type ValidatedThisType<
  */
 export type ValidatedStaticThisType<
     TGuards extends GuardStatic[]
-> = {
+> = UnionToIntersection<{
     [key in keyof TGuards]: InstanceType<TGuards[key]> extends Guard<infer TSchema extends ValibotSchema, any>
                             ? InferOutput<TSchema>
                             : never
-}[number];
+        
+}[number]>;
 
 /**
  * Infers the this-type of a Guard function/hook. (Non-class guard)
