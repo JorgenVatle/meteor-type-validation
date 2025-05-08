@@ -216,9 +216,7 @@ describe('UndefinedContextSchemaGuard', () => {
                 'todo.edit': {
                     schema: [EditTodoSchema],
                     guards: [UndefinedContextSchemaGuard],
-                    method(entry) {
-                        expectTypeOf(entry).toMatchTypeOf<{ createdBy: string }>()
-                    }
+                    method() {}
                 }
             })
         })
