@@ -69,7 +69,8 @@ describe('larger method objects', () => {
                     expectTypeOf(entry).toEqualTypeOf<{
                         newUserId: string;
                     }>();
+                }
             }
-        })
+        });
     })
 })
