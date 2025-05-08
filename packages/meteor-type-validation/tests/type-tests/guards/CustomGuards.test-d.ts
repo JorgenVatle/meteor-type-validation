@@ -123,11 +123,7 @@ describe('AdminGuard', () => {
                 }
             })
         })
-    })
-});
-
-describe('PermissionGuard', () => {
-    describe('methods', () => {
+        
         it(`should assert that the user's 'roles' field includes 'admin'`, () => {
             defineMethods({
                 'admin:todo.edit': {
@@ -156,7 +152,7 @@ describe('PermissionGuard', () => {
             })
         })
     })
-})
+});
 
 describe('QueryValidationGuard', () => {
     class QueryValidationGuard extends Guard {
