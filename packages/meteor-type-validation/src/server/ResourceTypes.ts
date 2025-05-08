@@ -107,11 +107,17 @@ export type UnwrapSchemaInput<TSchemas extends ValibotSchemaList> = {
 export type UnwrapGuardedSchemaOutput<
     TSchemas extends ValibotSchemaList,
     TGuards extends readonly GuardStatic[],
-    TSchemaOutput extends readonly unknown[] = UnwrapSchemaOutput<TSchemas>,
-    TGuardOutput extends readonly unknown[] = UnwrapGuardStaticSchemas<TGuards>,
+> = MergeParams<
+    UnwrapSchemaOutput<TSchemas>,
+    UnwrapGuardStaticSchemas<TGuards>
+>;
+
+type MergeParams<
+    TSchemaParams extends readonly unknown[] = [],
+    TGuardParams extends readonly unknown[] = [],
 > = MergeDeep<
-    TSchemaOutput extends [] ? [{}] : TSchemaOutput,
-    TGuardOutput extends [] ? [{}] : TGuardOutput,
+    TSchemaParams extends [] ? [{}] : TSchemaParams,
+    TGuardParams extends [] ? [{}] : TGuardParams,
     { recurseIntoArrays: true, arrayMergeMode: 'replace' }
 >;
 
