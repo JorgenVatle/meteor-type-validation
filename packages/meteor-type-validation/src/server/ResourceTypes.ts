@@ -195,5 +195,6 @@ export interface ContextWrapper<
     name: string;
 }
 
-export type ValibotSchema = BaseSchema<unknown, unknown, BaseIssue<unknown>>;
+export type NonAsyncValibotSchema = BaseSchema<unknown, unknown, BaseIssue<unknown>>;
 export type AsyncValibotSchema = BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>;
+export type ValibotSchema = NonAsyncValibotSchema | AsyncValibotSchema;
