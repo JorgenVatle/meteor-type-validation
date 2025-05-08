@@ -118,7 +118,7 @@ export type UnwrapGuardedSchemaOutput<
     TSchemas extends ValibotSchemaList,
     TGuards extends readonly GuardStatic[],
 > = MergeParams<
-    UnwrapSchemaOutput<TSchemas>,
+    UnwrapSchemaOutput<FilterEmptySchemas<TSchemas>>,
     UnwrapSchemaOutput<UnwrapGuardStaticSchemas<TGuards>>
 >;
 
@@ -130,7 +130,7 @@ export type UnwrapGuardedSchemaInput<
     TSchemas extends ValibotSchemaList,
     TGuards extends readonly GuardStatic[],
 > = MergeParams<
-    UnwrapSchemaInput<TSchemas>,
+    UnwrapSchemaInput<FilterEmptySchemas<TSchemas>>,
     UnwrapSchemaInput<UnwrapGuardStaticSchemas<TGuards>>
 >;
 
