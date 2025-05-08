@@ -102,8 +102,9 @@ export type UnwrapSchemaInput<TSchemas extends ValibotSchema[]> = {
 
 /**
  * Infer method/publication argument output types after applying input validation schemas from guard classes.
+ * @internal
  */
-type UnwrapGuardedSchemaOutput<
+export type UnwrapGuardedSchemaOutput<
     TSchemas extends ValibotSchema[],
     TGuards extends GuardStatic[],
     TSchemaOutput extends UnwrapSchemaOutput<TSchemas> = UnwrapSchemaOutput<TSchemas>,

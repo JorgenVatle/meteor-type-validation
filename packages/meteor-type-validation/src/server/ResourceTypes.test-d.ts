@@ -3,6 +3,7 @@ import { describe, expectTypeOf, it } from 'vitest';
 import { Guard, type GuardStatic, UserLoggedInGuard } from './guards';
 import type {
     InferResourceHandleFn,
+    UnwrapGuardedSchemaOutput,
     UnwrapGuardStaticSchemas,
     ValibotSchema,
     ValidatedStaticThisType,
@@ -170,7 +171,53 @@ describe('UnwrapGuardStaticSchemas', () => {
             
         })
     })
+})
+
+describe('UnwrapGuardedSchemaOutput', () => {
+    function unwrapGuardedSchema<
+        const TGuards extends GuardStatic[],
+        const TSchemas extends ValibotSchema[] = [],
+    >(resource: { guards: TGuards; schema: TSchemas }) {
+        return {} as UnwrapGuardedSchemaOutput<TSchemas, TGuards>
+    }
     
+    describe('single guard input schema', () => {
+        const result = unwrapGuardedSchema({
+            schema: [],
+            guards: [SingleGuardInputSchema],
+        });
+        
+        it('unwraps the first guard param schema', () => {
+            expectTypeOf(result).toEqualTypeOf([{ userId: 'foo' }]);
+        })
+    })
+    
+    describe('multiple guard input schemas', () => {
+        const result = unwrapGuardedSchema({
+            schema: [],
+            guards: [MultiParamSchemaGuard],
+        });
+        
+        
+        it('has two fields', () => {
+            expectTypeOf(result[0]).toBeObject();
+            expectTypeOf(result[1]).toBeObject();
+        })
+        
+        it('unwraps the first guard param schema', () => {
+            expectTypeOf(result[0]).toEqualTypeOf<{ userId: string }>();
+        })
+        
+        it('unwraps the second guard param schema', () => {
+            expectTypeOf(result[1]).toEqualTypeOf<{ fields: Array<'_id' | 'userId' | 'createdAt'> }>();
+        });
+        
+        it('does not allow unspecified fields', () => {
+            expectTypeOf(result[1]).not.toEqualTypeOf({ extra: 1 });
+            expectTypeOf(result[1]).not.toEqualTypeOf<{ fields: Array<'_id' | 'userId' | 'createdAt' | 'extra'> }>();
+            
+        })
+    })
 })
 
 class ExtraContextGuard extends Guard {
