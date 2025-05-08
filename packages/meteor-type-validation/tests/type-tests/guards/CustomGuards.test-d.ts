@@ -2,6 +2,7 @@ import { defineMethods, definePublications, UserLoggedInGuard } from '@meteor-ty
 import { describe, expectTypeOf, it } from 'vitest';
 import { AdminGuard } from '../../lib/AdminGuard';
 import { CreatedByCurrentUser } from '../../lib/CreatedByCurrentUserGuard';
+import { QueryValidationGuard } from '../../lib/QueryValidationGuard';
 import { EditTodoSchema } from '../../lib/Schemas';
 
 describe('CreatedByCurrentUser', () => {
@@ -115,6 +116,23 @@ describe('PermissionGuard', () => {
                             title: string,
                             completed: boolean,
                         }>()
+                    }
+                }
+            })
+        })
+    })
+})
+
+describe('QueryValidationGuard', () => {
+    describe('methods', () => {
+        it(`should assert that the user's 'roles' field includes 'admin'`, () => {
+            defineMethods({
+                'channel.messages': {
+                    schema: [],
+                    guards: [QueryValidationGuard],
+                    method(query, options) {
+                        expectTypeOf(query).toEqualTypeOf<{ channelId: string }>();
+                        expectTypeOf(options).toMatchTypeOf<{ limit: number }>();
                     }
                 }
             })
