@@ -130,4 +130,4 @@ export type GuardFunction<
 }) => asserts request;
 
 export type DefaultGuardContextSchema = ValibotSchema | undefined;
-export type DefaultGuardInputSchema = ValibotSchema[];
+export type DefaultGuardInputSchema = readonly ValibotSchema[];
