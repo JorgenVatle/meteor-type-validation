@@ -181,7 +181,7 @@ describe('QueryValidationGuard', () => {
                     v.maxValue(100)
                 ),
             })
-        ];
+        ] as const;
         
     }
     
