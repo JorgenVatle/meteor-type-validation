@@ -7,6 +7,10 @@ describe('ValidatedStaticThisType', () => {
     function unwrapThis<TGuards extends GuardStatic[]>(guards: TGuards) {
         return null as ValidatedStaticThisType<TGuards>
     }
+    const result = unwrapThis([
+        UserLoggedInGuard,
+        ExtraContextGuard,
+    ]);
     
     it('can unwrap the this context for a single guard class', () => {
         const result = unwrapThis([
@@ -14,6 +18,10 @@ describe('ValidatedStaticThisType', () => {
         ]);
         
         expectTypeOf(result).toMatchTypeOf<{ userId: string | null }>();
+    });
+    
+    it('does not result in "any"', () => {
+        expectTypeOf(result).not.toMatchTypeOf<{ somethingElse: string }>();
     })
 });
 
@@ -31,15 +39,6 @@ describe('ValidatedThisType', () => {
     });
     
     describe('custom guards', () => {
-        class ExtraContextGuard extends Guard {
-            public readonly paramSchema = [];
-            public readonly writeToParams = false;
-            public readonly writeToContext = false;
-            public readonly contextSchema = v.object({
-                extra: v.string(),
-            });
-        }
-        
         const result = unwrapThis([
             UserLoggedInGuard,
             ExtraContextGuard,
@@ -55,3 +54,12 @@ describe('ValidatedThisType', () => {
         })
     })
 });
+
+class ExtraContextGuard extends Guard {
+    public readonly paramSchema = [];
+    public readonly writeToParams = false;
+    public readonly writeToContext = false;
+    public readonly contextSchema = v.object({
+        extra: v.string(),
+    });
+}
