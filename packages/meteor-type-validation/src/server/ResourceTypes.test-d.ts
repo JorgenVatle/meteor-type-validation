@@ -47,7 +47,7 @@ describe('ValidatedThisType', () => {
         ]);
         
         it('merges context with the default guard context', () => {
-            expectTypeOf(result).toMatchTypeOf<{ userId: string | null }>();
+            expectTypeOf(result).toMatchTypeOf<{ userId: string }>();
             expectTypeOf(result).toMatchTypeOf<{ extra: string }>();
         });
         
