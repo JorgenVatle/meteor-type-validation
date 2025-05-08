@@ -99,7 +99,7 @@ describe('InferResourceHandleFn', () => {
         
         
         it('infers input types from the guard', () => {
-            expectTypeOf(result).parameters.toEqualTypeOf([{ userId: '1' }])
+            expectTypeOf(result).parameter(0).toEqualTypeOf({ userId: '1' });
         })
         
         it('does not allow unspecified fields', () => {
