@@ -64,8 +64,12 @@ describe('ValidatedThisType', () => {
         it('does not modify the base context', () => {
             expectTypeOf(result).toMatchTypeOf<{ userId: string | null }>();
         });
+        
+        it('does not result in "any"', () => {
+            expectTypeOf(result).not.toMatchTypeOf<{ somethingElse: string }>();
+        })
     })
-   
+    
     
 });
 
