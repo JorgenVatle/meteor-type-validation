@@ -58,7 +58,7 @@ export interface PublicationDefinitionResultMethodDefinitionResult<
     schema: any,
     publish: (
         ...params: UnwrapGuardedSchemaInput<TSchemas, TGuards>
-    ) => NoInfer<TResult>;;
+    ) => NoInfer<TResult>;
 }
 
 /**
