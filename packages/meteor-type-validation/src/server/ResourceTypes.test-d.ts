@@ -147,8 +147,14 @@ describe('UnwrapGuardStaticSchemas', () => {
             MultiParamSchemaGuard,
         ]);
         
+        
+        it('has two fields', () => {
+            expectTypeOf(result[0]).toBeObject();
+            expectTypeOf(result[1]).toBeObject();
+        })
+        
         it('unwraps the first guard param schema', () => {
-            expectTypeOf(result[0]).toEqualTypeOf({ userId: 'foo' });
+            expectTypeOf(result[0]).toEqualTypeOf<{ userId: string }>();
         })
         
         it('unwraps the second guard param schema', () => {
