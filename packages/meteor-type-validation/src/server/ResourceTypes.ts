@@ -180,6 +180,7 @@ type ValidatedFnThisType<TGuards extends GuardFunction[]> = UnionToIntersection<
 /**
  * Infer a publication or method definition's handle function.
  * Essentially the context that peer projects will have when defining methods and publications.
+ * @internal
  */
 export type InferResourceHandleFn<
     TSchemas extends ValibotSchema[],
