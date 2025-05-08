@@ -125,7 +125,7 @@ describe('PermissionGuard', () => {
 
 describe('QueryValidationGuard', () => {
     describe('methods', () => {
-        it(`should assert that the user's 'roles' field includes 'admin'`, () => {
+        it(`can infer parameter types only from the guard's schema type`, () => {
             defineMethods({
                 'channel.messages': {
                     schema: [],
