@@ -3,7 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { performance } from 'node:perf_hooks';
 import type Pino from 'pino';
-import { parse, ValiError } from 'valibot';
+import { parseAsync, ValiError } from 'valibot';
 import { formatValibotError } from '../utils/FormatValibotError';
 import type { GuardStatic } from './guards';
 import { Logger } from './Logger';
@@ -144,9 +144,13 @@ export class MeteorTypeValidation<
         params: unknown[]
     }): Promise<{ validatedParams: unknown[] }> {
         // Run input validation on method arguments
-        const validatedParams = definition.schema.map((schema, index) => {
-            return parse(schema, params[index]);
-        });
+        const validatedParams: unknown[] = []
+        
+        for (const index in definition.schema) {
+            const validation = parseAsync(definition.schema[index], params[index]);
+            const result = Promise.await ? Promise.await(validation) : await validation;
+            validatedParams.push(result);
+        }
         
         if (params.length > validatedParams.length) {
             throw new Meteor.Error(
