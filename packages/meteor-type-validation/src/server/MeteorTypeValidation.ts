@@ -61,6 +61,7 @@ export class MeteorTypeValidation<
     }): {
         [key in TKeys]: MethodDefinitionResult<TSchemas[key], TResult[key]>
     } {
+        // @ts-expect-error The parameters for input and output handles are different on purpose.
         return methods;
     }
     
@@ -79,6 +80,7 @@ export class MeteorTypeValidation<
             logger.warn(new Error(`Publication definition included in client bundle. This is generally unwanted as publications should only live on the server.`));
         }
         
+        // @ts-expect-error The parameters for input and output handles are different on purpose.
         return publications;
     }
     
