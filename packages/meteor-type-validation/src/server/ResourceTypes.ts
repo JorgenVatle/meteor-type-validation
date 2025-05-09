@@ -124,7 +124,6 @@ export type UnwrapSchemaInput<TSchemas extends ValibotSchemaList> = {
 
 /**
  * Infer method/publication argument output types after applying input validation schemas from guard classes.
- * @internal
  */
 export type UnwrapGuardedSchemaOutput<
     TSchemas extends ValibotSchemaList,
@@ -136,7 +135,6 @@ export type UnwrapGuardedSchemaOutput<
 
 /**
  * Infer input types for the provided guards and schemas.
- * @internal
  */
 export type UnwrapGuardedSchemaInput<
     TSchemas extends ValibotSchemaList,
@@ -157,7 +155,6 @@ type MergeParams<
 
 /**
  * Infer schema output from a list of static guard classes
- * @internal
  */
 export type UnwrapGuardStaticSchemas<
     TGuards extends readonly GuardStatic[],
@@ -175,7 +172,6 @@ type FilterEmptySchemas<
 
 /**
  * Infer the this-type of a publication/method handle after applying guard validators.
- * @internal
  */
 export type ValidatedThisType<
     TGuards extends GuardStatic[] | GuardFunction[] | [],
@@ -195,7 +191,6 @@ type InferValidatedGuardContext<
 
 /**
  * Infers the this-type of a static Guard class.
- * @internal
  */
 export type ValidatedStaticThisType<
     TGuards extends GuardStatic[]
@@ -214,7 +209,6 @@ type ValidatedFnThisType<TGuards extends GuardFunction[]> = UnionToIntersection<
 /**
  * Infer a publication or method definition's handle function.
  * Essentially the context that peer projects will have when defining methods and publications.
- * @internal
  */
 export type InferResourceHandleFn<
     TSchemas extends ValibotSchemaList,
