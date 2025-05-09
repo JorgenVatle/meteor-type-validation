@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.4.0-beta.15
+
+### Patch Changes
+
+- 69f1cba: Unmark internal types to avoid issues where core types are missing
+
 ## 2.4.0-beta.14
 
 ### Minor Changes
