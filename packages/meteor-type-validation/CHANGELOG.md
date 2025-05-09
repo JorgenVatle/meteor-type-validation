@@ -1,5 +1,14 @@
 # meteor-type-validation
 
+## 2.4.0-beta.14
+
+### Minor Changes
+
+- 159acbe: Refactor approach to type inference for Guard classes
+
+  - Addresses issue where guard param schemas would leak into all parameter indexes regardless of position.
+  - Guard context schemas are now merged into the main context schema.
+
 ## 2.4.0-beta.13
 
 ### Minor Changes
