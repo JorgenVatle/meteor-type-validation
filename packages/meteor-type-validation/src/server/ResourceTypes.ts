@@ -105,14 +105,14 @@ export type UnwrapPublications<TPublications extends PublicationDefinitionMap> =
  * The input type (the type the caller should adhere to) is inferred from {@link UnwrapSchemaInput}
  */
 export type UnwrapSchemaOutput<TSchemas extends ValibotSchemaList> = {
-    [key in keyof TSchemas]: TSchemas[key] extends BaseSchema<any, infer Output, any> ? Output : never;
+    [key in keyof TSchemas]: TSchemas[key] extends ValibotSchema<any, infer Output> ? Output : never;
 }
 
 /**
  * Argument types for the provided schemas as it should be passed by the caller of the method/publication.
  */
 export type UnwrapSchemaInput<TSchemas extends ValibotSchemaList> = {
-    [key in keyof TSchemas]: TSchemas[key] extends BaseSchema<infer Input, any, any> ? Input : never;
+    [key in keyof TSchemas]: TSchemas[key] extends ValibotSchema<infer Input, any> ? Input : never;
 }
 
 /**
