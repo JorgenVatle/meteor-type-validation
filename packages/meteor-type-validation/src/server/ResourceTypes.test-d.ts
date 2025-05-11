@@ -239,6 +239,17 @@ describe('MergeParams', () => {
         expectTypeOf(result[0]).not.toMatchTypeOf<{ foobar: number }>();
         
     })
+    
+    it('merges contents of differently sized arrays', () => {
+        const result = mergeParams([{ foo: 1 }], [{ bar: 2 }, { foobar: 3 }]);
+        
+        expectTypeOf(result[0]).toMatchTypeOf<{ foo: number }>();
+        expectTypeOf(result[0]).toMatchTypeOf<{ bar: number }>();
+        expectTypeOf(result[0]).not.toMatchTypeOf<{ foobar: number }>();
+        
+        expectTypeOf(result[1]).toMatchTypeOf<{ foobar: number }>();
+        
+    })
 })
 
 class ExtraContextGuard extends Guard {
