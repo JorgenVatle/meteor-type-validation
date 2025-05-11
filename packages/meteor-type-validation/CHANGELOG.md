@@ -1,5 +1,11 @@
 # meteor-type-validation
 
+## 2.4.0-beta.16
+
+### Patch Changes
+
+- 21eb08c: Optimize guard and schema param merging. Fixes an issue where TS performance would degrade very quickly with every new schema used.
+
 ## 2.4.0-beta.15
 
 ### Patch Changes
