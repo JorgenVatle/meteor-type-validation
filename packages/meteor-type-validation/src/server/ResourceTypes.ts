@@ -1,14 +1,7 @@
 import type { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import type { Meteor, Subscription } from 'meteor/meteor';
 import type { MergeDeep, UnionToIntersection } from 'type-fest';
-import {
-    type BaseIssue,
-    type BaseSchema,
-    type BaseSchemaAsync,
-    type GenericSchema,
-    type InferInput,
-    type InferOutput,
-} from 'valibot';
+import { type BaseIssue, type BaseSchema, type BaseSchemaAsync, type GenericSchema, type InferOutput } from 'valibot';
 import { Guard, type GuardFunction, type GuardStatic } from './guards';
 
 interface BaseResourceDefinition<
@@ -112,14 +105,14 @@ export type UnwrapPublications<TPublications extends PublicationDefinitionMap> =
  * The input type (the type the caller should adhere to) is inferred from {@link UnwrapSchemaInput}
  */
 export type UnwrapSchemaOutput<TSchemas extends ValibotSchemaList> = {
-    [key in keyof TSchemas]: InferOutput<TSchemas[key]>
+    [key in keyof TSchemas]: TSchemas[key] extends BaseSchema<any, infer Output, any> ? Output : never;
 }
 
 /**
  * Argument types for the provided schemas as it should be passed by the caller of the method/publication.
  */
 export type UnwrapSchemaInput<TSchemas extends ValibotSchemaList> = {
-    [key in keyof TSchemas]: InferInput<TSchemas[key]>
+    [key in keyof TSchemas]: TSchemas[key] extends BaseSchema<infer Input, any, any> ? Input : never;
 }
 
 /**
@@ -240,7 +233,7 @@ export interface ContextWrapper<
     name: string;
 }
 
-export type NonAsyncValibotSchema = BaseSchema<unknown, unknown, BaseIssue<unknown>>;
-export type AsyncValibotSchema = BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>;
-export type ValibotSchema = NonAsyncValibotSchema | AsyncValibotSchema;
+export type NonAsyncValibotSchema<TInput = unknown, TOutput = TInput> = BaseSchema<TInput, TOutput, BaseIssue<unknown>>;
+export type AsyncValibotSchema<TInput = unknown, TOutput = TInput> = BaseSchemaAsync<TInput, TOutput, BaseIssue<unknown>>;
+export type ValibotSchema<TInput = unknown, TOutput = TInput> = NonAsyncValibotSchema<TInput, TOutput> | AsyncValibotSchema<TInput, TOutput>;
 export type ValibotSchemaList = readonly ValibotSchema[] | ValibotSchema[];
