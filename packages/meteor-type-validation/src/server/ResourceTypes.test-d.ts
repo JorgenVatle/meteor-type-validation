@@ -254,8 +254,10 @@ describe('MergeParams', () => {
     
     it('handles empty arrays', () => {
         const result = mergeParams([], []);
+        const result2 = mergeParams([{ foo: 1 }], [])
         
         expectTypeOf(result).toEqualTypeOf<[]>();
+        expectTypeOf(result2).toEqualTypeOf<[{ readonly foo: 1 }]>()
     })
 })
 
