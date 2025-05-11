@@ -140,11 +140,15 @@ export type UnwrapGuardedSchemaInput<
 export type MergeParams<
     TSchemaParams extends readonly unknown[] = [],
     TGuardParams extends readonly unknown[] = [],
-> = MergeDeep<
-    TSchemaParams extends [] ? [{}] : TSchemaParams,
-    TGuardParams extends [] ? [{}] : TGuardParams,
-    { recurseIntoArrays: true, arrayMergeMode: 'replace' }
->;
+> = TSchemaParams extends []
+    ? TGuardParams
+    : TGuardParams extends []
+      ? TSchemaParams
+      : MergeDeep<
+            TSchemaParams,
+            TGuardParams,
+            { recurseIntoArrays: true, arrayMergeMode: 'replace' }
+        >;
 
 /**
  * Infer schema output from a list of static guard classes

@@ -250,6 +250,12 @@ describe('MergeParams', () => {
         expectTypeOf(result[1]).toMatchTypeOf<{ foobar: number }>();
         expectTypeOf(result[1]).not.toMatchTypeOf<{ foo: number }>();
         
+    });
+    
+    it('handles empty arrays', () => {
+        const result = mergeParams([], []);
+        
+        expectTypeOf(result).toEqualTypeOf<[]>();
     })
 })
 
