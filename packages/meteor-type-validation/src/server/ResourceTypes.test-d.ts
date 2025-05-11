@@ -225,8 +225,8 @@ describe('UnwrapGuardedSchemaOutput', () => {
 
 describe('MergeParams', () => {
     function mergeParams<
-        ParamA extends unknown[],
-        ParamB extends unknown[]
+        const ParamA extends unknown[],
+        const ParamB extends unknown[]
     >(a: ParamA, b: ParamB): MergeParams<ParamA, ParamB> {
         return {} as any;
     }
