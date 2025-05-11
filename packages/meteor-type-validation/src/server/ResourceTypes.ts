@@ -137,7 +137,7 @@ export type UnwrapGuardedSchemaInput<
     TGuards extends [] ? [] :UnwrapSchemaInput<UnwrapGuardStaticSchemas<TGuards>>
 >;
 
-type MergeParams<
+export type MergeParams<
     TSchemaParams extends readonly unknown[] = [],
     TGuardParams extends readonly unknown[] = [],
 > = MergeDeep<

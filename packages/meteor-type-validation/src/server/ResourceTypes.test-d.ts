@@ -3,6 +3,7 @@ import { describe, expectTypeOf, it } from 'vitest';
 import { Guard, type GuardStatic, UserLoggedInGuard } from './guards';
 import type {
     InferResourceHandleFn,
+    MergeParams,
     UnwrapGuardedSchemaOutput,
     UnwrapGuardStaticSchemas,
     UnwrapSchemaOutput,
@@ -219,6 +220,24 @@ describe('UnwrapGuardedSchemaOutput', () => {
             expectTypeOf(result[1]).not.toEqualTypeOf<{ fields: Array<'_id' | 'userId' | 'createdAt' | 'extra'> }>();
             
         })
+    })
+});
+
+describe('MergeParams', () => {
+    function mergeParams<
+        ParamA extends unknown[],
+        ParamB extends unknown[]
+    >(a: ParamA, b: ParamB): MergeParams<ParamA, ParamB> {
+        return {} as any;
+    }
+    
+    it('merges contents of two similar sized arrays', () => {
+        const result = mergeParams([{ foo: 1 }], [{ bar: 2 }]);
+        
+        expectTypeOf(result[0]).toMatchTypeOf<{ foo: number }>();
+        expectTypeOf(result[0]).toMatchTypeOf<{ bar: number }>();
+        expectTypeOf(result[0]).not.toMatchTypeOf<{ foobar: number }>();
+        
     })
 })
 
