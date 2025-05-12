@@ -2,12 +2,10 @@ declare module 'meteor/meteor' {
     // These are left empty so you can merge in your own types
     export interface DefinedMethods {}
     export interface DefinedPublications {}
-    export type MethodName = keyof DefinedMethods;
-    export type PublicationName = keyof DefinedPublications;
-    export type PublicationParams<TName extends PublicationName> = Parameters<DefinedPublications[TName]>;
-    export type MethodParams<TName extends MethodName> = Parameters<DefinedMethods[TName]>;
-    export type MethodResult<TName extends MethodName> = Awaited<ReturnType<DefinedMethods[TName]>>;
-    export type PublicationResult<TName extends PublicationName> = ReturnType<DefinedPublications[TName]>;
+    export type PublicationParams<TName extends Meteor.PublicationName> = Parameters<DefinedPublications[TName]>;
+    export type MethodParams<TName extends Meteor.MethodName> = Parameters<DefinedMethods[TName]>;
+    export type MethodResult<TName extends Meteor.MethodName> = Awaited<ReturnType<DefinedMethods[TName]>>;
+    export type PublicationResult<TName extends Meteor.PublicationName> = ReturnType<DefinedPublications[TName]>;
     
     /**
      * Meteor.subscribe() options type. Remains untyped in current versions of @types/meteor
@@ -19,6 +17,9 @@ declare module 'meteor/meteor' {
     }
     
     namespace Meteor {
+        type MethodName = keyof DefinedMethods;
+        type PublicationName = keyof DefinedPublications;
+        
         function subscribe<
             TName extends PublicationName
         >(name: TName, ...params: [
