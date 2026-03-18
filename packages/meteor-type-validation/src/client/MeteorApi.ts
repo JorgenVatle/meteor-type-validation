@@ -1,9 +1,7 @@
 import {
     Meteor,
-    MethodName,
     MethodParams,
     MethodResult,
-    PublicationName,
     PublicationParams,
     SubscribeCallbacks,
 } from 'meteor/meteor';
@@ -13,12 +11,12 @@ import {
  * Overrides for Meteor's default types to enforce type safety.
  */
 export const MeteorApi = {
-    callAsync: Meteor.callAsync as <TName extends MethodName>(
+    callAsync: Meteor.callAsync as <TName extends Meteor.MethodName>(
         name: TName,
         ...params: MethodParams<TName>
     ) => Promise<MethodResult<TName>>,
     
-    call: Meteor.call as <TName extends MethodName>(
+    call: Meteor.call as <TName extends Meteor.MethodName>(
         name: TName,
         ...params: [
             ...MethodParams<TName>,
@@ -27,7 +25,7 @@ export const MeteorApi = {
         ]
     ) => void,
     
-    subscribe: Meteor.subscribe as <TName extends PublicationName>(
+    subscribe: Meteor.subscribe as <TName extends Meteor.PublicationName>(
         name: TName,
         ...params: [
             ...PublicationParams<TName>,
