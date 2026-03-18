@@ -5,7 +5,7 @@ import { ErrorMessageFormatter, type FormattedErrorMessage } from './ErrorMessag
 
 export function formatValibotError(error: ValiError<BaseSchema<any, any, any>>) {
     const errors: FormattedErrorMessage[] = error.issues.map((issue) => formatIssue(issue));
-    
+
     return new MeteorValiError(error.message, {
         errors,
         issues: error.issues
@@ -51,14 +51,16 @@ export type ValiErrorDetails = {
 
 export class MeteorValiError extends Meteor.Error {
     // @ts-expect-error Meteor's type definitions incorrectly sets this to string.
-    declare details: ValiErrorDetails;
-    
+    public override details: Omit<ValiErrorDetails, 'issues'>;
+    public readonly issues: ValiErrorDetails['issues'];
+
     constructor(message: string, details: ValiErrorDetails) {
         super(
             'ValiError',
             message,
             // @ts-expect-error @types/meteor invalidly sets a 'string' type here.
-            details
+            { errors: details.errors }
         );
+        this.issues = details.issues;
     }
 }
