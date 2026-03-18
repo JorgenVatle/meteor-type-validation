@@ -21,6 +21,7 @@
     },
     "types": [],
     "declaration": true,
+    "declarationMap": true,
     "outDir": "./dist",
     "stripInternal": true,
     "isolatedModules": true,
