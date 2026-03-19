@@ -1,5 +1,15 @@
 # meteor-type-validation
 
+## 2.4.0-beta.17
+
+### Minor Changes
+
+- e74b266: Move MethodName and PublicationName utility types into the Meteor namespace
+
+### Patch Changes
+
+- b3b1139: Correct issue where complex validation issues could potentially send non-EJSON-compatible issue lists to clients. The issue list has been moved to the root of the error object. There is already a serialized version of issues being sent to clients, so this field was somewhat redundant in the first place.
+
 ## 2.4.0-beta.16
 
 ### Patch Changes
