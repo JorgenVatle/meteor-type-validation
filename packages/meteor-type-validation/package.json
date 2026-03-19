@@ -1,0 +1,95 @@
+{
+  "name": "meteor-type-validation",
+  "version": "2.4.0-beta.16",
+  "description": "A lightweight set of TypeScript utilities to add proper type inference and validation for your Meteor publications and methods",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./client": {
+      "import": {
+        "types": "./dist/client.d.mts",
+        "default": "./dist/client.mjs"
+      },
+      "require": {
+        "types": "./dist/client.d.ts",
+        "default": "./dist/client.js"
+      }
+    },
+    "./utils": {
+      "import": {
+        "types": "./dist/utils.d.mts",
+        "default": "./dist/utils.mjs"
+      },
+      "require": {
+        "types": "./dist/utils.d.ts",
+        "default": "./dist/utils.js"
+      }
+    },
+    "./types": {
+      "import": {
+        "types": "./dist/types.d.mts"
+      },
+      "require": {
+        "types": "./dist/types.d.ts"
+      }
+    }
+  },
+  "scripts": {
+    "test": "vitest",
+    "lint": "tsc --noEmit",
+    "build": "tsup",
+    "build:watch": "tsup --clean false --watch",
+    "prepack": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JorgenVatle/meteor-type-validation.git"
+  },
+  "keywords": [
+    "Meteor",
+    "TypeScript",
+    "Valibot",
+    "improved types"
+  ],
+  "author": "Jørgen Vatle <jorgen@wcaservices.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JorgenVatle/meteor-type-validation/issues"
+  },
+  "homepage": "https://github.com/JorgenVatle/meteor-type-validation#readme",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@microsoft/api-extractor": "^7.52.1",
+    "@types/meteor": "^2.9.8",
+    "picocolors": "^1.1.1",
+    "tsup": "^8.4.0",
+    "typescript": "^5.9.3",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.6"
+  },
+  "optionalDependencies": {
+    "pino": "^8.19.0"
+  },
+  "peerDependencies": {
+    "valibot": "^1.0.0"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "type-fest": "^4.40.1"
+  }
+}

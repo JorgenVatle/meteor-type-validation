@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Build Output Tests" pattern="file[meteor-type-validation]:packages/meteor-type-validation/tests/build-output//*" />
+</component>

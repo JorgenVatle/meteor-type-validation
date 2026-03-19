@@ -1,0 +1,43 @@
+{
+  "name": "meteor-v2",
+  "private": true,
+  "scripts": {
+    "start": "concurrently -n tsup,meteor -c dim,yellow -k npm:start:tsup npm:start:meteor",
+    "start:meteor": "FORCE_COLOR=1 meteor run --raw-logs",
+    "start:tsup": "tsup --watch",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+    "visualize": "meteor --production --extra-packages bundle-visualizer"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.23.5",
+    "@faker-js/faker": "^9.5.1",
+    "@tailwindcss/vite": "^4.0.9",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "lodash-es": "^4.17.21",
+    "meteor-node-stubs": "^1.2.7",
+    "meteor-type-validation": "file:../../packages/meteor-type-validation",
+    "meteor-vite": "^2.0.0",
+    "pino": "^9.6.0",
+    "tailwindcss": "^3.4.17",
+    "valibot": "^1.0.0",
+    "vue": "^3.5.13"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/entry-meteor.js",
+      "server": "server/entry-meteor.js"
+    },
+    "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "@types/meteor": "^2.9.8",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "daisyui": "^4.12.24",
+    "postcss": "^8.5.3",
+    "tsup": "^7.2.0",
+    "typescript": "^5.7.3",
+    "vite": "^4.5.9"
+  }
+}

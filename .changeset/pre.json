@@ -1,0 +1,30 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "meteor-type-validation": "2.3.0"
+  },
+  "changesets": [
+    "chilly-parrots-tease",
+    "few-spiders-tap",
+    "five-tomatoes-type",
+    "full-bananas-send",
+    "hot-cooks-tie",
+    "khaki-suns-sort",
+    "large-knives-fix",
+    "lemon-zoos-compare",
+    "long-spoons-spend",
+    "major-cloths-fly",
+    "ninety-dingos-change",
+    "orange-peaches-cross",
+    "purple-words-pump",
+    "quick-hands-share",
+    "silver-cloths-visit",
+    "smooth-cars-bow",
+    "thick-pumas-love",
+    "tiny-pianos-decide",
+    "twenty-walls-camp",
+    "wicked-birds-beg",
+    "wise-poems-send"
+  ]
+}

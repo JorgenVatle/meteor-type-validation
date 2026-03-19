@@ -1,0 +1,66 @@
+import { Meteor } from 'meteor/meteor';
+import * as v from 'valibot';
+import { type BaseSchema, getDotPath, ValiError } from 'valibot';
+import { ErrorMessageFormatter, type FormattedErrorMessage } from './ErrorMessageFormatter';
+
+export function formatValibotError(error: ValiError<BaseSchema<any, any, any>>) {
+    const errors: FormattedErrorMessage[] = error.issues.map((issue) => formatIssue(issue));
+
+    return new MeteorValiError(error.message, {
+        errors,
+        issues: error.issues
+    });
+}
+
+function isDefaultMessage(issue: v.BaseIssue<unknown>) {
+    const message = issue.message;
+    if (message.includes('Invalid key: Expected')) {
+        return true;
+    }
+    if (message.includes('Invalid type: Expected')) {
+        return true;
+    }
+    return false;
+}
+
+export function formatIssue(issue: v.BaseIssue<unknown>): FormattedErrorMessage {
+    
+    if (!isDefaultMessage(issue)) {
+        return {
+            key: getDotPath(issue),
+            message: issue.message,
+            reason: issue.message,
+        }
+    }
+    
+    if (issue.type === 'object') {
+        if (issue.received === 'undefined') {
+            return ErrorMessageFormatter.required(issue);
+        }
+    }
+    
+    
+    return ErrorMessageFormatter.invalidType(issue);
+}
+
+export type ValiErrorDetails = {
+    errors: FormattedErrorMessage[],
+    issues: v.BaseIssue<unknown>[]
+}
+
+
+export class MeteorValiError extends Meteor.Error {
+    // @ts-expect-error Meteor's type definitions incorrectly sets this to string.
+    public override details: Omit<ValiErrorDetails, 'issues'>;
+    public readonly issues: ValiErrorDetails['issues'];
+
+    constructor(message: string, details: ValiErrorDetails) {
+        super(
+            'ValiError',
+            message,
+            // @ts-expect-error @types/meteor invalidly sets a 'string' type here.
+            { errors: details.errors }
+        );
+        this.issues = details.issues;
+    }
+}
